@@ -137,7 +137,7 @@ const StartScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-100" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300" dir="rtl">
       {/* Question Type Modal */}
       {isQuestionTypeModalOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={closeQuestionTypeModal}>
@@ -240,10 +240,10 @@ const StartScreen = () => {
             </div>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            مركز اختبارات اللفظي
+            محاكي اختبارات قياس
           </h1>
           <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-            موقع متكامل لاختبارات القدرات اللفظية مع أدوات متقدمة للتدريب والتقييم
+            بواسطة our goal
           </p>
           <div className="flex justify-center gap-8 text-blue-100">
             <div className="flex items-center gap-2">
