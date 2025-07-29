@@ -1,11 +1,31 @@
 import React, { useState } from "react";
 import { useExamStore } from "../store/examStore";
 import { Button } from "./ui/button";
-import { Badge } from './ui/badge';
-import { CheckCircle, XCircle, Clock, ArrowLeft, ArrowRight, BookOpen, BarChart3, Target, Home, AlertTriangle } from 'lucide-react';
+import { 
+  CheckCircle, 
+  Circle, 
+  Clock, 
+  ArrowLeft, 
+  ArrowRight, 
+  Home, 
+  AlertTriangle,
+  Zap,
+  Target,
+  Eye,
+  Flame,
+  Star,
+  Sparkles,
+  ChevronRight,
+  Play,
+  BarChart4,
+  TrendingUp,
+  Award,
+  Layers
+} from 'lucide-react';
 
 const SectionReview = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [animatingCard, setAnimatingCard] = useState(null);
   
   const {
     currentSection,
@@ -21,14 +41,10 @@ const SectionReview = () => {
     moveToNextSectionFromReview
   } = useExamStore();
 
-  // Calculate total sections
   const totalSections = Math.max(...examQuestions.map(q => q.section));
   const isLastSection = currentSection === totalSections;
-
-  // Get current section questions
   const sectionQuestions = examQuestions.filter(q => q.section === currentSection);
   
-  // Calculate section statistics
   const sectionStats = {
     total: sectionQuestions.length,
     answered: 0,
@@ -54,23 +70,37 @@ const SectionReview = () => {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const getQuestionTypeLabel = (type) => {
-    const typeLabels = {
-      analogy: 'التناظر اللفظي',
-      completion: 'إكمال الجمل',
-      error: 'الخطأ السياقي',
-      rc: 'استيعاب المقروء',
-      odd: 'المفردة الشاذة'
+  const getQuestionTypeIcon = (type) => {
+    const icons = {
+      analogy: Layers,
+      completion: Sparkles,
+      error: Target,
+      rc: Eye,
+      odd: Star
     };
-    return typeLabels[type] || type;
+    return icons[type] || Circle;
+  };
+
+  const getQuestionTypeStyle = (type) => {
+    const styles = {
+      analogy: 'from-violet-500 to-purple-600',
+      completion: 'from-emerald-500 to-teal-600',
+      error: 'from-rose-500 to-pink-600',
+      rc: 'from-amber-500 to-orange-600',
+      odd: 'from-cyan-500 to-blue-600'
+    };
+    return styles[type] || 'from-gray-500 to-gray-600';
   };
 
   const handleQuestionClick = (questionNumber) => {
-    const globalIndex = examQuestions.findIndex(q => q.question_number === questionNumber);
-    if (globalIndex !== -1) {
-      goToQuestion(globalIndex);
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
-    }
+    setAnimatingCard(questionNumber);
+    setTimeout(() => {
+      const globalIndex = examQuestions.findIndex(q => q.question_number === questionNumber);
+      if (globalIndex !== -1) {
+        goToQuestion(globalIndex);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 300);
   };
 
   const handleNextSection = () => {
@@ -91,154 +121,241 @@ const SectionReview = () => {
     setShowConfirmModal(false);
   };
 
+  const getCompletionPercentage = () => {
+    return Math.round((sectionStats.answered / sectionStats.total) * 100);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-800 to-gray-900 text-white" dir="rtl">
-      {/* Header */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-800 to-purple-800"></div>
-        <div className="absolute inset-0 bg-black/30"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-            مراجعة القسم {currentSection}
-          </h1>
-          <p className="text-lg text-blue-200 mb-8 max-w-3xl mx-auto leading-relaxed">
-            راجع إجاباتك قبل الانتقال للقسم التالي
-          </p>
-          
-          {/* Enhanced Progress Indicator */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 max-w-md mx-auto mb-8 border border-white/20 shadow-2xl">
-            <div className="text-center mb-6">
-              <div className="text-white text-xl sm:text-2xl font-bold mb-2">
-                القسم {currentSection} من {totalSections}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden relative" dir="rtl">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-r from-purple-600/15 to-pink-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      <div className="relative z-10">
+        {/* Header with Dynamic Progress */}
+        <div className="sticky top-0 bg-black/40 backdrop-blur-xl border-b border-gray-700/50 z-40">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 space-x-reverse">
+                <div className="p-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl">
+                  <Flame className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                    مراجعة القسم {currentSection}
+                  </h1>
+                  <p className="text-sm text-gray-400">
+                    {sectionStats.answered} من {sectionStats.total} مُجابة
+                  </p>
+                </div>
               </div>
+              
+              {/* Timer Display */}
+              {timerActive && (
+                <div className="flex items-center gap-2 bg-red-900/30 border border-red-500/30 rounded-full px-4 py-2">
+                  <Clock className="h-5 w-5 text-red-400 animate-pulse" />
+                  <span className="text-red-300 font-bold font-mono">
+                    {formatTime(timeRemaining)}
+                  </span>
+                </div>
+              )}
+
+              <Button 
+                onClick={() => window.location.href = '/'}
+                variant="ghost"
+                className="text-white hover:bg-white/10 bg-white/5 border border-white/20 rounded-xl"
+              >
+                <Home className="h-5 w-5 ml-2" />
+                <span className="hidden sm:inline">الرئيسية</span>
+              </Button>
             </div>
-            
-            {/* Circular Progress */}
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-6">
-              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+          </div>
+        </div>
+
+        {/* Hero Section */}
+        <div className="px-6 py-16">
+          <div className="max-w-6xl mx-auto text-center">
+            {/* Progress Circle */}
+            <div className="relative mx-auto mb-12 w-48 h-48">
+              <svg className="w-48 h-48 transform -rotate-90" viewBox="0 0 100 100">
                 <circle
                   cx="50"
                   cy="50"
                   r="45"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="8"
+                  stroke="rgba(255,255,255,0.1)"
+                  strokeWidth="6"
                   fill="none"
                 />
                 <circle
                   cx="50"
                   cy="50"
                   r="45"
-                  stroke="url(#progressGradient)"
-                  strokeWidth="8"
+                  stroke="url(#progressGradientSection)"
+                  strokeWidth="6"
                   fill="none"
                   strokeLinecap="round"
-                  strokeDasharray={`${(currentSection / totalSections) * 283} 283`}
-                  className="transition-all duration-1000 ease-out"
+                  strokeDasharray={`${(getCompletionPercentage() / 100) * 283} 283`}
+                  className="transition-all duration-1000 ease-out drop-shadow-lg"
                 />
                 <defs>
-                  <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="progressGradientSection" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="#10B981" />
                     <stop offset="50%" stopColor="#06D6A0" />
                     <stop offset="100%" stopColor="#00F5FF" />
                   </linearGradient>
                 </defs>
               </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-white text-lg sm:text-xl font-bold">
-                  {Math.round((currentSection / totalSections) * 100)}%
-                </span>
-              </div>
-            </div>
-            
-            {/* Timer inside the same box */}
-            {timerActive && (
-              <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-md rounded-lg px-4 py-2 inline-flex items-center gap-2 border border-red-300/30">
-                <Clock className="w-4 h-4 text-red-200" />
-                <span className="text-white font-bold text-base tracking-wider">
-                  {formatTime(timeRemaining)}
-                </span>
-              </div>
-            )}
-          </div>
-          
-          <Button 
-            variant="" 
-            className="absolute top-3 right-3 sm:top-6 sm:right-6 text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm border border-white/30 px-2 py-2 sm:px-6 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" 
-            onClick={() => window.location.href = '/'}
-          >
-            <Home className="h-4 w-4 sm:h-6 sm:w-6 sm:ml-2" />
-            <span className="font-bold text-xs sm:text-base hidden sm:inline">الصفحة الرئيسية</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content - Mobile Optimized */}
-      <div className="max-w-7xl mx-auto px-4 py-16 space-y-8 sm:px-6 lg:px-8">
-        <div className="space-y-6 sm:space-y-8">
-          {/* Enhanced Statistics Cards - Mobile Optimized */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="bg-white/80 rounded-lg shadow-md p-4 text-center">
-              <h2 className="text-2xl font-bold text-blue-600">{sectionStats.total}</h2>
-              <p className="text-gray-600">إجمالي الأسئلة</p>
-            </div>
-
-            <div className="bg-white/80 rounded-lg shadow-md p-4 text-center">
-              <h2 className="text-2xl font-bold text-green-600">{sectionStats.answered}</h2>
-              <p className="text-gray-600">مُجابة</p>
-            </div>
-
-            <div className="bg-white/80 rounded-lg shadow-md p-4 text-center">
-              <h2 className="text-2xl font-bold text-red-600">{sectionStats.unanswered}</h2>
-              <p className="text-gray-600">غير مُجابة</p>
-            </div>
-          </div>
-
-          {/* Enhanced Questions Grid - Mobile Optimized */}
-          <div className="bg-white/80 rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-bold text-gray-800 text-center mb-4">
-              أسئلة القسم {currentSection}
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {sectionQuestions.map((question) => (
-                <div 
-                  key={question.question_number}
-                  className={`relative p-4 rounded-lg cursor-pointer transition-all duration-300 hover:shadow-lg border-2 ${
-                    userAnswers[question.question_number] !== undefined 
-                      ? 'border-green-300 bg-green-50' 
-                      : deferredQuestions[question.question_number] 
-                      ? 'border-yellow-300 bg-yellow-50' 
-                      : 'border-gray-300 bg-gray-50'
-                  }`}
-                  onClick={() => handleQuestionClick(question.question_number)}
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-bold text-lg">السؤال {question.question_number}</span>
-                    <Badge variant="outline" className={`text-xs font-medium ${
-                      userAnswers[question.question_number] !== undefined 
-                        ? 'bg-green-200 text-green-800' 
-                        : deferredQuestions[question.question_number] 
-                        ? 'bg-yellow-200 text-yellow-800' 
-                        : 'bg-gray-200 text-gray-800'
-                    }`}>
-                      {userAnswers[question.question_number] !== undefined 
-                        ? 'مُجابة' 
-                        : deferredQuestions[question.question_number] 
-                        ? 'مؤجلة' 
-                        : 'غير مُجابة'}
-                    </Badge>
-                  </div>
-                  <p className="text-gray-700 line-clamp-2">{question.question}</p>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                  {getCompletionPercentage()}%
                 </div>
-              ))}
+                <div className="text-gray-400 text-sm mt-1">مكتمل</div>
+              </div>
+            </div>
+
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              القسم {currentSection} من {totalSections}
+            </h2>
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+              راجع أداءك وتأكد من إجاباتك قبل المتابعة
+            </p>
+          </div>
+        </div>
+
+        {/* Statistics Dashboard */}
+        <div className="max-w-6xl mx-auto px-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Answered Questions */}
+            <div className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-500/30 text-green-400 mx-auto mb-6">
+                <CheckCircle className="h-8 w-8" />
+              </div>
+              <h3 className="text-3xl font-bold text-green-400 mb-2">{sectionStats.answered}</h3>
+              <p className="text-green-300">أسئلة مُجابة</p>
+              <div className="mt-4 bg-green-500/20 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-green-400 to-emerald-400 h-full rounded-full transition-all duration-1000"
+                  style={{ width: `${(sectionStats.answered / sectionStats.total) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Deferred Questions */}
+            <div className="bg-gradient-to-br from-amber-900/50 to-orange-900/50 border border-amber-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/30 text-amber-400 mx-auto mb-6">
+                <Clock className="h-8 w-8" />
+              </div>
+              <h3 className="text-3xl font-bold text-amber-400 mb-2">{sectionStats.deferred}</h3>
+              <p className="text-amber-300">أسئلة مؤجلة</p>
+              <div className="mt-4 bg-amber-500/20 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-amber-400 to-orange-400 h-full rounded-full transition-all duration-1000"
+                  style={{ width: `${(sectionStats.deferred / sectionStats.total) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Unanswered Questions */}
+            <div className="bg-gradient-to-br from-red-900/50 to-rose-900/50 border border-red-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-500/30 text-red-400 mx-auto mb-6">
+                <Circle className="h-8 w-8" />
+              </div>
+              <h3 className="text-3xl font-bold text-red-400 mb-2">{sectionStats.unanswered}</h3>
+              <p className="text-red-300">أسئلة غير مُجابة</p>
+              <div className="mt-4 bg-red-500/20 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-red-400 to-rose-400 h-full rounded-full transition-all duration-1000"
+                  style={{ width: `${(sectionStats.unanswered / sectionStats.total) * 100}%` }}
+                ></div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Enhanced Action Buttons - Mobile Optimized */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 sm:pt-6">
+        {/* Questions Grid */}
+        <div className="max-w-6xl mx-auto px-6 mb-16">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-200 mb-4">أسئلة القسم</h3>
+            <p className="text-gray-400">انقر على أي سؤال للانتقال إليه مباشرة</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {sectionQuestions.sort((a, b) => a.question_number - b.question_number).map((question) => {
+              const isAnswered = userAnswers[question.question_number] !== undefined;
+              const isDeferred = deferredQuestions[question.question_number];
+              const TypeIcon = getQuestionTypeIcon(question.type);
+              const typeStyle = getQuestionTypeStyle(question.type);
+              
+              return (
+                <div
+                  key={question.question_number}
+                  onClick={() => handleQuestionClick(question.question_number)}
+                  className={`group relative bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700 rounded-xl p-6 cursor-pointer transition-all duration-300 hover:border-gray-500 hover:shadow-xl hover:scale-105 ${
+                    animatingCard === question.question_number ? 'animate-pulse scale-95' : ''
+                  }`}
+                >
+                  {/* Status Indicator */}
+                  <div className="absolute -top-2 -right-2">
+                    {isAnswered ? (
+                      <div className="bg-green-500 rounded-full p-2 shadow-lg shadow-green-500/50">
+                        <CheckCircle className="h-4 w-4 text-white" />
+                      </div>
+                    ) : isDeferred ? (
+                      <div className="bg-amber-500 rounded-full p-2 shadow-lg shadow-amber-500/50">
+                        <Clock className="h-4 w-4 text-white" />
+                      </div>
+                    ) : (
+                      <div className="bg-red-500 rounded-full p-2 shadow-lg shadow-red-500/50">
+                        <Circle className="h-4 w-4 text-white" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Question Type Icon */}
+                  <div className={`flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r ${typeStyle} mb-4 mx-auto`}>
+                    <TypeIcon className="h-6 w-6 text-white" />
+                  </div>
+
+                  {/* Question Number */}
+                  <h4 className="text-2xl font-bold text-center mb-2 text-white">
+                    {question.question_number}
+                  </h4>
+
+                  {/* Question Preview */}
+                  <p className="text-gray-300 text-sm text-center line-clamp-2 mb-4">
+                    {question.question.substring(0, 80)}...
+                  </p>
+
+                  {/* Status Badge */}
+                  <div className="text-center">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                      isAnswered 
+                        ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
+                        : isDeferred 
+                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                    }`}>
+                      {isAnswered ? 'مُجابة' : isDeferred ? 'مؤجلة' : 'غير مُجابة'}
+                    </span>
+                  </div>
+
+                  {/* Hover Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="max-w-6xl mx-auto px-6 pb-16">
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Button
               onClick={() => { 
                 exitSectionReview(); 
-                // Navigate to the first question of the current section
                 const firstQuestionOfSection = examQuestions.find(q => q.section === currentSection);
                 if (firstQuestionOfSection) {
                   const questionIndex = examQuestions.findIndex(q => q.question_number === firstQuestionOfSection.question_number);
@@ -248,20 +365,30 @@ const SectionReview = () => {
                 }
                 window.scrollTo({ top: 0, behavior: 'smooth' }); 
               }}
-              className="bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white/90 transition-all duration-300 px-4 py-2 sm:px-8 sm:py-4 text-sm sm:text-lg font-bold rounded-lg shadow-lg hover:shadow-xl border-2 border-gray-300 transform hover:scale-105 w-full sm:w-auto"
-              size="sm"
+              size="lg"
+              className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-1 sm:ml-2" />
+              <ArrowRight className="h-5 w-5 ml-2" />
               العودة للقسم {currentSection}
             </Button>
             
             <Button
               onClick={handleNextSection}
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white transition-all duration-300 px-4 py-2 sm:px-8 sm:py-4 text-sm sm:text-lg font-bold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 w-full sm:w-auto"
-              size="sm"
+              size="lg"
+              className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              {isLastSection ? 'إنهاء الاختبار' : `الانتقال للقسم ${currentSection + 1}`}
-              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+              {isLastSection ? (
+                <>
+                  <Award className="h-5 w-5 ml-2" />
+                  إنهاء الاختبار
+                </>
+              ) : (
+                <>
+                  <Play className="h-5 w-5 ml-2" />
+                  الانتقال للقسم {currentSection + 1}
+                </>
+              )}
+              <ArrowLeft className="h-5 w-5 mr-2" />
             </Button>
           </div>
         </div>
@@ -269,10 +396,10 @@ const SectionReview = () => {
 
       {/* Confirmation Modal */}
       {showConfirmModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden border border-gray-200">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-lg flex items-center justify-center z-50 p-4">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-2xl max-w-md w-full border border-gray-700 overflow-hidden">
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-6 text-center">
+            <div className="bg-gradient-to-r from-red-600 to-orange-600 p-6 text-center">
               <div className="flex justify-center mb-4">
                 <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                   <AlertTriangle className="h-8 w-8 text-white" />
@@ -281,7 +408,7 @@ const SectionReview = () => {
               <h3 className="text-xl font-bold text-white mb-2">
                 تأكيد الانتقال
               </h3>
-              <p className="text-orange-100 text-sm">
+              <p className="text-red-100 text-sm">
                 هذا الإجراء لا يمكن التراجع عنه
               </p>
             </div>
@@ -289,24 +416,25 @@ const SectionReview = () => {
             {/* Modal Content */}
             <div className="p-6">
               <div className="text-center mb-6">
-                <p className="text-gray-700 text-base leading-relaxed">
-                  الرجاء التأكيد على رغبتك في إنهاء هذه المراجعة. إذا نقرت فوق "نعم"، لن تكون هناك إمكانية للعودة إلى هذه المراجعة والإجابة على الأسئلة.
+                <p className="text-gray-300 text-base leading-relaxed">
+                  هل أنت متأكد من رغبتك في {isLastSection ? 'إنهاء الاختبار' : `الانتقال للقسم ${currentSection + 1}`}؟ 
+                  لن تكون هناك إمكانية للعودة إلى هذا القسم.
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex gap-4">
                 <Button
                   onClick={cancelNextSection}
-                  className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 transition-all duration-300 py-3 rounded-xl font-bold"
+                  className="flex-1 bg-gray-700 hover:bg-gray-600 text-white border border-gray-600 transition-all duration-300 py-3 rounded-xl font-bold"
                 >
                   إلغاء
                 </Button>
                 <Button
                   onClick={confirmNextSection}
-                  className="flex-1 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white transition-all duration-300 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl"
+                  className="flex-1 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white transition-all duration-300 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl"
                 >
-                  نعم
+                  نعم، متابعة
                 </Button>
               </div>
             </div>
@@ -318,3 +446,4 @@ const SectionReview = () => {
 };
 
 export default SectionReview;
+
