@@ -1,35 +1,36 @@
+
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { 
-  ChevronRight, 
-  ChevronLeft, 
   Clock, 
-  Flag, 
-  BookOpen, 
-  Target, 
-  CheckCircle, 
-  Home, 
-  ZoomIn, 
-  RotateCcw,
+  Bookmark, 
+  Eye,
   Brain,
+  Target,
   Lightbulb,
   Star,
-  Eye,
+  BookOpen,
+  Zap,
+  Sparkles,
+  Shield,
+  Compass,
   ArrowRight,
   ArrowLeft,
-  Timer,
-  Award,
-  Bookmark
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  Settings,
+  HelpCircle,
+  RotateCcw
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 
 const QuestionDisplay = () => {
-  const [isTextEnlarged, setIsTextEnlarged] = useState(false);
-  const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showHint, setShowHint] = useState(false);
 
   const {
     examQuestions,
@@ -38,57 +39,29 @@ const QuestionDisplay = () => {
     userAnswers,
     deferredQuestions,
     examMode,
-    reviewMode,
     timerActive,
     timeRemaining,
-    sectionReviewMode,
-    hasSeenSectionReview,
-    returnedFromSectionReview,
-    reviewedSection,
-    hideDeferButton,
     selectAnswer,
     toggleDeferred,
     nextQuestion,
     previousQuestion,
-    getQuestionStats,
-    getCurrentExamInfo,
-    goToQuestion,
-    setReviewMode,
     goToSectionReview
   } = useExamStore();
 
-  // Add keyboard navigation
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
         return;
       }
 
-      const currentQuestionNumber = currentQuestionIndex + 1;
-      const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-      
-      let shouldShowDeferredButton = false;
-      
-      if (examMode === 'combined') {
-        shouldShowDeferredButton = isLastQuestion && hasDeferredQuestionsInCurrentSection();
-      } else {
-        shouldShowDeferredButton = 
-          (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned' && hasDeferredQuestionsInCurrentSection()) ||
-          (isLastQuestion && hasDeferredQuestionsInCurrentSection());
-      }
-
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault();
-          if (canProceed && !shouldShowDeferredButton) {
-            handleNext();
-          }
+          handleNext();
           break;
         case 'ArrowRight':
           event.preventDefault();
-          if (canGoPrevious()) {
-            handlePrevious();
-          }
+          handlePrevious();
           break;
         case '1':
         case '2':
@@ -109,22 +82,162 @@ const QuestionDisplay = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]);
+  }, [currentQuestionIndex]);
+
+  if (!examQuestions || examQuestions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 flex items-center justify-center" dir="rtl">
+        <div className="text-center">
+          <div className="relative w-32 h-32 mx-auto mb-8">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full animate-spin"></div>
+            <div className="absolute inset-2 bg-gray-900 rounded-full flex items-center justify-center">
+              <Brain className="h-12 w-12 text-blue-400 animate-pulse" />
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-4">جاري تحميل الأسئلة...</h2>
+          <p className="text-gray-400">تهيئة البيئة التفاعلية للاختبار</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = examQuestions[currentQuestionIndex];
+  const selectedAnswer = userAnswers[currentQuestion.question_number];
+  const isDeferred = deferredQuestions[currentQuestion.question_number];
+  const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
+  const isFirstQuestion = currentQuestionIndex === 0;
 
   const getDisplayQuestionNumber = () => {
     if (examMode === 'sectioned') {
-      const questionInSection = (currentQuestionIndex % 13) + 1;
-      return questionInSection;
-    } else {
-      return currentQuestionIndex + 1;
+      return (currentQuestionIndex % 13) + 1;
     }
+    return currentQuestionIndex + 1;
   };
 
   const getTotalQuestionsDisplay = () => {
-    if (examMode === 'sectioned') {
-      return 13;
-    } else {
-      return examQuestions.length;
+    return examMode === 'sectioned' ? 13 : examQuestions.length;
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
+  const getQuestionTypeIcon = (type) => {
+    const icons = {
+      analogy: Brain,
+      completion: Sparkles,
+      error: Target,
+      rc: Eye,
+      reading: BookOpen,
+      odd: Star
+    };
+    return icons[type] || Brain;
+  };
+
+  const getQuestionTypeStyle = (type) => {
+    const styles = {
+      analogy: 'from-violet-500 to-purple-600',
+      completion: 'from-emerald-500 to-teal-600',
+      error: 'from-rose-500 to-pink-600',
+      rc: 'from-amber-500 to-orange-600',
+      reading: 'from-amber-500 to-orange-600',
+      odd: 'from-cyan-500 to-blue-600'
+    };
+    return styles[type] || 'from-gray-500 to-gray-600';
+  };
+
+  const getQuestionTypeLabel = (type) => {
+    const labels = {
+      analogy: 'التناظر اللفظي',
+      completion: 'إكمال الجمل',
+      error: 'الخطأ السياقي',
+      rc: 'استيعاب المقروء',
+      reading: 'استيعاب المقروء',
+      odd: 'المفردة الشاذة'
+    };
+    return labels[type] || type;
+  };
+
+  const INSTRUCTIONS = {
+    analogy: {
+      title: 'التناظر اللفظي',
+      subtitle: 'العلاقات والمقارنات',
+      text: 'في بداية كل سؤال كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات. المطلوب: اختيار الزوج الذي يحمل نفس العلاقة.',
+      example: 'مثال: قلم : كتابة\nأ- مطرقة : بناء  ب- سيارة : نقل\nج- كتاب : قراءة  د- ماء : عطش',
+      tips: '💡 ابحث عن العلاقة الأساسية بين الكلمتين الأوليين\n💡 طبق نفس العلاقة على الخيارات'
+    },
+    completion: {
+      title: 'إكمال الجمل',
+      subtitle: 'ملء الفراغات بدقة',
+      text: 'تحتوي كل جملة على فراغ أو أكثر، وعليك اختيار الكلمة أو العبارة المناسبة.',
+      example: 'مثال: العلم _____ والجهل ظلام.\nأ- صعب  ب- نور  ج- مفيد  د- ضروري',
+      tips: '💡 اقرأ الجملة كاملة مع كل خيار\n💡 اختر ما يجعل المعنى منطقياً ومتماسكاً'
+    },
+    error: {
+      title: 'الخطأ السياقي',
+      subtitle: 'تحديد الكلمة الشاذة',
+      text: 'في كل جملة أربع كلمات مميزة، واحدة منها لا تتناسب مع السياق العام.',
+      example: 'مثال: الطالب المجتهد يحقق النجاح في دراسته الصعبة.\n(الخطأ: الصعبة - يجب أن تكون الطويلة)',
+      tips: '💡 ركز على المعنى العام للجملة\n💡 ابحث عن الكلمة التي تخل بالمعنى'
+    },
+    rc: {
+      title: 'استيعاب المقروء',
+      subtitle: 'فهم النصوص والمعاني',
+      text: 'اقرأ النص بعناية ثم أجب عن الأسئلة بناءً على فهمك للمحتوى.',
+      example: 'اقرأ النص أولاً، ثم انتقل للسؤال. ركز على الفكرة الأساسية والتفاصيل المهمة.',
+      tips: '💡 اقرأ النص مرتين على الأقل\n💡 ابحث عن الإجابة داخل النص'
+    },
+    reading: {
+      title: 'استيعاب المقروء',
+      subtitle: 'فهم النصوص والمعاني',
+      text: 'اقرأ النص بعناية ثم أجب عن الأسئلة بناءً على فهمك للمحتوى.',
+      example: 'اقرأ النص أولاً، ثم انتقل للسؤال. ركز على الفكرة الأساسية والتفاصيل المهمة.',
+      tips: '💡 اقرأ النص مرتين على الأقل\n💡 ابحث عن الإجابة داخل النص'
+    },
+    odd: {
+      title: 'المفردة الشاذة',
+      subtitle: 'تحديد الكلمة المختلفة',
+      text: 'من بين أربع كلمات، ثلاث تنتمي لمجال واحد والرابعة مختلفة.',
+      example: 'مثال: تفاح - برتقال - موز - طاولة\n(الإجابة: طاولة - لأنها ليست فاكهة)',
+      tips: '💡 ابحث عن الخيط المشترك بين الكلمات\n💡 حدد الكلمة التي لا تنتمي للمجموعة'
+    }
+  };
+
+  const currentInstructions = INSTRUCTIONS[currentQuestion.type] || INSTRUCTIONS.analogy;
+  const TypeIcon = getQuestionTypeIcon(currentQuestion.type);
+  const typeStyle = getQuestionTypeStyle(currentQuestion.type);
+
+  const handleAnswerSelect = (choiceIndex) => {
+    setIsAnimating(true);
+    selectAnswer(currentQuestion.question_number, choiceIndex);
+    setTimeout(() => setIsAnimating(false), 200);
+  };
+
+  const handleDeferToggle = () => {
+    toggleDeferred(currentQuestion.question_number);
+  };
+
+  const handleNext = () => {
+    if (!isLastQuestion) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        nextQuestion();
+        setIsAnimating(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 200);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (!isFirstQuestion) {
+      setIsAnimating(true);
+      setTimeout(() => {
+        previousQuestion();
+        setIsAnimating(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 200);
     }
   };
 
@@ -135,79 +248,16 @@ const QuestionDisplay = () => {
 
     let highlightedText = questionText;
     
-    const sortedChoices = [...choices].sort((a, b) => b.length - a.length);
-    
-    const removeDiacritics = (text) => {
-      return text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]/g, "");
-    };
-    
-    const normalizeHamza = (text) => {
-      return text
-        .replace(/[أإآ]/g, 'ا')
-        .replace(/[ؤ]/g, 'و')
-        .replace(/[ئ]/g, 'ي');
-    };
-
-    const getCoreWord = (word) => {
-      let cleanedWord = word.replace(/[،,\.؛;:!؟?]/g, '');
-      
-      let core = normalizeHamza(removeDiacritics(cleanedWord));
-      
-      core = core.replace(/^و/, '');
-      
-      if (core.startsWith('بال')) {
-        core = core.substring(3);
-      }
-      else if (core.startsWith('لال')) {
-        core = core.substring(3);
-      }
-      else if (core.startsWith('ب')) {
-        core = core.substring(1);
-        if (core.startsWith('ال')) {
-          core = core.substring(2);
-        }
-      }
-      else if (core.startsWith('ل')) {
-        core = core.substring(1);
-        if (core.startsWith('ال')) {
-          core = core.substring(2);
-        }
-      }
-      else if (core.startsWith('ال')) {
-        core = core.substring(2);
-      }
-      
-      core = core.replace(/^(ف|ك|س)/, '');
-      
-      if (core.endsWith('وا')) {
-        core = core.slice(0, -2) + 'و';
-      }
-      
-      core = core.replace(/(ه|ها|هم|هن|ك|كم|كن|ي|نا|ون|ين|ات)$/, '');
-      
-      return core;
-    };
-    
-    sortedChoices.forEach(choice => {
+    choices.forEach(choice => {
       if (choice && choice.trim()) {
-        const trimmedChoice = choice.trim();
-        
-        const wordsInChoice = trimmedChoice.split(/[\s\(\)\[\]،,\.؛;:]+/).filter(word => word.length > 0);
-        
-        wordsInChoice.forEach(wordInChoice => {
-          const coreWordInChoice = getCoreWord(wordInChoice);
-          
-          const wordsInQuestion = questionText.split(/\s+/);
-          
-          wordsInQuestion.forEach(wordInQuestion => {
-            const coreWordInQuestion = getCoreWord(wordInQuestion);
-            
-            if (coreWordInQuestion === coreWordInChoice && coreWordInChoice.length > 0) {
-              if (!highlightedText.includes(`<span style="color: red; font-weight: bold;">${wordInQuestion}</span>`)) {
-                highlightedText = highlightedText.replace(wordInQuestion, `<span style="color: red; font-weight: bold;">${wordInQuestion}</span>`);
-              }
+        const words = choice.trim().split(/\s+/);
+        words.forEach(word => {
+          if (word.length > 2) {
+            const regex = new RegExp(`\\b${word}\\b`, 'g');
+            if (highlightedText.match(regex)) {
+              highlightedText = highlightedText.replace(regex, `<span class="bg-red-200 text-red-800 font-bold px-1 rounded">${word}</span>`);
             }
-          });
+          }
         });
       }
     });
@@ -219,369 +269,268 @@ const QuestionDisplay = () => {
     return <div dangerouslySetInnerHTML={{ __html: text }} />;
   };
 
-  if (!examQuestions || examQuestions.length === 0) {
-    return (
-      <div className="min-h-screen bg-[#eaf3fa] flex items-center justify-center" dir="rtl">
-        <div className="text-center bg-white rounded-lg p-8 shadow-lg mx-4">
-          <div className="bg-blue-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <Brain className="h-8 w-8 text-blue-600 animate-pulse" />
-          </div>
-          <div className="text-xl font-medium text-gray-900">جاري تحميل الأسئلة...</div>
-          <div className="text-sm text-gray-600 mt-2">يرجى الانتظار</div>
-        </div>
-      </div>
-    );
-  }
-
-  const currentQuestion = examQuestions[currentQuestionIndex];
-  const selectedAnswer = userAnswers[currentQuestion.question_number];
-  const isDeferred = deferredQuestions[currentQuestion.question_number];
-  const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
-  const isFirstQuestion = currentQuestionIndex === 0;
-  const examInfo = getCurrentExamInfo();
-
-  const canGoPrevious = () => {
-    if (isFirstQuestion) return false;
-    
-    if (examMode !== 'sectioned') {
-      return true;
-    }
-
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
-      return false;
-    }
-    
-    return true;
-  };
-
-  const canProceed = true;
-
-  const hasDeferredQuestionsInCurrentSection = () => {
-    const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
-
-    if (isLastQuestion) {
-        return examQuestions.some(q => deferredQuestions[q.question_number]);
-    }
-    return examQuestions
-      .filter(q => q.section === currentSection)
-      .some(q => deferredQuestions[q.question_number]);
-  };
-  
-  const getFirstDeferredQuestionIndexInCurrentSection = () => {
-    const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
-
-    if (isLastQuestion) {
-        for (let i = 0; i < examQuestions.length; i++) {
-            const question = examQuestions[i];
-            if (deferredQuestions[question.question_number]) {
-                return i;
-            }
-        }
-        return -1;
-    }
-    for (let i = 0; i < examQuestions.length; i++) {
-      const question = examQuestions[i];
-      if (question.section === currentSection && deferredQuestions[question.question_number]) {
-        return i;
-      }
-    }
-    return -1;
-  };
-
-  const handleAnswerSelect = (choiceIndex) => {
-    selectAnswer(currentQuestion.question_number, choiceIndex);
-  };
-
-  const handleDeferToggle = () => {
-    toggleDeferred(currentQuestion.question_number);
-  };
-
-  const handleNext = () => {
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-    
-    if (examMode === 'combined') {
-      if (isLastQuestion && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
-    } else {
-      if (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned' && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
-      
-      if (isLastQuestion && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
-    }
-    
-    nextQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handlePrevious = () => {
-    if (examMode !== 'sectioned') {
-      previousQuestion();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
-      return;
-    }
-    
-    previousQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleTextEnlarge = () => {
-    setIsTextEnlarged(true);
-  };
-
-  const handleCloseEnlargedText = () => {
-    setIsTextEnlarged(false);
-  };
-
-  const handleOpenInstructionModal = () => {
-    setIsInstructionModalOpen(true);
-  };
-
-  const handleCloseInstructionModal = () => {
-    setIsInstructionModalOpen(false);
-  };
-
-  const handleSectionReview = () => {
-    goToSectionReview();
-  };
-
-  const shouldShowSectionReviewButton = () => {
-    return examMode === 'sectioned' && (
-      returnedFromSectionReview || 
-      (hasDeferredQuestionsInCurrentSection() && hasSeenSectionReview)
-    );
-  };
-
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-
-  const getQuestionTypeLabel = (type) => {
-    const labels = {
-      'analogy': 'التناظر اللفظي',
-      'completion': 'إكمال الجمل',
-      'error': 'الخطأ السياقي',
-      'rc': 'استيعاب المقروء',
-      'reading': 'فهم المقروء'
-    };
-    return labels[type] || type;
-  };
-
-  const getQuestionTypeIcon = (type) => {
-    const icons = {
-      'analogy': <Target className="h-4 w-4" />,
-      'completion': <Lightbulb className="h-4 w-4" />,
-      'error': <Eye className="h-4 w-4" />,
-      'rc': <BookOpen className="h-4 w-4" />,
-      'reading': <BookOpen className="h-4 w-4" />
-    };
-    return icons[type] || <Brain className="h-4 w-4" />;
-  };
-
-  // تعليمات حسب النوع
-  const INSTRUCTIONS = {
-    'analogy': {
-      title: 'التناظر اللفظي',
-      text: 'في بداية كل سؤال مما يأتي ، كلمتان ترتبطان بعلاقة معينة ، تتبعهما أربعة أزواج من الكلمات ، واحد منها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال . المطلوب هو : اختيار الإجابة الصحيحة',
-    },
-    'completion': {
-      title: 'إكمال الجمل',
-      text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات ، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالا صحيحا . المطلوب هو : اختيار الإجابة الصحيحة',
-    },
-    'error': {
-      title: 'الخطأ السياقي',
-      text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ . المطلوب هو : تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة ،( الخطأ ليس إملائياً ولا نحويا )',
-    },
-    'rc': {
-      title: 'استيعاب المقروء',
-      text: 'الأسئلة التالية تتعلق بالنص الذي يسبقها ، بعد كل سؤال أربعة اختيارات ، واحد منها صحيح . المطلوب هو : قراءة النص بعناية ، واختيار الإجابة الصحيحة عن كل سؤال.',
-    },
-    'reading': {
-      title: 'استيعاب المقروء',
-      text: 'الأسئلة التالية تتعلق بالنص الذي يسبقها ، بعد كل سؤال أربعة اختيارات ، واحد منها صحيح . المطلوب هو : قراءة النص بعناية ، واختيار الإجابة الصحيحة عن كل سؤال.',
-    }
-  };
-
-  const currentInstructions = INSTRUCTIONS[currentQuestion.type] || { title: '', text: '' };
-
   return (
-    <div className="min-h-screen flex flex-col bg-white" dir="rtl">
-      {/* الشريط العلوي */}
-      <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
-        {/* اسم الاختبار */}
-        <div className="font-bold text-white text-lg">
-          محاكي our goal - أنت الآن في القسم {currentSection + 0}
-        </div>
-        
-        {/* باقي العناصر */}
-        <div className="flex items-center gap-3 flex-row-reverse">
-          <select className="rounded px-2 py-1 text-black bg-white">
-            <option>خط عادي</option>
-            <option>خط كبير</option>
-          </select>
-          
-          <button
-            className={`bg-white/30 text-white px-3 py-1 rounded border border-white/50 ${isDeferred ? 'ring-2 ring-yellow-400' : ''}`}
-            onClick={handleDeferToggle}
-            type="button"
-          >
-            {isDeferred ? '★ مميز للمراجعة' : 'تمييز السؤال للمراجعة'}
-          </button>
-          
-          <span className="text-white">
-            {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
-          </span>
-          
-          {timerActive && (
-            <span className="text-white flex items-center gap-1">
-              <span>الوقت المتبقي:</span>
-              <Clock className="w-4 h-4" />
-              <span>{formatTime(timeRemaining)}</span>
-            </span>
-          )}
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden relative" dir="rtl">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-72 h-72 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-r from-emerald-600/8 to-cyan-600/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-amber-600/6 to-rose-600/6 rounded-full blur-3xl animate-pulse delay-2000"></div>
       </div>
 
-      {/* محتوى الصفحة */}
-      <div className="flex-1 flex flex-row">
-        {/* عمود السؤال والاختيارات */}
-        <div className="w-1/2 flex flex-col justify-start items-start p-12">
-          {/* نص الاستيعاب */}
-          {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-            <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
-              {currentQuestion.passage}
-            </div>
-          )}
-          
-          {/* السؤال */}
-          <div className="text-2xl font-bold text-gray-900 text-center w-full mb-8">
-            {currentQuestion.type === 'error' ? 
-              renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
-              currentQuestion.question
-            }
-          </div>
-          
-          {/* الخيارات */}
-          <div className="flex flex-col gap-6 w-full">
-            <RadioGroup
-              value={selectedAnswer?.toString()}
-              onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-              className="space-y-6"
-            >
-              {currentQuestion.choices.map((choice, index) => (
-                <div
-                  key={index}
-                  className="flex flex-row-reverse items-center gap-2 cursor-pointer text-lg text-gray-900 font-normal w-full text-right"
-                  onClick={() => handleAnswerSelect(index)}
-                >
-                  <RadioGroupItem
-                    value={index.toString()}
-                    id={`choice-${index}`}
-                    className="accent-[#03A9F4] w-5 h-5"
-                  />
-                  <Label
-                    htmlFor={`choice-${index}`}
-                    className="flex-1 cursor-pointer"
-                  >
-                    {choice}
-                  </Label>
+      <div className="relative z-10">
+        {/* Header with Dynamic Progress */}
+        <div className="sticky top-0 bg-black/40 backdrop-blur-xl border-b border-gray-700/50 z-40">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 space-x-reverse">
+                <div className={`p-3 bg-gradient-to-r ${typeStyle} rounded-xl shadow-lg`}>
+                  <TypeIcon className="h-8 w-8 text-white" />
                 </div>
-              ))}
-            </RadioGroup>
+                <div>
+                  <h1 className={`text-xl font-bold bg-gradient-to-r ${typeStyle.replace('from-', 'from-').replace('to-', 'to-')} bg-clip-text text-transparent`}>
+                    محاكي قياس التفاعلي
+                  </h1>
+                  <p className="text-sm text-gray-400">
+                    {getQuestionTypeLabel(currentQuestion.type)} - السؤال {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
+                  </p>
+                </div>
+              </div>
+              
+              {/* Timer and Tools */}
+              <div className="flex items-center gap-4">
+                {timerActive && (
+                  <div className="flex items-center gap-2 bg-red-900/30 border border-red-500/30 rounded-full px-4 py-2">
+                    <Clock className="h-5 w-5 text-red-400 animate-pulse" />
+                    <span className="text-red-300 font-bold font-mono">
+                      {formatTime(timeRemaining)}
+                    </span>
+                  </div>
+                )}
+
+                <Button
+                  onClick={handleDeferToggle}
+                  variant="ghost"
+                  className={`flex items-center gap-2 transition-all duration-300 ${
+                    isDeferred 
+                      ? 'bg-yellow-600/30 border border-yellow-500/30 text-yellow-300' 
+                      : 'bg-gray-700/30 border border-gray-600/30 text-gray-300 hover:bg-gray-600/30'
+                  }`}
+                >
+                  <Bookmark className={`h-4 w-4 ${isDeferred ? 'fill-current' : ''}`} />
+                  <span className="text-sm">
+                    {isDeferred ? 'مؤجل' : 'تأجيل'}
+                  </span>
+                </Button>
+
+                <Button
+                  onClick={() => setShowHint(!showHint)}
+                  variant="ghost"
+                  className="bg-blue-700/30 border border-blue-600/30 text-blue-300 hover:bg-blue-600/30"
+                >
+                  <HelpCircle className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mt-4 w-full bg-gray-700/50 rounded-full h-2">
+              <div 
+                className={`h-2 bg-gradient-to-r ${typeStyle} rounded-full transition-all duration-500 ease-out shadow-lg`}
+                style={{ width: `${(getDisplayQuestionNumber() / getTotalQuestionsDisplay()) * 100}%` }}
+              ></div>
+            </div>
           </div>
         </div>
 
-        {/* عمود التعليمات */}
-        <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-start p-12">
-          <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
-            {currentInstructions.title}
+        {/* Main Content */}
+        <div className="flex flex-1 min-h-[calc(100vh-120px)]">
+          {/* Question Section */}
+          <div className={`w-1/2 p-8 transition-all duration-500 ${isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`}>
+            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 rounded-2xl p-8 h-full backdrop-blur-lg">
+              {/* Reading Passage */}
+              {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
+                <div className="mb-8 p-6 bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-xl">
+                  <div className="flex items-center gap-3 mb-4">
+                    <BookOpen className="h-5 w-5 text-blue-400" />
+                    <h3 className="text-lg font-semibold text-blue-300">النص</h3>
+                  </div>
+                  <div className="text-gray-200 leading-relaxed">
+                    {currentQuestion.passage}
+                  </div>
+                </div>
+              )}
+              
+              {/* Question */}
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`p-2 bg-gradient-to-r ${typeStyle} rounded-lg`}>
+                    <TypeIcon className="h-5 w-5 text-white" />
+                  </div>
+                  <h2 className="text-xl font-bold text-gray-200">
+                    السؤال {getDisplayQuestionNumber()}
+                  </h2>
+                </div>
+                <div className="text-xl text-white leading-relaxed bg-gradient-to-br from-gray-700/30 to-gray-800/30 border border-gray-600/30 rounded-xl p-6">
+                  {currentQuestion.type === 'error' ? 
+                    renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
+                    currentQuestion.question
+                  }
+                </div>
+              </div>
+              
+              {/* Answer Choices */}
+              <div className="space-y-4">
+                <RadioGroup
+                  value={selectedAnswer?.toString()}
+                  onValueChange={(value) => handleAnswerSelect(parseInt(value))}
+                  className="space-y-4"
+                >
+                  {currentQuestion.choices.map((choice, index) => {
+                    const isSelected = selectedAnswer === index;
+                    return (
+                      <div
+                        key={index}
+                        className={`group relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                          isSelected
+                            ? `border-emerald-400 bg-gradient-to-r from-emerald-900/30 to-teal-900/30 shadow-lg shadow-emerald-500/25`
+                            : 'border-gray-600 bg-gradient-to-r from-gray-800/30 to-gray-900/30 hover:border-gray-500 hover:shadow-lg'
+                        }`}
+                        onClick={() => handleAnswerSelect(index)}
+                      >
+                        <div className="flex items-center gap-4">
+                          <RadioGroupItem
+                            value={index.toString()}
+                            id={`choice-${index}`}
+                            className={`w-5 h-5 ${isSelected ? 'text-emerald-400 border-emerald-400' : 'border-gray-400'}`}
+                          />
+                          <Label
+                            htmlFor={`choice-${index}`}
+                            className={`flex-1 cursor-pointer text-lg leading-relaxed ${
+                              isSelected ? 'text-emerald-100' : 'text-gray-200'
+                            }`}
+                          >
+                            {choice}
+                          </Label>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </RadioGroup>
+              </div>
+            </div>
           </div>
-          <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
-            {currentInstructions.text}
+
+          {/* Instructions Section */}
+          <div className="w-1/2 p-8">
+            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 border border-gray-700/50 rounded-2xl p-8 h-full backdrop-blur-lg">
+              <div className="text-center mb-8">
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r ${typeStyle} mb-4 shadow-lg`}>
+                  <TypeIcon className="h-8 w-8 text-white" />
+                </div>
+                <h3 className={`text-2xl font-bold bg-gradient-to-r ${typeStyle} bg-clip-text text-transparent mb-2`}>
+                  {currentInstructions.title}
+                </h3>
+                <p className="text-gray-400">{currentInstructions.subtitle}</p>
+              </div>
+
+              <div className="space-y-6">
+                {/* Instructions */}
+                <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-700/30 rounded-xl p-6">
+                  <h4 className="text-lg font-semibold text-blue-300 mb-3">التعليمات</h4>
+                  <p className="text-gray-200 leading-relaxed">
+                    {currentInstructions.text}
+                  </p>
+                </div>
+
+                {/* Example */}
+                {currentInstructions.example && (
+                  <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/20 border border-emerald-700/30 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-emerald-300 mb-3">مثال</h4>
+                    <pre className="text-gray-200 leading-relaxed whitespace-pre-line">
+                      {currentInstructions.example}
+                    </pre>
+                  </div>
+                )}
+
+                {/* Tips */}
+                {currentInstructions.tips && (
+                  <div className="bg-gradient-to-br from-amber-900/20 to-orange-900/20 border border-amber-700/30 rounded-xl p-6">
+                    <h4 className="text-lg font-semibold text-amber-300 mb-3">نصائح مفيدة</h4>
+                    <pre className="text-gray-200 leading-relaxed whitespace-pre-line">
+                      {currentInstructions.tips}
+                    </pre>
+                  </div>
+                )}
+
+                {/* Hint Section */}
+                {showHint && (
+                  <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-xl p-6 animate-in slide-in-from-bottom-4 duration-300">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Sparkles className="h-5 w-5 text-purple-400" />
+                      <h4 className="text-lg font-semibold text-purple-300">تلميح ذكي</h4>
+                    </div>
+                    <p className="text-purple-100">
+                      {currentQuestion.type === 'analogy' && "ركز على نوع العلاقة بين الكلمتين الأوليين"}
+                      {currentQuestion.type === 'completion' && "اقرأ الجملة مع كل خيار لتجد المعنى المنطقي"}
+                      {currentQuestion.type === 'error' && "ابحث عن الكلمة التي تبدو غريبة في السياق"}
+                      {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && "الإجابة موجودة في النص، لا تعتمد على معرفتك الخارجية"}
+                      {currentQuestion.type === 'odd' && "فكر في التصنيف المشترك للكلمات الثلاث"}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* الشريط السفلي */}
-      <div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-8 py-3">
-        <button
-          className="flex items-center gap-1 text-lg font-bold disabled:opacity-50"
-          disabled={!canGoPrevious()}
-          onClick={handlePrevious}
-        >
-          ◀ السابق
-        </button>
+        {/* Navigation Footer */}
+        <div className="sticky bottom-0 bg-black/40 backdrop-blur-xl border-t border-gray-700/50">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <div className="flex justify-between items-center">
+              <Button
+                onClick={handlePrevious}
+                disabled={isFirstQuestion}
+                size="lg"
+                className={`flex items-center gap-3 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  isFirstQuestion 
+                    ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                    : 'bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white shadow-lg hover:shadow-xl hover:scale-105'
+                }`}
+              >
+                <ChevronRight className="h-5 w-5" />
+                السؤال السابق
+              </Button>
 
-        {/* زر التأجيل في الوسط */}
-        {!hideDeferButton && (
-          <button
-            onClick={handleDeferToggle}
-            className={`mx-4 px-6 py-2 rounded-lg font-bold border transition ${
-              isDeferred
-                ? 'bg-yellow-500 text-black border-yellow-600'
-                : 'bg-white/20 text-white border-white/50'
-            }`}
-          >
-            <Bookmark className="h-4 w-4 inline ml-2" />
-            {isDeferred ? 'إلغاء التأجيل' : 'تأجيل'}
-          </button>
-        )}
+              <div className="flex items-center gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">
+                    {getDisplayQuestionNumber()}/{getTotalQuestionsDisplay()}
+                  </div>
+                  <div className="text-xs text-gray-400">تقدم الاختبار</div>
+                </div>
+              </div>
 
-        {/* زر مراجعة القسم */}
-        {shouldShowSectionReviewButton() && (
-          <button
-            onClick={handleSectionReview}
-            className="mx-4 px-6 py-2 bg-purple-500 text-white rounded-lg font-bold border border-purple-600 hover:bg-purple-600 transition"
-          >
-            <Eye className="h-4 w-4 inline ml-2" />
-            مراجعة القسم
-          </button>
-        )}
-
-        <button
-          className="flex items-center gap-1 text-lg font-bold"
-          onClick={handleNext}
-          disabled={!canProceed}
-        >
-          التالي ▶
-        </button>
+              <Button
+                onClick={handleNext}
+                disabled={isLastQuestion}
+                size="lg"
+                className={`flex items-center gap-3 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  isLastQuestion 
+                    ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                    : `bg-gradient-to-r ${typeStyle} text-white shadow-lg hover:shadow-xl hover:scale-105`
+                }`}
+              >
+                السؤال التالي
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default QuestionDisplay;
+
