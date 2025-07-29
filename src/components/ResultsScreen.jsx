@@ -23,7 +23,16 @@ import {
   ChevronUp,
   BookOpen,
   Lightbulb,
-  BarChart4
+  BarChart4,
+  Shield,
+  Compass,
+  Diamond,
+  Hexagon,
+  ArrowUpRight,
+  Lightning,
+  Layers,
+  Activity,
+  Radio
 } from 'lucide-react';
 
 const ResultsScreen = () => {
@@ -42,9 +51,17 @@ const ResultsScreen = () => {
   const [displayedQuestions, setDisplayedQuestions] = useState([]);
   const [isAnimating, setIsAnimating] = useState(true);
   const [expandedQuestion, setExpandedQuestion] = useState(null);
+  const [activeInsight, setActiveInsight] = useState(0);
 
   useEffect(() => {
     setTimeout(() => setIsAnimating(false), 1000);
+    
+    // Auto-cycle through insights
+    const interval = setInterval(() => {
+      setActiveInsight(prev => (prev + 1) % 4);
+    }, 3000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   if (!examResults) {
@@ -171,251 +188,439 @@ const ResultsScreen = () => {
   const performance = getPerformanceLevel(percentage);
   const PerformanceIcon = performance.icon;
 
+  // Smart Insights Generator
+  const generateSmartInsights = () => {
+    const insights = [
+      {
+        icon: Activity,
+        title: "معدل الدقة",
+        value: `${percentage.toFixed(1)}%`,
+        description: percentage >= 85 ? "أداء استثنائي!" : percentage >= 70 ? "أداء جيد ومستقر" : "متاح للتحسين",
+        color: percentage >= 85 ? "from-green-400 to-emerald-500" : percentage >= 70 ? "from-blue-400 to-cyan-500" : "from-orange-400 to-red-500"
+      },
+      {
+        icon: Lightning,
+        title: "معدل الإكمال",
+        value: `${Math.round(((examResults.correctAnswers + examResults.incorrectAnswers) / examResults.totalQuestions) * 100)}%`,
+        description: "من الأسئلة تم حلها",
+        color: "from-purple-400 to-pink-500"
+      },
+      {
+        icon: Shield,
+        title: "مؤشر الثقة",
+        value: examResults.correctAnswers > examResults.incorrectAnswers ? "عالي" : "متوسط",
+        description: "مستوى الثقة في الإجابات",
+        color: "from-indigo-400 to-purple-500"
+      },
+      {
+        icon: Compass,
+        title: "توصية التطوير",
+        value: percentage >= 80 ? "التخصص" : "التوسع",
+        description: percentage >= 80 ? "ركز على مجالات متقدمة" : "عزز المهارات الأساسية",
+        color: "from-teal-400 to-cyan-500"
+      }
+    ];
+    return insights;
+  };
+
+  const smartInsights = generateSmartInsights();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden relative" dir="rtl">
-      {/* Animated Background Elements */}
+      {/* Dynamic Background Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-80 h-80 bg-gradient-to-r from-purple-600/15 to-pink-600/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 3}s`
+            }}
+          />
+        ))}
+        <div className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-80 h-80 bg-gradient-to-r from-purple-600/10 to-pink-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
-        <div className="sticky top-0 bg-black/40 backdrop-blur-xl border-b border-gray-700/50 z-40">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <div className={`p-3 bg-gradient-to-r ${performance.color} rounded-xl ${performance.glow} shadow-xl`}>
-                  <PerformanceIcon className="h-8 w-8 text-white" />
-                </div>
-                <div>
-                  <h1 className={`text-xl font-bold bg-gradient-to-r ${performance.color} bg-clip-text text-transparent`}>
-                    تقرير النتائج النهائي
-                  </h1>
-                  <p className="text-sm text-gray-400">تحليل شامل لأدائك</p>
-                </div>
+        {/* Floating Navigation Header */}
+        <div className="fixed top-6 left-6 right-6 bg-black/30 backdrop-blur-2xl border border-gray-700/30 rounded-2xl z-50">
+          <div className="flex items-center justify-between px-6 py-4">
+            <div className="flex items-center space-x-3 space-x-reverse">
+              <div className={`p-2 bg-gradient-to-r ${performance.color} rounded-lg ${performance.glow} shadow-lg`}>
+                <PerformanceIcon className="h-6 w-6 text-white" />
               </div>
-              
-              <Button 
-                onClick={() => window.location.href = '/'}
-                variant="ghost"
-                className="text-white hover:bg-white/10 bg-white/5 border border-white/20 rounded-xl"
-              >
-                <Home className="h-5 w-5 ml-2" />
-                <span className="hidden sm:inline">الرئيسية</span>
-              </Button>
+              <div>
+                <h1 className={`text-lg font-bold bg-gradient-to-r ${performance.color} bg-clip-text text-transparent`}>
+                  تحليل الأداء المتقدم
+                </h1>
+              </div>
             </div>
+            
+            <Button 
+              onClick={() => window.location.href = '/'}
+              className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 border border-gray-600 rounded-xl px-4 py-2 text-sm font-medium"
+            >
+              <Home className="h-4 w-4 ml-2" />
+              الرئيسية
+            </Button>
           </div>
         </div>
 
-        {/* Hero Results Section */}
-        <div className="px-6 py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Main Score Display */}
-            <div className={`relative mx-auto mb-16 transition-all duration-1000 ${isAnimating ? 'scale-0 rotate-180' : 'scale-100 rotate-0'}`}>
+        {/* Revolutionary Score Display */}
+        <div className="pt-32 pb-20">
+          <div className="max-w-5xl mx-auto px-6 text-center">
+            {/* Hexagonal Score Display */}
+            <div className={`relative mx-auto mb-16 transition-all duration-1000 ${isAnimating ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}>
               <div className="relative w-80 h-80 mx-auto">
-                {/* Outer Ring */}
-                <svg className="w-80 h-80 transform -rotate-90" viewBox="0 0 100 100">
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    stroke="rgba(255,255,255,0.1)"
-                    strokeWidth="4"
-                    fill="none"
-                  />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="45"
-                    stroke={`url(#scoreGradient)`}
-                    strokeWidth="4"
+                {/* Rotating Hexagon Background */}
+                <div className="absolute inset-0">
+                  <Hexagon className={`w-full h-full text-gray-700 animate-spin-slow`} style={{ animationDuration: '20s' }} />
+                </div>
+                
+                {/* Score Ring */}
+                <svg className="absolute inset-4 w-72 h-72 transform -rotate-90" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" strokeWidth="3" fill="none" />
+                  <circle 
+                    cx="50" 
+                    cy="50" 
+                    r="40" 
+                    stroke="url(#hexGradient)"
+                    strokeWidth="3"
                     fill="none"
                     strokeLinecap="round"
-                    strokeDasharray={`${(percentage / 100) * 283} 283`}
-                    className="transition-all duration-2000 ease-out drop-shadow-lg"
+                    strokeDasharray={`${(percentage / 100) * 251} 251`}
+                    className="transition-all duration-2000 ease-out"
                   />
                   <defs>
-                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#10B981" />
-                      <stop offset="50%" stopColor="#06D6A0" />
-                      <stop offset="100%" stopColor="#00F5FF" />
+                    <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#06D6A0" />
+                      <stop offset="50%" stopColor="#00F5FF" />
+                      <stop offset="100%" stopColor="#9333EA" />
                     </linearGradient>
                   </defs>
                 </svg>
                 
                 {/* Center Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <div className={`p-6 bg-gradient-to-r ${performance.color} rounded-full ${performance.glow} shadow-2xl mb-4`}>
-                    <PerformanceIcon className="h-16 w-16 text-white" />
-                  </div>
                   <div className={`text-6xl font-bold bg-gradient-to-r ${performance.color} bg-clip-text text-transparent mb-2`}>
                     {percentage}%
                   </div>
-                  <div className="text-2xl font-semibold text-gray-300 mb-2">
-                    {examResults.correctAnswers} / {examResults.totalQuestions}
+                  <div className="text-xl text-gray-300 mb-3">
+                    {examResults.correctAnswers}/{examResults.totalQuestions}
                   </div>
-                  <div className={`px-6 py-2 bg-gradient-to-r ${performance.color} rounded-full ${performance.glow} shadow-xl`}>
-                    <span className="text-white font-bold text-lg">{performance.level}</span>
+                  <div className={`px-4 py-2 bg-gradient-to-r ${performance.color} rounded-full ${performance.glow} shadow-lg`}>
+                    <span className="text-white font-bold">{performance.level}</span>
                   </div>
+                </div>
+                
+                {/* Floating Particles Around Score */}
+                <div className="absolute inset-0">
+                  {[...Array(6)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`absolute w-3 h-3 bg-gradient-to-r ${performance.color} rounded-full animate-pulse`}
+                      style={{
+                        left: `${50 + 45 * Math.cos((i * 60 * Math.PI) / 180)}%`,
+                        top: `${50 + 45 * Math.sin((i * 60 * Math.PI) / 180)}%`,
+                        animationDelay: `${i * 0.3}s`
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
 
-            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              تهانينا على إنجازك!
+            <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
+              انجاز رقمي متميز!
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
-              لقد أكملت الاختبار بنجاح. إليك تحليل مفصل لأدائك ونصائح للتحسين
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-16 leading-relaxed">
+              تم تحليل أدائك باستخدام خوارزميات ذكية لتقديم رؤى شخصية ونصائح مُخصصة لتطوير مهاراتك
             </p>
           </div>
         </div>
 
-        {/* Statistics Dashboard */}
+        {/* Smart Insights Dashboard - Completely New Design */}
+        <div className="max-w-6xl mx-auto px-6 mb-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              رؤى ذكية ومؤشرات متقدمة
+            </h3>
+            <p className="text-gray-400">تحليل متطور يكشف أنماط أدائك وإمكانياتك الحقيقية</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {smartInsights.map((insight, index) => {
+              const IconComponent = insight.icon;
+              return (
+                <div 
+                  key={index}
+                  className={`relative bg-gradient-to-br from-gray-800/60 to-gray-900/80 border border-gray-700/50 rounded-2xl p-6 hover:scale-105 transition-all duration-500 overflow-hidden group ${
+                    activeInsight === index ? 'ring-2 ring-cyan-400 shadow-2xl shadow-cyan-500/25' : ''
+                  }`}
+                >
+                  {/* Animated Background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${insight.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                  
+                  {/* Content */}
+                  <div className="relative z-10">
+                    <div className={`p-3 bg-gradient-to-r ${insight.color} rounded-xl w-fit mb-4 shadow-lg`}>
+                      <IconComponent className="h-6 w-6 text-white" />
+                    </div>
+                    
+                    <h4 className="text-lg font-bold text-white mb-2">{insight.title}</h4>
+                    <div className={`text-3xl font-bold bg-gradient-to-r ${insight.color} bg-clip-text text-transparent mb-2`}>
+                      {insight.value}
+                    </div>
+                    <p className="text-gray-400 text-sm">{insight.description}</p>
+                  </div>
+
+                  {/* Pulse Animation */}
+                  <div className={`absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r ${insight.color} rounded-full animate-ping ${
+                    activeInsight === index ? 'opacity-75' : 'opacity-0'
+                  }`}></div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Advanced Analytics Section */}
+          <div className="bg-gradient-to-br from-gray-800/40 to-gray-900/60 border border-gray-700/30 rounded-3xl p-8 backdrop-blur-lg">
+            <div className="text-center mb-8">
+              <h4 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-3">
+                <Radio className="h-7 w-7 text-cyan-400" />
+                خريطة الأداء التفاعلية
+              </h4>
+              <p className="text-gray-400">تصور بياني لنقاط قوتك ومساحات النمو</p>
+            </div>
+
+            {/* Custom Progress Visualization */}
+            <div className="grid grid-cols-3 gap-8 mb-8">
+              <div className="text-center">
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="rgba(34, 197, 94, 0.2)" strokeWidth="8" fill="none" />
+                    <circle 
+                      cx="50" 
+                      cy="50" 
+                      r="40" 
+                      stroke="rgb(34, 197, 94)"
+                      strokeWidth="8"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeDasharray={`${(examResults.correctAnswers / examResults.totalQuestions) * 251} 251`}
+                      className="transition-all duration-1000"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-green-400 font-bold">{examResults.correctAnswers}</span>
+                  </div>
+                </div>
+                <h5 className="text-green-400 font-semibold mb-1">اتقان</h5>
+                <p className="text-gray-500 text-sm">إجابات صحيحة</p>
+              </div>
+
+              <div className="text-center">
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="rgba(239, 68, 68, 0.2)" strokeWidth="8" fill="none" />
+                    <circle 
+                      cx="50" 
+                      cy="50" 
+                      r="40" 
+                      stroke="rgb(239, 68, 68)"
+                      strokeWidth="8"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeDasharray={`${(examResults.incorrectAnswers / examResults.totalQuestions) * 251} 251`}
+                      className="transition-all duration-1000"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-red-400 font-bold">{examResults.incorrectAnswers}</span>
+                  </div>
+                </div>
+                <h5 className="text-red-400 font-semibold mb-1">تطوير</h5>
+                <p className="text-gray-500 text-sm">تحتاج مراجعة</p>
+              </div>
+
+              <div className="text-center">
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" stroke="rgba(245, 158, 11, 0.2)" strokeWidth="8" fill="none" />
+                    <circle 
+                      cx="50" 
+                      cy="50" 
+                      r="40" 
+                      stroke="rgb(245, 158, 11)"
+                      strokeWidth="8"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeDasharray={`${((examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers) / examResults.totalQuestions) * 251} 251`}
+                      className="transition-all duration-1000"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-amber-400 font-bold">{examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers}</span>
+                  </div>
+                </div>
+                <h5 className="text-amber-400 font-semibold mb-1">استكشاف</h5>
+                <p className="text-gray-500 text-sm">لم يتم حلها</p>
+              </div>
+            </div>
+
+            {/* AI-Powered Recommendations */}
+            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-2xl p-6">
+              <h5 className="text-xl font-bold text-purple-400 mb-4 flex items-center gap-3">
+                <Brain className="h-6 w-6" />
+                توصيات ذكية مخصصة
+              </h5>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <h6 className="font-semibold text-white flex items-center gap-2">
+                    <Diamond className="h-5 w-5 text-cyan-400" />
+                    نقاط التميز
+                  </h6>
+                  {percentage >= 85 ? (
+                    <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
+                      <p className="text-cyan-300 text-sm">أداءك متفوق! ركز على التخصص في المجالات المتقدمة</p>
+                    </div>
+                  ) : percentage >= 70 ? (
+                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
+                      <p className="text-blue-300 text-sm">مستوى جيد، اعمل على صقل مهارات حل المسائل المعقدة</p>
+                    </div>
+                  ) : (
+                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
+                      <p className="text-green-300 text-sm">بناء أساسي قوي، ركز على ترسيخ المفاهيم الأساسية</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-3">
+                  <h6 className="font-semibold text-white flex items-center gap-2">
+                    <ArrowUpRight className="h-5 w-5 text-emerald-400" />
+                    خطة النمو
+                  </h6>
+                  <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
+                    <p className="text-emerald-300 text-sm">
+                      {examResults.incorrectAnswers > 5 
+                        ? "راجع الأسئلة الخاطئة وحلل أنماط الأخطاء" 
+                        : percentage < 80 
+                        ? "توسع في مصادر التعلم وزد من التدريب المنتظم"
+                        : "متابعة ممتازة! حافظ على هذا المستوى واستكشف تحديات أصعب"
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Interactive Results Categories */}
         <div className="max-w-6xl mx-auto px-6 mb-16">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-pink-400 bg-clip-text text-transparent">
+              استكشاف تفصيلي للنتائج
+            </h3>
+            <p className="text-gray-400">انقر على أي فئة لاستكشاф تفاصيل الأسئلة والحلول</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Correct Answers */}
             <div 
               onClick={() => handleCategoryClick('correct')}
-              className={`group relative bg-gradient-to-br from-green-900/50 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/25 ${
-                selectedCategory === 'correct' ? 'ring-2 ring-green-400 shadow-2xl shadow-green-500/50' : ''
+              className={`group relative bg-gradient-to-br from-green-900/30 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/25 ${
+                selectedCategory === 'correct' ? 'ring-2 ring-green-400 shadow-2xl shadow-green-500/50 scale-105' : ''
               }`}
             >
-              <div className="flex items-center justify-center w-20 h-20 rounded-full bg-green-500/30 text-green-400 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <CheckCircle className="h-10 w-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-green-500/20 border-2 border-green-400/30 text-green-400 mx-auto mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <CheckCircle className="h-10 w-10" />
+                </div>
+                <h3 className="text-4xl font-bold text-green-400 mb-2 text-center group-hover:scale-110 transition-transform duration-300">
+                  {examResults.correctAnswers}
+                </h3>
+                <p className="text-green-300 text-center mb-4 font-medium">إجابات دقيقة</p>
+                <div className="bg-green-500/20 rounded-full h-2 overflow-hidden mb-4">
+                  <div 
+                    className="bg-gradient-to-r from-green-400 to-emerald-400 h-full rounded-full transition-all duration-1000 group-hover:shadow-glow-green"
+                    style={{ width: `${(examResults.correctAnswers / examResults.totalQuestions) * 100}%` }}
+                  ></div>
+                </div>
+                <div className="text-center">
+                  <Badge className="bg-green-500/20 text-green-300 border-green-500/30 text-xs px-3 py-1">
+                    انقر للاستكشاف
+                  </Badge>
+                </div>
               </div>
-              <h3 className="text-4xl font-bold text-green-400 mb-2 text-center">{examResults.correctAnswers}</h3>
-              <p className="text-green-300 text-center mb-4">إجابات صحيحة</p>
-              <div className="bg-green-500/20 rounded-full h-3 overflow-hidden">
-                <div 
-                  className="bg-gradient-to-r from-green-400 to-emerald-400 h-full rounded-full transition-all duration-1000"
-                  style={{ width: `${(examResults.correctAnswers / examResults.totalQuestions) * 100}%` }}
-                ></div>
-              </div>
-              <p className="text-xs text-green-300/70 text-center mt-3">انقر للعرض التفصيلي</p>
             </div>
 
             {/* Incorrect Answers */}
             <div 
               onClick={() => handleCategoryClick('incorrect')}
-              className={`group relative bg-gradient-to-br from-red-900/50 to-rose-900/50 border border-red-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/25 ${
-                selectedCategory === 'incorrect' ? 'ring-2 ring-red-400 shadow-2xl shadow-red-500/50' : ''
+              className={`group relative bg-gradient-to-br from-red-900/30 to-rose-900/50 border border-red-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/25 ${
+                selectedCategory === 'incorrect' ? 'ring-2 ring-red-400 shadow-2xl shadow-red-500/50 scale-105' : ''
               }`}
             >
-              <div className="flex items-center justify-center w-20 h-20 rounded-full bg-red-500/30 text-red-400 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <XCircle className="h-10 w-10" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-rose-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-red-500/20 border-2 border-red-400/30 text-red-400 mx-auto mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <XCircle className="h-10 w-10" />
+                </div>
+                <h3 className="text-4xl font-bold text-red-400 mb-2 text-center group-hover:scale-110 transition-transform duration-300">
+                  {examResults.incorrectAnswers}
+                </h3>
+                <p className="text-red-300 text-center mb-4 font-medium">فرص التحسين</p>
+                <div className="bg-red-500/20 rounded-full h-2 overflow-hidden mb-4">
+                  <div 
+                    className="bg-gradient-to-r from-red-400 to-rose-400 h-full rounded-full transition-all duration-1000"
+                    style={{ width: `${(examResults.incorrectAnswers / examResults.totalQuestions) * 100}%` }}
+                  ></div>
+                </div>
+                <div className="text-center">
+                  <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-xs px-3 py-1">
+                    انقر للمراجعة
+                  </Badge>
+                </div>
               </div>
-              <h3 className="text-4xl font-bold text-red-400 mb-2 text-center">{examResults.incorrectAnswers}</h3>
-              <p className="text-red-300 text-center mb-4">إجابات خاطئة</p>
-              <div className="bg-red-500/20 rounded-full h-3 overflow-hidden">
-                <div 
-                  className="bg-gradient-to-r from-red-400 to-rose-400 h-full rounded-full transition-all duration-1000"
-                  style={{ width: `${(examResults.incorrectAnswers / examResults.totalQuestions) * 100}%` }}
-                ></div>
-              </div>
-              <p className="text-xs text-red-300/70 text-center mt-3">انقر للمراجعة</p>
             </div>
 
             {/* Unanswered Questions */}
             <div 
               onClick={() => handleCategoryClick('unanswered')}
-              className={`group relative bg-gradient-to-br from-amber-900/50 to-orange-900/50 border border-amber-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/25 ${
-                selectedCategory === 'unanswered' ? 'ring-2 ring-amber-400 shadow-2xl shadow-amber-500/50' : ''
+              className={`group relative bg-gradient-to-br from-amber-900/30 to-orange-900/50 border border-amber-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/25 ${
+                selectedCategory === 'unanswered' ? 'ring-2 ring-amber-400 shadow-2xl shadow-amber-500/50 scale-105' : ''
               }`}
             >
-              <div className="flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/30 text-amber-400 mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                <BookOpen className="h-10 w-10" />
-              </div>
-              <h3 className="text-4xl font-bold text-amber-400 mb-2 text-center">
-                {examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers}
-              </h3>
-              <p className="text-amber-300 text-center mb-4">أسئلة غير محلولة</p>
-              <div className="bg-amber-500/20 rounded-full h-3 overflow-hidden">
-                <div 
-                  className="bg-gradient-to-r from-amber-400 to-orange-400 h-full rounded-full transition-all duration-1000"
-                  style={{ width: `${((examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers) / examResults.totalQuestions) * 100}%` }}
-                ></div>
-              </div>
-              <p className="text-xs text-amber-300/70 text-center mt-3">انقر للاستكشاف</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Performance Insights */}
-        <div className="max-w-6xl mx-auto px-6 mb-16">
-          <div className="bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700/50 rounded-2xl p-8">
-            <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-                <TrendingUp className="h-8 w-8 text-blue-400" />
-                تحليل الأداء
-              </h3>
-              <p className="text-gray-300">نظرة عامة على نقاط القوة والتحسين</p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Strengths */}
-              <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border border-green-500/30 rounded-xl p-6">
-                <h4 className="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
-                  <Sparkles className="h-6 w-6" />
-                  نقاط القوة
-                </h4>
-                <ul className="space-y-3">
-                  {percentage >= 80 && (
-                    <li className="flex items-center gap-3 text-green-300">
-                      <CheckCircle className="h-5 w-5 text-green-400" />
-                      أداء ممتاز في الاختبار
-                    </li>
-                  )}
-                  {percentage >= 70 && (
-                    <li className="flex items-center gap-3 text-green-300">
-                      <CheckCircle className="h-5 w-5 text-green-400" />
-                      فهم جيد للمفاهيم الأساسية
-                    </li>
-                  )}
-                  <li className="flex items-center gap-3 text-green-300">
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                    إكمال الاختبار بنجاح
-                  </li>
-                  {examResults.correctAnswers > examResults.incorrectAnswers && (
-                    <li className="flex items-center gap-3 text-green-300">
-                      <CheckCircle className="h-5 w-5 text-green-400" />
-                      إجابات صحيحة أكثر من الخاطئة
-                    </li>
-                  )}
-                </ul>
-              </div>
-
-              {/* Improvement Areas */}
-              <div className="bg-gradient-to-br from-orange-900/30 to-red-900/30 border border-orange-500/30 rounded-xl p-6">
-                <h4 className="text-xl font-bold text-orange-400 mb-4 flex items-center gap-2">
-                  <Target className="h-6 w-6" />
-                  مجالات التحسين
-                </h4>
-                <ul className="space-y-3">
-                  {percentage < 70 && (
-                    <li className="flex items-center gap-3 text-orange-300">
-                      <Lightbulb className="h-5 w-5 text-orange-400" />
-                      مراجعة المفاهيم الأساسية
-                    </li>
-                  )}
-                  {examResults.incorrectAnswers > 0 && (
-                    <li className="flex items-center gap-3 text-orange-300">
-                      <Lightbulb className="h-5 w-5 text-orange-400" />
-                      تحليل الأخطاء والتعلم منها
-                    </li>
-                  )}
-                  <li className="flex items-center gap-3 text-orange-300">
-                    <Lightbulb className="h-5 w-5 text-orange-400" />
-                    المزيد من التدريب المنتظم
-                  </li>
-                  {(examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers) > 0 && (
-                    <li className="flex items-center gap-3 text-orange-300">
-                      <Lightbulb className="h-5 w-5 text-orange-400" />
-                      تحسين إدارة الوقت
-                    </li>
-                  )}
-                </ul>
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/20 border-2 border-amber-400/30 text-amber-400 mx-auto mb-6 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
+                  <BookOpen className="h-10 w-10" />
+                </div>
+                <h3 className="text-4xl font-bold text-amber-400 mb-2 text-center group-hover:scale-110 transition-transform duration-300">
+                  {examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers}
+                </h3>
+                <p className="text-amber-300 text-center mb-4 font-medium">منطقة الاستكشاف</p>
+                <div className="bg-amber-500/20 rounded-full h-2 overflow-hidden mb-4">
+                  <div 
+                    className="bg-gradient-to-r from-amber-400 to-orange-400 h-full rounded-full transition-all duration-1000"
+                    style={{ width: `${((examResults.totalQuestions - examResults.correctAnswers - examResults.incorrectAnswers) / examResults.totalQuestions) * 100}%` }}
+                  ></div>
+                </div>
+                <div className="text-center">
+                  <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 text-xs px-3 py-1">
+                    انقر للاستكشاف
+                  </Badge>
+                </div>
               </div>
             </div>
           </div>
@@ -584,10 +789,10 @@ const ResultsScreen = () => {
           <div className="max-w-6xl mx-auto px-6 mb-16">
             <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/70 border border-gray-700/50 rounded-2xl p-12 text-center">
               <div className="mx-auto w-24 h-24 bg-gray-700/50 rounded-full flex items-center justify-center mb-6">
-                <BookOpen className="h-12 w-12 text-gray-400" />
+                <Layers className="h-12 w-12 text-gray-400" />
               </div>
               <h3 className="text-2xl font-bold text-gray-300 mb-4">
-                لا توجد أسئلة متاحة
+                لا توجد عناصر في هذه الفئة
               </h3>
               <p className="text-gray-400">
                 {selectedCategory === 'correct' ? 'لا توجد أسئلة صحيحة لعرضها' :
@@ -598,20 +803,32 @@ const ResultsScreen = () => {
           </div>
         )}
 
-        {/* Final Action Button */}
-        <div className="max-w-6xl mx-auto px-6 pb-16 text-center">
-          <Button
-            onClick={() => window.location.href = '/'}
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
-          >
-            <Home className="h-6 w-6 ml-3" />
-            العودة للصفحة الرئيسية
-            <Rocket className="h-6 w-6 mr-3" />
-          </Button>
+        {/* Revolutionary Final Section */}
+        <div className="max-w-6xl mx-auto px-6 pb-20 text-center">
+          <div className="bg-gradient-to-r from-purple-900/30 via-blue-900/30 to-cyan-900/30 border border-purple-500/30 rounded-3xl p-12 mb-12 backdrop-blur-lg">
+            <h3 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              رحلتك التعليمية مستمرة
+            </h3>
+            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+              كل اختبار خطوة نحو هدفك. استخدم هذه النتائج كدليل لتطوير استراتيجيتك القادمة
+            </p>
+            
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <Button
+                onClick={() => window.location.href = '/'}
+                size="lg"
+                className="bg-gradient-to-r from-purple-600 via-blue-600 to-cyan-600 hover:from-purple-500 hover:via-blue-500 hover:to-cyan-500 text-white px-12 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300 hover:scale-105 group"
+              >
+                <Home className="h-6 w-6 ml-3 group-hover:rotate-12 transition-transform duration-300" />
+                العودة للصفحة الرئيسية
+                <Rocket className="h-6 w-6 mr-3 group-hover:-translate-y-1 transition-transform duration-300" />
+              </Button>
+            </div>
+          </div>
           
-          <p className="text-gray-400 text-sm mt-6 max-w-md mx-auto">
-            شكراً لك على استخدام محاكي اور جول . نتمنى لك التوفيق في اختباراتك القادمة!
+          <p className="text-gray-500 text-sm max-w-2xl mx-auto">
+            تم تصميم هذا التحليل باستخدام خوارزميات متقدمة لمساعدتك في تحقيق أقصى استفادة من تجربة التعلم. 
+            نتمنى لك التوفيق في رحلتك الأكاديمية!
           </p>
         </div>
       </div>
