@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, Circle, Clock, Flag, ArrowLeft, Home } from 'lucide-react';
@@ -20,7 +19,7 @@ const ReviewScreen = () => {
   } = useExamStore();
 
   const stats = getQuestionStats();
-  
+
   // Get filtered questions based on current filter
   const getFilteredQuestions = () => {
     switch (reviewFilter) {
@@ -51,7 +50,7 @@ const ReviewScreen = () => {
   const getQuestionStatus = (questionNumber) => {
     const isAnswered = userAnswers[questionNumber] !== undefined;
     const isDeferred = deferredQuestions[questionNumber];
-    
+
     if (isAnswered && isDeferred) {
       return { status: 'answered-deferred', label: 'مجاب ومؤجل', color: 'bg-blue-100 text-blue-800' };
     } else if (isAnswered) {
@@ -68,7 +67,6 @@ const ReviewScreen = () => {
   };
 
   const getQuestionDisplayNumber = (question) => {
-    // Find the actual index of this question in the original exam questions array
     const actualIndex = examQuestions.findIndex(q => q.question_number === question.question_number);
     return actualIndex + 1; // Display as 1-based index
   };
@@ -79,11 +77,11 @@ const ReviewScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100" dir="rtl">
-      {/* Header - Mobile Optimized */}
-      <div className="bg-blue-900 text-white px-4 py-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-indigo-200" dir="rtl">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-4 sm:px-6 lg:px-8 shadow-lg">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">مراجعة جميع الأسئلة</h1>
+          <h1 className="text-2xl font-bold mb-1 sm:mb-2">مراجعة جميع الأسئلة</h1>
           {examMode === 'sectioned' && (
             <p className="text-blue-200 text-sm sm:text-base">القسم {currentSection}</p>
           )}
@@ -99,39 +97,31 @@ const ReviewScreen = () => {
         </div>
       </div>
 
-      {/* Statistics Cards - Mobile Optimized */}
+      {/* Statistics Cards */}
       <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
-          <Card className="text-center">
-            <CardContent className="p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold text-blue-600">{stats.total}</div>
-              <div className="text-xs sm:text-sm text-gray-600">إجمالي الأسئلة</div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 sm:mb-8">
+          <div className="bg-white rounded-lg shadow-md p-4 text-center">
+            <h2 className="text-2xl font-bold text-blue-600">{stats.total}</h2>
+            <p className="text-gray-600">إجمالي الأسئلة</p>
+          </div>
           
-          <Card className="text-center">
-            <CardContent className="p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.deferred}</div>
-              <div className="text-xs sm:text-sm text-gray-600">أسئلة مؤجلة</div>
-            </CardContent>
-          </Card>
+          <div className="bg-white rounded-lg shadow-md p-4 text-center">
+            <h2 className="text-2xl font-bold text-yellow-600">{stats.deferred}</h2>
+            <p className="text-gray-600">أسئلة مؤجلة</p>
+          </div>
           
-          <Card className="text-center">
-            <CardContent className="p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.unanswered}</div>
-              <div className="text-xs sm:text-sm text-gray-600">أسئلة غير مجابة</div>
-            </CardContent>
-          </Card>
+          <div className="bg-white rounded-lg shadow-md p-4 text-center">
+            <h2 className="text-2xl font-bold text-red-600">{stats.unanswered}</h2>
+            <p className="text-gray-600">أسئلة غير مجابة</p>
+          </div>
           
-          <Card className="text-center">
-            <CardContent className="p-3 sm:p-4">
-              <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.answered}</div>
-              <div className="text-xs sm:text-sm text-gray-600">أسئلة مجابة</div>
-            </CardContent>
-          </Card>
+          <div className="bg-white rounded-lg shadow-md p-4 text-center">
+            <h2 className="text-2xl font-bold text-green-600">{stats.answered}</h2>
+            <p className="text-gray-600">أسئلة مجابة</p>
+          </div>
         </div>
 
-        {/* Filter Info - Mobile Optimized */}
+        {/* Filter Info */}
         <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="text-base sm:text-lg font-semibold text-center sm:text-right">
             {reviewFilter === 'all' && `عرض ${filteredQuestions.length} من ${stats.total} سؤال`}
@@ -145,50 +135,50 @@ const ReviewScreen = () => {
           </Button>
         </div>
 
-        {/* Questions Grid - Mobile Optimized */}
+        {/* Questions Grid */}
         {filteredQuestions.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 sm:mb-8">
             {filteredQuestions.map((question) => {
               const questionStatus = getQuestionStatus(question.question_number);
               const displayNumber = getQuestionDisplayNumber(question);
               const questionSection = getQuestionSection(question);
               
               return (
-                <Card 
+                <div 
                   key={question.question_number} 
-                  className="cursor-pointer hover:shadow-lg transition-shadow border-r-4 border-blue-500"
+                  className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-blue-500"
                   onClick={() => handleQuestionClick(examQuestions.findIndex(q => q.question_number === question.question_number))}
                 >
-                  <CardHeader className="pb-1 sm:pb-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
                         {questionStatus.status === 'answered' ? (
-                          <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                          <CheckCircle className="h-5 w-5 text-green-600" />
                         ) : (
-                          <Circle className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400" />
+                          <Circle className="h-5 w-5 text-gray-400" />
                         )}
-                        <span className="font-bold text-sm sm:text-base">السؤال {displayNumber}</span>
+                        <span className="font-bold text-lg">السؤال {displayNumber}</span>
                       </div>
-                      <Badge variant="secondary" className={`${questionStatus.color} text-xs sm:text-sm px-2 py-1`}>
+                      <Badge variant="secondary" className={`${questionStatus.color} text-xs px-2 py-1`}>
                         {questionStatus.label}
                       </Badge>
                     </div>
-                    <div className="flex items-center justify-between text-xs sm:text-sm text-gray-600">
+                    <div className="flex items-center justify-between text-sm text-gray-600">
                       <span>{getQuestionTypeLabel(question.type)}</span>
                       {examMode === 'sectioned' && (
                         <span>القسم {questionSection}</span>
                       )}
                     </div>
-                  </CardHeader>
+                  </div>
                   
-                  <CardContent className="p-3 sm:p-4 pt-0">
+                  <div className="p-4 border-t">
                     <div className="text-sm text-gray-700 line-clamp-3">
                       {question.passage && (
-                        <div className="text-xs text-gray-500 mb-1 sm:mb-2 italic">
+                        <div className="text-xs text-gray-500 mb-1 italic">
                           {question.passage.substring(0, 100)}...
                         </div>
                       )}
-                      <div className="font-medium text-sm sm:text-base">
+                      <div className="font-medium">
                         {question.question.length > 100 
                           ? `${question.question.substring(0, 100)}...`
                           : question.question
@@ -197,15 +187,15 @@ const ReviewScreen = () => {
                     </div>
                     
                     {userAnswers[question.question_number] !== undefined && (
-                      <div className="mt-2 sm:mt-3 p-2 bg-green-50 rounded text-xs sm:text-sm">
+                      <div className="mt-2 p-2 bg-green-50 rounded text-xs">
                         <span className="font-medium text-green-800">الإجابة المختارة: </span>
                         <span className="text-green-700">
                           {question.choices[userAnswers[question.question_number]]}
                         </span>
                       </div>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -221,8 +211,8 @@ const ReviewScreen = () => {
           </div>
         )}
 
-        {/* Action Buttons - Mobile Optimized */}
-        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-4 sm:pt-6">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4 sm:pt-6">
           <Button 
             onClick={exitReviewMode}
             variant="outline"
@@ -246,4 +236,3 @@ const ReviewScreen = () => {
 };
 
 export default ReviewScreen;
-
