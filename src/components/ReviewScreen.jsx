@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, Circle, Clock, Flag, ArrowLeft, Home } from 'lucide-react';
+import { 
+  CheckCircle, 
+  ChevronRight, 
+  Clock, 
+  Flame, 
+  SkipForward, 
+  List, 
+  ArrowRight,
+  Home,
+  Eye,
+  BookOpen,
+  Target,
+  Circle,
+  Flag
+} from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 
 const ReviewScreen = () => {
@@ -15,14 +28,16 @@ const ReviewScreen = () => {
     exitReviewMode,
     goToQuestion,
     completeExam,
-    getQuestionStats
+    getQuestionStats,
+    toggleReviewFilter
   } = useExamStore();
 
+  const [activeTab, setActiveTab] = useState('all');
   const stats = getQuestionStats();
 
-  // Get filtered questions based on current filter
+  // Filter questions based on active tab
   const getFilteredQuestions = () => {
-    switch (reviewFilter) {
+    switch (activeTab) {
       case 'answered':
         return examQuestions.filter(q => userAnswers[q.question_number] !== undefined);
       case 'unanswered':
@@ -34,201 +49,224 @@ const ReviewScreen = () => {
     }
   };
 
-  const filteredQuestions = getFilteredQuestions();
-
-  const getQuestionTypeLabel = (type) => {
-    const typeLabels = {
-      analogy: 'التناظر اللفظي',
-      completion: 'إكمال الجمل',
-      error: 'الخطأ السياقي',
-      rc: 'استيعاب المقروء',
-      odd: 'المفردة الشاذة'
-    };
-    return typeLabels[type] || type;
-  };
-
-  const getQuestionStatus = (questionNumber) => {
+  const getQuestionStatusIcon = (questionNumber) => {
     const isAnswered = userAnswers[questionNumber] !== undefined;
     const isDeferred = deferredQuestions[questionNumber];
 
-    if (isAnswered && isDeferred) {
-      return { status: 'answered-deferred', label: 'مجاب ومؤجل', color: 'bg-blue-100 text-blue-800' };
-    } else if (isAnswered) {
-      return { status: 'answered', label: 'مجاب', color: 'bg-green-100 text-green-800' };
-    } else if (isDeferred) {
-      return { status: 'deferred', label: 'مؤجل', color: 'bg-yellow-100 text-yellow-800' };
-    } else {
-      return { status: 'unanswered', label: 'غير مجاب', color: 'bg-red-100 text-red-800' };
-    }
-  };
-
-  const handleQuestionClick = (questionIndex) => {
-    goToQuestion(questionIndex);
-  };
-
-  const getQuestionDisplayNumber = (question) => {
-    const actualIndex = examQuestions.findIndex(q => q.question_number === question.question_number);
-    return actualIndex + 1; // Display as 1-based index
-  };
-
-  const getQuestionSection = (question) => {
-    const actualIndex = examQuestions.findIndex(q => q.question_number === question.question_number);
-    return Math.floor(actualIndex / 13) + 1; // Calculate section (1-based)
+    if (isAnswered && isDeferred) return <SkipForward className="h-5 w-5 text-blue-500" />;
+    if (isAnswered) return <CheckCircle className="h-5 w-5 text-green-500" />;
+    if (isDeferred) return <Clock className="h-5 w-5 text-yellow-500" />;
+    return <Circle className="h-5 w-5 text-gray-400" />;
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-indigo-200" dir="rtl">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white px-4 py-4 sm:px-6 lg:px-8 shadow-lg">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl font-bold mb-1 sm:mb-2">مراجعة جميع الأسئلة</h1>
-          {examMode === 'sectioned' && (
-            <p className="text-blue-200 text-sm sm:text-base">القسم {currentSection}</p>
-          )}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-gray-900 text-white" dir="rtl">
+      {/* Floating Navigation */}
+      <div className="fixed top-0 left-0 right-0 bg-black/50 backdrop-blur-xl border-b border-gray-700 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
           <Button 
-            variant="ghost" 
-            className="absolute top-3 right-3 sm:top-6 sm:right-6 text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm border border-white/30 px-3 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base" 
-            onClick={() => window.location.href = '/'}
+            onClick={exitReviewMode}
+            variant="ghost"
+            className="flex items-center gap-2 text-white hover:text-white hover:bg-white/10"
           >
-            <Home className="h-4 w-4 sm:h-6 sm:w-6 ml-1 sm:ml-2" />
-            <span className="font-bold hidden sm:inline">الصفحة الرئيسية</span>
-            <span className="font-bold sm:hidden">الرئيسية</span>
+            <ChevronRight className="h-5 w-5" />
+            <span className="hidden sm:inline">عودة للاختبار</span>
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
+              لوحة المراجعة
+            </h1>
+            <List className="h-6 w-6 text-orange-400" />
+          </div>
+          
+          <Button 
+            onClick={() => window.location.href = '/'}
+            variant="ghost"
+            className="flex items-center gap-2 text-white hover:text-white hover:bg-white/10"
+          >
+            <Home className="h-5 w-5" />
+            <span className="hidden sm:inline">الرئيسية</span>
           </Button>
         </div>
       </div>
 
-      {/* Statistics Cards */}
-      <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 sm:mb-8">
-          <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <h2 className="text-2xl font-bold text-blue-600">{stats.total}</h2>
-            <p className="text-gray-600">إجمالي الأسئلة</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <h2 className="text-2xl font-bold text-yellow-600">{stats.deferred}</h2>
-            <p className="text-gray-600">أسئلة مؤجلة</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <h2 className="text-2xl font-bold text-red-600">{stats.unanswered}</h2>
-            <p className="text-gray-600">أسئلة غير مجابة</p>
-          </div>
-          
-          <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <h2 className="text-2xl font-bold text-green-600">{stats.answered}</h2>
-            <p className="text-gray-600">أسئلة مجابة</p>
+      {/* Main Content */}
+      <div className="relative pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+        {/* Floating Stats Summary */}
+        <div className="fixed top-16 left-0 right-0 bg-gradient-to-r from-gray-800/70 to-gray-900/70 backdrop-blur-md z-40 border-y border-gray-700/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-3 gap-1 py-3 text-center">
+              <div className="bg-gradient-to-br from-green-900/50 to-gray-800/70 border border-gray-700 rounded-lg p-2">
+                <div className="text-green-400 font-bold text-lg">{stats.answered}</div>
+                <div className="text-xs text-gray-400">مُجابة</div>
+              </div>
+              <div className="bg-gradient-to-br from-yellow-900/50 to-gray-800/70 border border-gray-700 rounded-lg p-2">
+                <div className="text-yellow-400 font-bold text-lg">{stats.deferred}</div>
+                <div className="text-xs text-gray-400">مؤجلة</div>
+              </div>
+              <div className="bg-gradient-to-br from-red-900/50 to-gray-800/70 border border-gray-700 rounded-lg p-2">
+                <div className="text-red-400 font-bold text-lg">{stats.unanswered}</div>
+                <div className="text-xs text-gray-400">غير مُجابة</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Filter Info */}
-        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="text-base sm:text-lg font-semibold text-center sm:text-right">
-            {reviewFilter === 'all' && `عرض ${filteredQuestions.length} من ${stats.total} سؤال`}
-            {reviewFilter === 'answered' && `عرض ${filteredQuestions.length} سؤال مجاب`}
-            {reviewFilter === 'unanswered' && `عرض ${filteredQuestions.length} سؤال غير مجاب`}
-            {reviewFilter === 'deferred' && `عرض ${filteredQuestions.length} سؤال مؤجل`}
-          </div>
-          <Button variant="outline" onClick={exitReviewMode} className="flex items-center gap-1 sm:gap-2 px-3 py-2 text-sm sm:text-base">
-            <ArrowLeft className="h-4 w-4" />
-            العودة للاختبار
-          </Button>
-        </div>
-
-        {/* Questions Grid */}
-        {filteredQuestions.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 sm:mb-8">
-            {filteredQuestions.map((question) => {
-              const questionStatus = getQuestionStatus(question.question_number);
-              const displayNumber = getQuestionDisplayNumber(question);
-              const questionSection = getQuestionSection(question);
-              
+        {/* Filter Tabs */}
+        <div className="max-w-2xl mx-auto mt-20 mb-8">
+          <div className="flex justify-center space-x-1 sm:space-x-2 px-4">
+            {[
+              { id: 'all', label: 'الكل', icon: Eye },
+              { id: 'answered', label: 'المُجابة', icon: CheckCircle },
+              { id: 'unanswered', label: 'غير المُجابة', icon: Circle },
+              { id: 'deferred', label: 'المؤجلة', icon: Clock }
+            ].map((tab) => {
+              const Icon = tab.icon;
               return (
-                <div 
-                  key={question.question_number} 
-                  className="bg-white rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-blue-500"
-                  onClick={() => handleQuestionClick(examQuestions.findIndex(q => q.question_number === question.question_number))}
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center justify-center gap-1 px-4 py-2 sm:px-6 sm:py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeTab === tab.id
+                      ? 'bg-orange-600 text-white shadow-md shadow-orange-500/30'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
                 >
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        {questionStatus.status === 'answered' ? (
-                          <CheckCircle className="h-5 w-5 text-green-600" />
-                        ) : (
-                          <Circle className="h-5 w-5 text-gray-400" />
-                        )}
-                        <span className="font-bold text-lg">السؤال {displayNumber}</span>
-                      </div>
-                      <Badge variant="secondary" className={`${questionStatus.color} text-xs px-2 py-1`}>
-                        {questionStatus.label}
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between text-sm text-gray-600">
-                      <span>{getQuestionTypeLabel(question.type)}</span>
-                      {examMode === 'sectioned' && (
-                        <span>القسم {questionSection}</span>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 border-t">
-                    <div className="text-sm text-gray-700 line-clamp-3">
-                      {question.passage && (
-                        <div className="text-xs text-gray-500 mb-1 italic">
-                          {question.passage.substring(0, 100)}...
-                        </div>
-                      )}
-                      <div className="font-medium">
-                        {question.question.length > 100 
-                          ? `${question.question.substring(0, 100)}...`
-                          : question.question
-                        }
-                      </div>
-                    </div>
-                    
-                    {userAnswers[question.question_number] !== undefined && (
-                      <div className="mt-2 p-2 bg-green-50 rounded text-xs">
-                        <span className="font-medium text-green-800">الإجابة المختارة: </span>
-                        <span className="text-green-700">
-                          {question.choices[userAnswers[question.question_number]]}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  <Icon className="h-4 w-4" />
+                  {tab.label}
+                </button>
               );
             })}
           </div>
-        ) : (
-          <div className="text-center py-6 sm:py-12">
-            <div className="text-gray-500 text-base sm:text-lg mb-3 sm:mb-4">
-              {reviewFilter === 'answered' && 'لا توجد أسئلة مجابة'}
-              {reviewFilter === 'unanswered' && 'لا توجد أسئلة غير مجابة'}
-              {reviewFilter === 'deferred' && 'لا توجد أسئلة مؤجلة'}
-              {reviewFilter === 'all' && 'لا توجد أسئلة'}
-            </div>
-            <Button onClick={exitReviewMode} className="px-4 py-2 text-sm sm:text-base">العودة للاختبار</Button>
-          </div>
-        )}
+        </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4 sm:pt-6">
-          <Button 
-            onClick={exitReviewMode}
-            variant="outline"
-            className="flex items-center gap-1 sm:gap-2 px-4 py-2 text-sm sm:text-base w-full sm:w-auto"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            إنهاء المراجعة
-          </Button>
-          
-          <Button 
-            onClick={completeExam}
-            className="bg-red-600 hover:bg-red-700 flex items-center gap-1 sm:gap-2 px-4 py-2 text-sm sm:text-base w-full sm:w-auto"
-          >
-            <Flag className="h-4 w-4" />
-            إنهاء الاختبار
-          </Button>
+        {/* Questions List */}
+        <div className="max-w-4xl mx-auto space-y-4">
+          {getFilteredQuestions().map((question) => {
+            const questionNumber = examQuestions.findIndex(q => q.question_number === question.question_number) + 1;
+            const isAnswered = userAnswers[question.question_number] !== undefined;
+            const isDeferred = deferredQuestions[question.question_number];
+            const answerChoice = isAnswered ? question.choices[userAnswers[question.question_number]] : null;
+
+            return (
+              <div 
+                key={question.question_number}
+                onClick={() => goToQuestion(questionNumber - 1)}
+                className="group relative bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700 rounded-xl p-4 hover:border-orange-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              >
+                {/* Question Header */}
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="font-bold text-lg flex items-center gap-2">
+                      {getQuestionStatusIcon(question.question_number)}
+                      <span>السؤال {questionNumber}</span>
+                    </h3>
+                    <div className="mt-1 flex items-center gap-2 text-sm text-gray-400">
+                      <BookOpen className="h-4 w-4" />
+                      <span>
+                        {question.type === 'rc' ? 'استيعاب المقروء' : 
+                         question.type === 'analogy' ? 'التناظر اللفظي' :
+                         question.type === 'completion' ? 'إكمال الجمل' :
+                         question.type === 'error' ? 'الخطأ السياقي' : 'المفردة الشاذة'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    {examMode === 'sectioned' && (
+                      <span className="text-xs bg-gray-700 px-2 py-1 rounded text-gray-300">
+                        القسم {Math.floor((questionNumber - 1) / 13) + 1}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Question Content */}
+                <div className="mt-3">
+                  {question.passage && (
+                    <p className="text-gray-400 text-sm line-clamp-2 mb-2">
+                      {question.passage.substring(0, 100)}...
+                    </p>
+                  )}
+                  <p className="text-gray-200 line-clamp-2">
+                    {question.question.substring(0, 120)}...
+                  </p>
+                </div>
+
+                {/* Answer Preview */}
+                {isAnswered && (
+                  <div className="mt-3 bg-gray-700/30 border-l-2 border-green-500 rounded-r-lg p-2">
+                    <p className="text-sm text-green-400 flex items-center gap-2">
+                      <Target className="h-4 w-4" />
+                      <span className="font-medium">إجابتك:</span>
+                      <span className="text-green-300">{answerChoice}</span>
+                    </p>
+                  </div>
+                )}
+                
+                {/* View Button */}
+                <div className="mt-3 flex justify-end">
+                  <button className="flex items-center gap-1 text-orange-400 group-hover:text-orange-300 text-sm font-medium">
+                    <span>عرض السؤال</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          {getFilteredQuestions().length === 0 && (
+            <div className="text-center py-16">
+              <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/70 border border-gray-700 rounded-xl p-8 mx-auto max-w-md">
+                <div className="mx-auto w-20 h-20 bg-red-900/30 rounded-full flex items-center justify-center mb-4">
+                  <Flag className="h-10 w-10 text-red-400" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-300 mb-2">
+                  {activeTab === 'answered' && 'لا توجد أسئلة مُجابة'}
+                  {activeTab === 'unanswered' && 'لا توجد أسئلة غير مُجابة'} 
+                  {activeTab === 'deferred' && 'لا توجد أسئلة مؤجلة'}
+                  {activeTab === 'all' && 'لا توجد أسئلة'}
+                </h3>
+                <p className="text-gray-400 mb-6">يمكنك العودة للاختبار لمراجعة المزيد</p>
+                <Button 
+                  onClick={exitReviewMode}
+                  size="lg"
+                  className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500"
+                >
+                  العودة للاختبار
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Fixed Bottom Bar */}
+        <div className="fixed bottom-0 left-0 right-0 bg-black/50 backdrop-blur-lg border-t border-gray-700/50 py-3 px-4">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <Button 
+              onClick={completeExam}
+              size="lg"
+              className="bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 flex items-center gap-2"
+            >
+              <Flag className="h-5 w-5" />
+              إنهاء الاختبار
+            </Button>
+            
+            <span className="text-gray-400 text-sm">
+              {getFilteredQuestions().length} من {examQuestions.length} سؤال
+            </span>
+            
+            <Button 
+              onClick={exitReviewMode}
+              variant="secondary"
+              size="lg"
+              className="bg-gradient-to-r from-gray-700 to-gray-800 flex items-center gap-2"
+            >
+              <ChevronRight className="h-5 w-5" />
+              إنهاء المراجعة
+            </Button>
+          </div>
         </div>
       </div>
     </div>
