@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -30,6 +31,7 @@ import { useExamStore } from '../store/examStore';
 const QuestionDisplay = () => {
   const [isTextEnlarged, setIsTextEnlarged] = useState(false);
   const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
 
   const {
     examQuestions,
@@ -56,6 +58,20 @@ const QuestionDisplay = () => {
     setReviewMode,
     goToSectionReview
   } = useExamStore();
+
+  // Handle window resize for responsive design
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
   // Add keyboard navigation
   useEffect(() => {
@@ -396,7 +412,8 @@ const QuestionDisplay = () => {
       'completion': 'إكمال الجمل',
       'error': 'الخطأ السياقي',
       'rc': 'استيعاب المقروء',
-      'reading': 'فهم المقروء'
+      'reading': 'فهم المقروء',
+      'odd': 'المفردة الشاذة'
     };
     return labels[type] || type;
   };
@@ -407,7 +424,8 @@ const QuestionDisplay = () => {
       'completion': <Lightbulb className="h-4 w-4" />,
       'error': <Eye className="h-4 w-4" />,
       'rc': <BookOpen className="h-4 w-4" />,
-      'reading': <BookOpen className="h-4 w-4" />
+      'reading': <BookOpen className="h-4 w-4" />,
+      'odd': <Star className="h-4 w-4" />
     };
     return icons[type] || <Brain className="h-4 w-4" />;
   };
@@ -416,27 +434,40 @@ const QuestionDisplay = () => {
   const INSTRUCTIONS = {
     'analogy': {
       title: 'التناظر اللفظي',
-      text: 'في بداية كل سؤال مما يأتي ، كلمتان ترتبطان بعلاقة معينة ، تتبعهما أربعة أزواج من الكلمات ، واحد منها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال . المطلوب هو : اختيار الإجابة الصحيحة',
+      text: `في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة
+
+مثال: ساعة : وقت
+أ- شمس : قمر  ب- ميزان : ثقل
+ج- ترمومتر : زكام  د- صفر : محرم
+
+الشرح: علاقة الساعة بالوقت مثل علاقة الميزان بالثقل. أي كما أن الساعة تقيس الوقت فإن الميزان يقيس الثقل، فالإجابة الصحيحة هي (ب). أما الاختيار (ج) فهو غير صحيح؛ لأن الترمومتر يقيس الحرارة الناتجة عن الزكام لا الزكام نفسه. أما الاختياران (أ) و (د) فليس فيهما علاقة مماثلة أو قريبة من علاقة الساعة بالوقت.`,
     },
     'completion': {
       title: 'إكمال الجمل',
-      text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات ، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالا صحيحا . المطلوب هو : اختيار الإجابة الصحيحة',
+      text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالاً صحيحاً. المطلوب هو: اختيار الإجابة الصحيحة',
     },
     'error': {
       title: 'الخطأ السياقي',
-      text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ . المطلوب هو : تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة ،( الخطأ ليس إملائياً ولا نحويا )',
+      text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ. المطلوب هو: تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة، (الخطأ ليس إملائياً ولا نحوياً)',
     },
     'rc': {
       title: 'استيعاب المقروء',
-      text: 'الأسئلة التالية تتعلق بالنص الذي يسبقها ، بعد كل سؤال أربعة اختيارات ، واحد منها صحيح . المطلوب هو : قراءة النص بعناية ، واختيار الإجابة الصحيحة عن كل سؤال.',
+      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة',
     },
     'reading': {
       title: 'استيعاب المقروء',
-      text: 'الأسئلة التالية تتعلق بالنص الذي يسبقها ، بعد كل سؤال أربعة اختيارات ، واحد منها صحيح . المطلوب هو : قراءة النص بعناية ، واختيار الإجابة الصحيحة عن كل سؤال.',
+      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة',
+    },
+    'odd': {
+      title: 'المفردة الشاذة',
+      text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة',
     }
   };
 
   const currentInstructions = INSTRUCTIONS[currentQuestion.type] || { title: '', text: '' };
+
+  // Check if we're on mobile
+  const isMobile = windowWidth <= 768;
 
   return (
     <div className="min-h-screen flex flex-col bg-white" dir="rtl">
@@ -479,7 +510,7 @@ const QuestionDisplay = () => {
       {/* محتوى الصفحة */}
       <div className="flex-1 flex flex-row">
         {/* عمود السؤال والاختيارات */}
-        <div className="w-1/2 flex flex-col justify-start items-start p-12">
+        <div className={`${isMobile ? 'w-full' : 'w-1/2'} flex flex-col justify-start items-start p-4 md:p-12`}>
           {/* نص الاستيعاب */}
           {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
             <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
@@ -488,7 +519,7 @@ const QuestionDisplay = () => {
           )}
           
           {/* السؤال */}
-          <div className="text-2xl font-bold text-gray-900 text-center w-full mb-8">
+          <div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
             {currentQuestion.type === 'error' ? 
               renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
               currentQuestion.question
@@ -496,16 +527,16 @@ const QuestionDisplay = () => {
           </div>
           
           {/* الخيارات */}
-          <div className="flex flex-col gap-6 w-full">
+          <div className="flex flex-col gap-4 md:gap-6 w-full">
             <RadioGroup
               value={selectedAnswer?.toString()}
               onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
             >
               {currentQuestion.choices.map((choice, index) => (
                 <div
                   key={index}
-                  className="flex flex-row-reverse items-center gap-2 cursor-pointer text-lg text-gray-900 font-normal w-full text-right"
+                  className="flex flex-row-reverse items-center gap-2 cursor-pointer text-base md:text-lg text-gray-900 font-normal w-full text-right"
                   onClick={() => handleAnswerSelect(index)}
                 >
                   <RadioGroupItem
@@ -525,21 +556,23 @@ const QuestionDisplay = () => {
           </div>
         </div>
 
-        {/* عمود التعليمات */}
-        <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-start p-12">
-          <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
-            {currentInstructions.title}
+        {/* عمود التعليمات - يظهر فقط على الشاشات الكبيرة */}
+        {!isMobile && (
+          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-start p-12">
+            <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
+              {currentInstructions.title}
+            </div>
+            <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
+              {currentInstructions.text}
+            </div>
           </div>
-          <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
-            {currentInstructions.text}
-          </div>
-        </div>
+        )}
       </div>
 
       {/* الشريط السفلي */}
-      <div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-8 py-3">
+      <div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3">
         <button
-          className="flex items-center gap-1 text-lg font-bold disabled:opacity-50"
+          className="flex items-center gap-1 text-base md:text-lg font-bold disabled:opacity-50"
           disabled={!canGoPrevious()}
           onClick={handlePrevious}
         >
@@ -550,7 +583,7 @@ const QuestionDisplay = () => {
         {!hideDeferButton && (
           <button
             onClick={handleDeferToggle}
-            className={`mx-4 px-6 py-2 rounded-lg font-bold border transition ${
+            className={`mx-2 md:mx-4 px-3 md:px-6 py-2 rounded-lg font-bold border transition text-sm md:text-base ${
               isDeferred
                 ? 'bg-yellow-500 text-black border-yellow-600'
                 : 'bg-white/20 text-white border-white/50'
@@ -565,7 +598,7 @@ const QuestionDisplay = () => {
         {shouldShowSectionReviewButton() && (
           <button
             onClick={handleSectionReview}
-            className="mx-4 px-6 py-2 bg-purple-500 text-white rounded-lg font-bold border border-purple-600 hover:bg-purple-600 transition"
+            className="mx-2 md:mx-4 px-3 md:px-6 py-2 bg-purple-500 text-white rounded-lg font-bold border border-purple-600 hover:bg-purple-600 transition text-sm md:text-base"
           >
             <Eye className="h-4 w-4 inline ml-2" />
             مراجعة القسم
@@ -573,7 +606,7 @@ const QuestionDisplay = () => {
         )}
 
         <button
-          className="flex items-center gap-1 text-lg font-bold"
+          className="flex items-center gap-1 text-base md:text-lg font-bold"
           onClick={handleNext}
           disabled={!canProceed}
         >
@@ -585,3 +618,4 @@ const QuestionDisplay = () => {
 };
 
 export default QuestionDisplay;
+
