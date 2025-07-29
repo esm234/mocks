@@ -480,10 +480,11 @@ const QuestionDisplay = () => {
         
         {/* باقي العناصر */}
         <div className="flex items-center gap-3 flex-row-reverse">
-          <select className="rounded px-2 py-1 text-black bg-white">
-            <option>خط عادي</option>
-            <option>خط كبير</option>
-          </select>
+    {!isMobile && (
+      <select className="rounded px-2 py-1 text-black bg-white">
+        <option>خط عادي</option>
+        <option>خط كبير</option>
+      </select>
           
           <button
             className={`bg-white/30 text-white px-3 py-1 rounded border border-white/50 ${isDeferred ? 'ring-2 ring-yellow-400' : ''}`}
@@ -570,49 +571,49 @@ const QuestionDisplay = () => {
       </div>
 
       {/* الشريط السفلي */}
-      <div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3">
-        <button
-          className="flex items-center gap-1 text-base md:text-lg font-bold disabled:opacity-50"
-          disabled={!canGoPrevious()}
-          onClick={handlePrevious}
-        >
-          ◀ السابق
-        </button>
+<div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3">
+  <button
+    className="flex items-center gap-1 text-base md:text-lg font-bold disabled:opacity-50"
+    disabled={!canGoPrevious()}
+    onClick={handlePrevious}
+  >
+    ▶ السابق
+  </button>
 
-        {/* زر التأجيل في الوسط */}
-        {!hideDeferButton && (
-          <button
-            onClick={handleDeferToggle}
-            className={`mx-2 md:mx-4 px-3 md:px-6 py-2 rounded-lg font-bold border transition text-sm md:text-base ${
-              isDeferred
-                ? 'bg-yellow-500 text-black border-yellow-600'
-                : 'bg-white/20 text-white border-white/50'
-            }`}
-          >
-            <Bookmark className="h-4 w-4 inline ml-2" />
-            {isDeferred ? 'إلغاء التأجيل' : 'تأجيل'}
-          </button>
-        )}
+  {/* Defer Button */}
+  {!hideDeferButton && (
+    <button
+      onClick={handleDeferToggle}
+      className={`mx-2 md:mx-4 px-3 md:px-6 py-2 rounded-lg font-bold border transition text-sm md:text-base ${
+        isDeferred
+          ? 'bg-yellow-500 text-black border-yellow-600'
+          : 'bg-white/20 text-white border-white/50'
+      }`}
+    >
+      <Bookmark className="h-4 w-4 inline ml-2" />
+      {isDeferred ? 'إلغاء التأجيل' : 'تأجيل'}
+    </button>
+  )}
 
-        {/* زر مراجعة القسم */}
-        {shouldShowSectionReviewButton() && (
-          <button
-            onClick={handleSectionReview}
-            className="mx-2 md:mx-4 px-3 md:px-6 py-2 bg-purple-500 text-white rounded-lg font-bold border border-purple-600 hover:bg-purple-600 transition text-sm md:text-base"
-          >
-            <Eye className="h-4 w-4 inline ml-2" />
-            مراجعة القسم
-          </button>
-        )}
+  {/* Section Review Button */}
+  {shouldShowSectionReviewButton() && (
+    <button
+      onClick={handleSectionReview}
+      className="mx-2 md:mx-4 px-3 md:px-6 py-2 bg-purple-500 text-white rounded-lg font-bold border border-purple-600 hover:bg-purple-600 transition text-sm md:text-base"
+    >
+      <Eye className="h-4 w-4 inline ml-2" />
+      مراجعة القسم
+    </button>
+  )}
 
-        <button
-          className="flex items-center gap-1 text-base md:text-lg font-bold"
-          onClick={handleNext}
-          disabled={!canProceed}
-        >
-          التالي ▶
-        </button>
-      </div>
+  <button
+    className="flex items-center gap-1 text-base md:text-lg font-bold"
+    onClick={handleNext}
+    disabled={!canProceed}
+  >
+    التالي ◀
+  </button>
+</div>
     </div>
   );
 };
