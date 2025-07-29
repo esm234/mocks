@@ -79,24 +79,20 @@ const ReviewScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300" dir="rtl">
       {/* Header - Mobile Optimized */}
-      <div className="bg-blue-900 text-white px-4 py-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">مراجعة جميع الأسئلة</h1>
-          {examMode === 'sectioned' && (
-            <p className="text-blue-200 text-sm sm:text-base">القسم {currentSection}</p>
-          )}
-          <Button 
-            variant="ghost" 
-            className="absolute top-3 right-3 sm:top-6 sm:right-6 text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm border border-white/30 px-3 py-2 sm:px-6 sm:py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm sm:text-base" 
-            onClick={() => window.location.href = '/'}
-          >
-            <Home className="h-4 w-4 sm:h-6 sm:w-6 ml-1 sm:ml-2" />
-            <span className="font-bold hidden sm:inline">الصفحة الرئيسية</span>
-            <span className="font-bold sm:hidden">الرئيسية</span>
-          </Button>
+      <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
+        <div className="font-bold text-white text-lg">
+          محاكي our goal - مراجعة جميع الأسئلة
         </div>
+        <Button 
+          variant="ghost" 
+          className="text-white hover:bg-white/20 bg-white/10 backdrop-blur-sm border border-white/30 px-3 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-sm"
+          onClick={() => window.location.href = '/'}
+        >
+          <Home className="h-4 w-4 ml-1" />
+          <span className="font-bold">الصفحة الرئيسية</span>
+        </Button>
       </div>
 
       {/* Statistics Cards - Mobile Optimized */}
