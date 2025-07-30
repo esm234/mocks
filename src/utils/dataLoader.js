@@ -5,29 +5,47 @@ import rcBank4Data from '../data/rcbank4.json';
 import rcBank5Data from '../data/rcbank5.json';
 import oddData from '../data/odd.json';
 
+// Simple hash function for creating unique IDs
+const createSimpleHash = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash).toString(36);
+};
+
 // Normalize question data structure and assign a truly unique ID
-const normalizeQuestion = (question, type, sourceIndex) => {
-  const contentString = JSON.stringify({
-    question: question.question,
-    choices: question.choices,
+const normalizeQuestion = (question, type, sourceIndex, sourceFile = '') => {
+  // Create a truly unique identifier that includes all unique aspects
+  const uniqueContent = {
+    question: question.question || '',
+    choices: Array.isArray(question.choices) ? question.choices : [],
     answer: question.answer,
-    passage: question.passage
-  });
+    passage: question.passage || null,
+    question_number: question.question_number || sourceIndex + 1,
+    source: sourceFile,
+    type: type
+  };
   
-  const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
-  const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
+  const contentString = JSON.stringify(uniqueContent);
+  const contentHash = createSimpleHash(contentString);
+  
+  // Create unique ID with more specificity
+  const uniqueId = `${type}-${sourceFile}-${sourceIndex}-${contentHash}`;
 
   return {
     id: uniqueId,
     question_number: question.question_number || sourceIndex + 1,
     question: question.question || '',
     type: type,
-    choices: question.choices || [],
+    choices: Array.isArray(question.choices) ? [...question.choices] : [],
     answer: question.answer,
     passage: question.passage || null,
     category: question.category || type,
     exam: question.exam || '',
-    passage_id: question.passage ? btoa(unescape(encodeURIComponent(question.passage))).substring(0, 12) : null
+    passage_id: question.passage ? createSimpleHash(question.passage) : null
   };
 };
 
@@ -55,7 +73,7 @@ const initialQuestionPools = (() => {
     if (analogyData && Array.isArray(analogyData)) {
       analogyData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.analogy.push(normalizeQuestion(q, 'analogy', index));
+          pools.analogy.push(normalizeQuestion(q, 'analogy', index, 'analogy'));
         }
       });
     }
@@ -63,7 +81,7 @@ const initialQuestionPools = (() => {
     if (completionData && Array.isArray(completionData)) {
       completionData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.completion.push(normalizeQuestion(q, 'completion', index));
+          pools.completion.push(normalizeQuestion(q, 'completion', index, 'completion'));
         }
       });
     }
@@ -71,7 +89,7 @@ const initialQuestionPools = (() => {
     if (errorData && Array.isArray(errorData)) {
       errorData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.error.push(normalizeQuestion(q, 'error', index));
+          pools.error.push(normalizeQuestion(q, 'error', index, 'error'));
         }
       });
     }
@@ -79,7 +97,7 @@ const initialQuestionPools = (() => {
     if (rcBank4Data && Array.isArray(rcBank4Data)) {
       rcBank4Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.rc.push(normalizeQuestion(q, 'rc', index));
+          pools.rc.push(normalizeQuestion(q, 'rc', index, 'rcbank4'));
         }
       });
     }
@@ -87,7 +105,7 @@ const initialQuestionPools = (() => {
     if (rcBank5Data && Array.isArray(rcBank5Data)) {
       rcBank5Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.rc.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
+          pools.rc.push(normalizeQuestion(q, 'rc', index, 'rcbank5'));
         }
       });
     }
@@ -95,7 +113,7 @@ const initialQuestionPools = (() => {
     if (oddData && Array.isArray(oddData)) {
       oddData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.odd.push(normalizeQuestion(q, 'odd', index));
+          pools.odd.push(normalizeQuestion(q, 'odd', index, 'odd'));
         }
       });
     }
@@ -114,6 +132,15 @@ const initialQuestionPools = (() => {
   
   return pools;
 })();
+
+// Function to get all questions for use in folder management
+export const getAllQuestions = () => {
+  const allQuestions = [];
+  Object.values(initialQuestionPools).forEach(pool => {
+    allQuestions.push(...pool);
+  });
+  return allQuestions;
+};
 
 // Group RC questions by passage for sequential ordering and limit per passage
 export const groupRCQuestionsByPassage = (rcQuestions, maxQuestionsPerPassage) => {
@@ -138,6 +165,24 @@ export const groupRCQuestionsByPassage = (rcQuestions, maxQuestionsPerPassage) =
   return finalPassageGroups;
 };
 
+// Helper function to ensure answer is in correct format
+const normalizeAnswer = (question) => {
+  const processedQuestion = { ...question };
+  
+  // Ensure answer is converted to index if it's stored as text
+  if (typeof processedQuestion.answer === 'string' && processedQuestion.choices && processedQuestion.choices.length > 0) {
+    const answerIndex = processedQuestion.choices.findIndex(choice => choice === processedQuestion.answer);
+    processedQuestion.answer = answerIndex >= 0 ? answerIndex : 0;
+  }
+  
+  // Ensure answer is a number
+  if (typeof processedQuestion.answer !== 'number') {
+    processedQuestion.answer = 0;
+  }
+  
+  return processedQuestion;
+};
+
 // Generate exam with exactly 65 questions (5 sections × 13 questions each)
 export const generateExam = (config = {}) => {
   console.log('generateExam called with config:', config);
@@ -148,11 +193,55 @@ export const generateExam = (config = {}) => {
     examMode = 'sectioned',
     rcQuestionOrder = 'sequential',
     questionTypeFilter = 'all',
-    selectedQuestionType = null
+    selectedQuestionType = null,
+    folderQuestions = null
   } = config;
 
   let examQuestions = [];
   const usedQuestionIds = new Set();
+
+  // Folder mode - use provided folder questions
+  if (folderQuestions && Array.isArray(folderQuestions) && folderQuestions.length > 0) {
+    console.log(`Generating folder exam with ${folderQuestions.length} questions`);
+    
+    folderQuestions.forEach((q, index) => {
+      const processedQuestion = normalizeAnswer({
+        ...q,
+        question_number: index + 1,
+        section: 1,
+        original_type: q.type
+      });
+
+      // Shuffle choices if requested
+      if (shuffleChoices && processedQuestion.choices && processedQuestion.choices.length > 0) {
+        const originalChoices = [...processedQuestion.choices];
+        const originalAnswer = processedQuestion.answer;
+        let originalCorrectChoice;
+        
+        if (typeof originalAnswer === 'number' && originalAnswer < originalChoices.length) {
+          originalCorrectChoice = originalChoices[originalAnswer];
+        } else {
+          originalCorrectChoice = originalAnswer;
+        }
+        
+        const shuffledChoices = shuffleArray(originalChoices);
+        const newAnswerIndex = shuffledChoices.findIndex(choice => choice === originalCorrectChoice);
+        
+        processedQuestion.choices = shuffledChoices;
+        processedQuestion.answer = newAnswerIndex >= 0 ? newAnswerIndex : 0;
+      }
+
+      examQuestions.push(processedQuestion);
+    });
+
+    return {
+      questions: examQuestions,
+      totalQuestions: examQuestions.length,
+      totalSections: 1,
+      questionsPerSection: examQuestions.length,
+      structure: { folder: examQuestions.length }
+    };
+  }
 
   // Determine if this is single section mode
   const isSingleMode = examMode === 'single' || questionTypeFilter === 'specific';
@@ -218,18 +307,12 @@ export const generateExam = (config = {}) => {
 
     // Process questions for single mode
     selectedQuestions.forEach((q, index) => {
-      const processedQuestion = {
+      const processedQuestion = normalizeAnswer({
         ...q,
         question_number: index + 1,
         section: 1,
         original_type: q.type
-      };
-
-      // Ensure answer is converted to index if it's stored as text
-      if (typeof processedQuestion.answer === 'string' && processedQuestion.choices) {
-        const answerIndex = processedQuestion.choices.findIndex(choice => choice === processedQuestion.answer);
-        processedQuestion.answer = answerIndex >= 0 ? answerIndex : 0;
-      }
+      });
 
       // Shuffle choices if requested
       if (shuffleChoices && processedQuestion.choices && processedQuestion.choices.length > 0) {
@@ -237,7 +320,7 @@ export const generateExam = (config = {}) => {
         const originalAnswer = processedQuestion.answer;
         let originalCorrectChoice;
         
-        if (typeof originalAnswer === 'number') {
+        if (typeof originalAnswer === 'number' && originalAnswer < originalChoices.length) {
           originalCorrectChoice = originalChoices[originalAnswer];
         } else {
           originalCorrectChoice = originalAnswer;
@@ -342,17 +425,11 @@ export const generateExam = (config = {}) => {
 
       // Process questions
       questionsToAdd.forEach(q => {
-        const processedQuestion = {
+        const processedQuestion = normalizeAnswer({
           ...q,
           section: section,
           original_type: q.type
-        };
-
-        // Ensure answer is converted to index if it's stored as text
-        if (typeof processedQuestion.answer === 'string' && processedQuestion.choices) {
-          const answerIndex = processedQuestion.choices.findIndex(choice => choice === processedQuestion.answer);
-          processedQuestion.answer = answerIndex >= 0 ? answerIndex : 0;
-        }
+        });
 
         // Shuffle choices if requested
         if (shuffleChoices && processedQuestion.choices && processedQuestion.choices.length > 0) {
@@ -360,7 +437,7 @@ export const generateExam = (config = {}) => {
           const originalAnswer = processedQuestion.answer;
           let originalCorrectChoice;
           
-          if (typeof originalAnswer === 'number') {
+          if (typeof originalAnswer === 'number' && originalAnswer < originalChoices.length) {
             originalCorrectChoice = originalChoices[originalAnswer];
           } else {
             originalCorrectChoice = originalAnswer;
@@ -405,6 +482,6 @@ export const generateExam = (config = {}) => {
 export default {
   generateExam,
   groupRCQuestionsByPassage,
-  shuffleArray
+  shuffleArray,
+  getAllQuestions
 };
-
