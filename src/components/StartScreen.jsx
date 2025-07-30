@@ -241,9 +241,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
   </div>
 </div>
 
-            </div>
-          </div>
-        </div>
 
         {/* Main Content Area */}
         <div className="max-w-6xl mx-auto px-6 py-12">
