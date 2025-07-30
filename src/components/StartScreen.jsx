@@ -86,9 +86,9 @@ const StartScreen = ({ onShowFolderManagement }) => {
       title: 'التناظر اللفظي', 
       subtitle: 'العلاقات والمقارنات', 
       icon: Brain,
-      color: 'from-purple-600 to-teal-600',
+      color: 'from-purple-700 to-indigo-600',
       bgColor: 'bg-purple-900/20',
-      borderColor: 'border-purple-500',
+      borderColor: 'border-purple-700',
       shadow: 'shadow-purple-500/20',
       stats: '1200+ سؤال'
     },
@@ -97,10 +97,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
       title: 'إكمال الجمل', 
       subtitle: 'ملء الفراغات بدقة', 
       icon: BookText,
-      color: 'from-teal-600 to-emerald-600',
-      bgColor: 'bg-teal-900/20',
-      borderColor: 'border-teal-500',
-      shadow: 'shadow-teal-500/20',
+      color: 'from-green-700 to-teal-600',
+      bgColor: 'bg-green-900/20',
+      borderColor: 'border-green-700',
+      shadow: 'shadow-green-500/20',
       stats: '950+ سؤال'
     },
     { 
@@ -108,10 +108,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
       title: 'الخطأ السياقي', 
       subtitle: 'تحديد الأخطاء', 
       icon: Target,
-      color: 'from-purple-600 to-pink-600',
-      bgColor: 'bg-purple-900/20',
-      borderColor: 'border-purple-500',
-      shadow: 'shadow-purple-500/20',
+      color: 'from-rose-700 to-pink-600',
+      bgColor: 'bg-rose-900/20',
+      borderColor: 'border-rose-700',
+      shadow: 'shadow-rose-500/20',
       stats: '800+ سؤال'
     },
     { 
@@ -119,10 +119,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
       title: 'استيعاب المقروء', 
       subtitle: 'فهم النصوص', 
       icon: Lightbulb,
-      color: 'from-teal-600 to-green-600',
-      bgColor: 'bg-teal-900/20',
-      borderColor: 'border-teal-500',
-      shadow: 'shadow-teal-500/20',
+      color: 'from-amber-700 to-orange-600',
+      bgColor: 'bg-amber-900/20',
+      borderColor: 'border-amber-700',
+      shadow: 'shadow-amber-500/20',
       stats: '1500+ سؤال'
     },
     { 
@@ -130,10 +130,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
       title: 'المفردة الشاذة', 
       subtitle: 'تحديد المختلف', 
       icon: Sparkles,
-      color: 'from-purple-600 to-teal-600',
-      bgColor: 'bg-purple-900/20',
-      borderColor: 'border-purple-500',
-      shadow: 'shadow-purple-500/20',
+      color: 'from-cyan-700 to-blue-600',
+      bgColor: 'bg-cyan-900/20',
+      borderColor: 'border-cyan-700',
+      shadow: 'shadow-cyan-500/20',
       stats: '700+ سؤال'
     }
   ];
@@ -190,36 +190,53 @@ const StartScreen = ({ onShowFolderManagement }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-teal-950 to-purple-950 text-white overflow-hidden relative" dir="rtl">
+    <div className="min-h-screen bg-gradient-to-br from-purple-950 via-indigo-950 to-purple-900 text-white overflow-hidden relative" dir="rtl">
+      {/* Premium Animated Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Floating Orbs */}
+        <div className="absolute top-10 right-20 w-96 h-96 bg-gradient-to-r from-purple-700/10 to-indigo-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 left-10 w-[500px] h-[500px] bg-gradient-to-r from-green-700/8 to-teal-600/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-gradient-to-r from-amber-700/5 to-orange-600/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        
+        {/* Light Beams */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-white/1 to-transparent transform rotate-45"></div>
+      </div>
+
       <div className="relative z-10">
-        <div className="sticky top-0 bg-black/60 backdrop-blur-2xl border-b border-teal-900/20 z-40">
+        {/* Premium Header */}
+        <div className="sticky top-0 bg-black/60 backdrop-blur-2xl border-b border-white/10 z-40">
           <div className="max-w-7xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3 space-x-reverse">
                 <div className="relative">
-                  <div className="p-3 bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl shadow-lg shadow-teal-500/30">
+                  <div className="p-3 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-xl shadow-lg shadow-purple-500/30">
                     <Diamond className="h-8 w-8 text-white" />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-teal-400 rounded-full animate-ping"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-ping"></div>
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-teal-400 bg-clip-text text-transparent">
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                     محاكي أور  
                   </h1>
                   <p className="text-sm text-gray-400">المرحلة {currentStep} من 3</p>
                 </div>
               </div>
               
+              {/* Folder Management Button */}
               <div className="flex items-center gap-4">
                 <button
                   onClick={onShowFolderManagement}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-600 to-purple-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg shadow-teal-500/30"
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-700 to-teal-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg shadow-green-500/30"
                 >
                   <Folder className="h-4 w-4" />
                   مجلداتي
                 </button>
               </div>
               
+              {/* Luxury Progress Steps */}
               <div className="flex items-center space-x-6 space-x-reverse">
                 {[1, 2, 3].map((step) => (
                   <button
@@ -227,7 +244,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     onClick={() => handleStepChange(step)}
                     className={`relative w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
                       currentStep >= step
-                        ? 'bg-gradient-to-r from-purple-600 to-teal-600 text-white shadow-xl shadow-teal-500/30'
+                        ? 'bg-gradient-to-r from-purple-700 to-indigo-600 text-white shadow-xl shadow-purple-500/30'
                         : 'bg-gray-800/50 text-gray-500 hover:bg-gray-700/50'
                     }`}
                   >
@@ -237,33 +254,36 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       <span className="text-lg">{step}</span>
                     )}
                     {currentStep >= step && (
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-teal-600 opacity-30 animate-pulse"></div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-700 to-indigo-600 opacity-30 animate-pulse"></div>
                     )}
                   </button>
                 ))}
               </div>
             </div>
             
+            {/* Elegant Progress Bar */}
             <div className="mt-4 w-full bg-gray-800/30 rounded-full h-1.5 overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-purple-500 to-teal-500 rounded-full transition-all duration-700 ease-out shadow-lg shadow-teal-500/30"
+                className="h-full bg-gradient-to-r from-green-700 to-teal-600 rounded-full transition-all duration-700 ease-out shadow-lg shadow-green-500/30"
                 style={{ width: `${(currentStep / 3) * 100}%` }}
               ></div>
             </div>
           </div>
         </div>
 
+        {/* Main Content */}
         <div className="max-w-6xl mx-auto px-6 py-12">
+          {/* Step 1: Question Type Selection */}
           {currentStep === 1 && (
             <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-6' : 'opacity-100 translate-y-0'}`}>
               <div className="text-center mb-16">
                 <div className="relative inline-block">
-                  <div className="p-6 bg-gradient-to-r from-purple-600 to-teal-600 rounded-3xl shadow-2xl shadow-teal-500/30 mb-6">
+                  <div className="p-6 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-3xl shadow-2xl shadow-purple-500/30 mb-6">
                     <Crown className="h-20 w-20 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-teal-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-teal-400 bg-clip-text text-transparent animate-gradient">
+                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent animate-gradient">
                   اختر نمط التدريب
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
@@ -271,75 +291,78 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 </p>
               </div>
 
+              {/* Premium Question Type Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                {/* All Types Option */}
                 <div 
                   onClick={() => updateSetting('questionTypeFilter', 'all')}
                   className={`group relative p-10 rounded-3xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
                     questionTypeFilter === 'all'
-                      ? 'border-purple-500 bg-gradient-to-br from-purple-900/30 to-teal-900/30 shadow-2xl shadow-teal-500/30'
+                      ? 'border-purple-700 bg-gradient-to-br from-purple-900/30 to-indigo-900/30 shadow-2xl shadow-purple-500/30'
                       : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
                   }`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-teal-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-700/5 to-indigo-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative flex items-center justify-between mb-8">
                     <div className={`p-5 rounded-2xl ${
                       questionTypeFilter === 'all' 
-                        ? 'bg-gradient-to-r from-purple-600 to-teal-600 shadow-lg shadow-teal-500/30' 
+                        ? 'bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg shadow-purple-500/30' 
                         : 'bg-gray-700 group-hover:bg-gray-600'
                     } transition-all duration-500`}>
                       <Gem className="h-10 w-10 text-white" />
                     </div>
                     {questionTypeFilter === 'all' && (
-                      <div className="p-3 bg-gradient-to-r from-purple-600 to-teal-600 rounded-full shadow-lg">
+                      <div className="p-3 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
                         <Check className="h-6 w-6 text-white" />
                       </div>
                     )}
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-teal-400 bg-clip-text text-transparent">
+                  <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
                     تدريب شامل
                   </h3>
                   <p className="text-gray-300 mb-6 text-lg leading-relaxed">
                     اختبار متكامل يغطي جميع أنواع الأسئلة
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="px-4 py-2 bg-gradient-to-r from-purple-600/20 to-teal-600/20 text-teal-300 rounded-full text-sm font-medium">
+                    <span className="px-4 py-2 bg-gradient-to-r from-purple-700/20 to-indigo-600/20 text-purple-300 rounded-full text-sm font-medium">
                       الأكثر شمولية
                     </span>
                     <span className="text-gray-400 font-medium">5000+ سؤال</span>
                   </div>
                 </div>
 
+                {/* Specific Type Option */}
                 <div 
                   onClick={() => updateSetting('questionTypeFilter', 'specific')}
                   className={`group relative p-10 rounded-3xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
                     questionTypeFilter === 'specific'
-                      ? 'border-teal-500 bg-gradient-to-br from-teal-900/30 to-purple-900/30 shadow-2xl shadow-teal-500/30'
+                      ? 'border-green-700 bg-gradient-to-br from-green-900/30 to-teal-900/30 shadow-2xl shadow-green-500/30'
                       : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
                   }`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-600/5 to-purple-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-700/5 to-teal-600/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="relative flex items-center justify-between mb-8">
                     <div className={`p-5 rounded-2xl ${
                       questionTypeFilter === 'specific' 
-                        ? 'bg-gradient-to-r from-teal-600 to-purple-600 shadow-lg shadow-teal-500/30' 
+                        ? 'bg-gradient-to-r from-green-700 to-teal-600 shadow-lg shadow-green-500/30' 
                         : 'bg-gray-700 group-hover:bg-gray-600'
                     } transition-all duration-500`}>
                       <Target className="h-10 w-10 text-white" />
                     </div>
                     {questionTypeFilter === 'specific' && (
-                      <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full shadow-lg">
+                      <div className="p-3 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
                         <Check className="h-6 w-6 text-white" />
                       </div>
                     )}
                   </div>
-                  <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-teal-400 to-purple-400 bg-clip-text text-transparent">
+                  <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">
                     تدريب مُركز
                   </h3>
                   <p className="text-gray-300 mb-6 text-lg leading-relaxed">
                     تركيز عالي على نوع محدد من الأسئلة
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="px-4 py-2 bg-gradient-to-r from-teal-600/20 to-purple-600/20 text-purple-300 rounded-full text-sm font-medium">
+                    <span className="px-4 py-2 bg-gradient-to-r from-green-700/20 to-teal-600/20 text-green-300 rounded-full text-sm font-medium">
                       تخصصي
                     </span>
                     <span className="text-gray-400 font-medium">
@@ -351,6 +374,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 </div>
               </div>
 
+              {/* Enhanced Question Type Grid */}
               {questionTypeFilter === 'specific' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in slide-in-from-bottom-6 duration-700">
                   {questionTypeOptions.map((type) => {
@@ -387,16 +411,17 @@ const StartScreen = ({ onShowFolderManagement }) => {
             </div>
           )}
 
+          {/* Step 2: Exam Mode & Timer */}
           {currentStep === 2 && (
             <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-6' : 'opacity-100 translate-y-0'}`}>
               <div className="text-center mb-16">
                 <div className="relative inline-block">
-                  <div className="p-6 bg-gradient-to-r from-teal-600 to-purple-600 rounded-3xl shadow-2xl shadow-teal-500/30 mb-6">
+                  <div className="p-6 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-3xl shadow-2xl shadow-purple-500/30 mb-6">
                     <Settings2 className="h-20 w-20 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-purple-400 bg-clip-text text-transparent animate-gradient">
+                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent animate-gradient">
                   إعدادات التجربة
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
@@ -405,9 +430,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                {/* Exam Mode Section */}
                 <div className="space-y-8">
                   <h3 className="text-3xl font-bold flex items-center gap-4">
-                    <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-xl shadow-lg">
                       <Shuffle className="h-7 w-7 text-white" />
                     </div>
                     نمط الاختبار
@@ -418,7 +444,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       onClick={() => updateSetting('examMode', 'sectioned')}
                       className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
                         examMode === 'sectioned'
-                          ? 'border-teal-500 bg-gradient-to-r from-teal-900/40 to-purple-900/40 shadow-2xl shadow-teal-500/30'
+                          ? 'border-purple-700 bg-gradient-to-r from-purple-900/40 to-indigo-900/40 shadow-2xl shadow-purple-500/30'
                           : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                       }`}
                     >
@@ -426,7 +452,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-xl ${
                             examMode === 'sectioned' 
-                              ? 'bg-gradient-to-r from-teal-600 to-purple-600 shadow-lg' 
+                              ? 'bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg' 
                               : 'bg-gray-700 group-hover:bg-gray-600'
                           } transition-all duration-500`}>
                             <Layers className="h-6 w-6 text-white" />
@@ -434,7 +460,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                           <h4 className="text-xl font-semibold">أقسام مع مراجعة</h4>
                         </div>
                         {examMode === 'sectioned' && (
-                          <div className="p-2 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full shadow-lg">
+                          <div className="p-2 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
                             <Check className="h-5 w-5 text-white" />
                           </div>
                         )}
@@ -448,7 +474,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       onClick={() => updateSetting('examMode', 'single')}
                       className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
                         examMode === 'single'
-                          ? 'border-teal-500 bg-gradient-to-r from-teal-900/40 to-purple-900/40 shadow-2xl shadow-teal-500/30'
+                          ? 'border-purple-700 bg-gradient-to-r from-purple-900/40 to-indigo-900/40 shadow-2xl shadow-purple-500/30'
                           : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                       }`}
                     >
@@ -456,7 +482,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-xl ${
                             examMode === 'single' 
-                              ? 'bg-gradient-to-r from-teal-600 to-purple-600 shadow-lg' 
+                              ? 'bg-gradient-to-r from-purple-700 to-indigo-600 shadow-lg' 
                               : 'bg-gray-700 group-hover:bg-gray-600'
                           } transition-all duration-500`}>
                             <Zap className="h-6 w-6 text-white" />
@@ -464,7 +490,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                           <h4 className="text-xl font-semibold">متتالي ومجمع</h4>
                         </div>
                         {examMode === 'single' && (
-                          <div className="p-2 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full shadow-lg">
+                          <div className="p-2 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
                             <Check className="h-5 w-5 text-white" />
                           </div>
                         )}
@@ -476,9 +502,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                   </div>
                 </div>
 
+                {/* Timer Settings */}
                 <div className="space-y-8">
                   <h3 className="text-3xl font-bold flex items-center gap-4">
-                    <div className="p-3 bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-xl shadow-lg">
                       <Timer className="h-7 w-7 text-white" />
                     </div>
                     إعدادات المؤقت
@@ -489,7 +516,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       onClick={() => updateSetting('timerMode', 'none')}
                       className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
                         timerMode === 'none'
-                          ? 'border-purple-500 bg-gradient-to-r from-purple-900/40 to-teal-900/40 shadow-2xl shadow-purple-500/30'
+                          ? 'border-green-700 bg-gradient-to-r from-green-900/40 to-teal-900/40 shadow-2xl shadow-green-500/30'
                           : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                       }`}
                     >
@@ -497,15 +524,15 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-xl ${
                             timerMode === 'none' 
-                              ? 'bg-gradient-to-r from-purple-600 to-teal-600 shadow-lg' 
+                              ? 'bg-gradient-to-r from-green-700 to-teal-600 shadow-lg' 
                               : 'bg-gray-700 group-hover:bg-gray-600'
-                          } transition-all duration-500">
+                          } transition-all duration-500`}>
                             <Star className="h-6 w-6 text-white" />
                           </div>
                           <h4 className="text-xl font-semibold">بدون مؤقت</h4>
                         </div>
                         {timerMode === 'none' && (
-                          <div className="p-2 bg-gradient-to-r from-purple-600 to-teal-600 rounded-full shadow-lg">
+                          <div className="p-2 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
                             <Check className="h-5 w-5 text-white" />
                           </div>
                         )}
@@ -514,67 +541,69 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         وقت مفتوح للتركيز الكامل على الإجابات بدون ضغط زمني
                       </p>
                     </div>
-<div
-  onClick={() => updateSetting('timerMode', 'total')}
-  className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
-    timerMode === 'total'
-      ? 'border-purple-500 bg-gradient-to-r from-purple-900/40 to-teal-900/40 shadow-2xl shadow-purple-500/30'
-      : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
-  }`}
->
-  <div className="flex items-center justify-between mb-6">
-    <div className="flex items-center gap-4">
-      <div className={`p-3 rounded-xl ${
-        timerMode === 'total' 
-          ? 'bg-gradient-to-r from-purple-600 to-teal-600 shadow-lg' 
-          : 'bg-gray-700 group-hover:bg-gray-600'
-      } transition-all duration-500`}>
-        <Timer className="h-6 w-6 text-white" />
-      </div>
-      <h4 className="text-xl font-semibold">مع مؤقت زمني</h4>
-    </div>
-    {timerMode === 'total' && (
-      <div className="p-2 bg-gradient-to-r from-purple-600 to-teal-600 rounded-full shadow-lg">
-        <Check className="h-5 w-5 text-white" />
-      </div>
-    )}
-  </div>
-  <p className="text-gray-300 text-base leading-relaxed mb-6">
-    تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
-  </p>
-  
-  {timerMode === 'total' && (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
-      {timerDurations.slice(0, 6).map((timer) => (
-        <button
-          key={timer.value}
-          onClick={(e) => {
-            e.stopPropagation();
-            updateSetting('selectedTimerDuration', timer.value);
-          }}
-          className={`relative p-4 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 ${
-            selectedTimerDuration === timer.value
-              ? 'bg-gradient-to-r from-purple-600 to-teal-600 text-white shadow-lg'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-          }`}
-        >
-          {timer.recommended && (
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-teal-400 rounded-full animate-pulse"></div>
-          )}
-          {timer.label}
-        </button>
-      ))}
-    </div>
-  )}
-</div>
+
+                    <div
+                      onClick={() => updateSetting('timerMode', 'total')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        timerMode === 'total'
+                          ? 'border-green-700 bg-gradient-to-r from-green-900/40 to-teal-900/40 shadow-2xl shadow-green-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-xl ${
+                            timerMode === 'total' 
+                              ? 'bg-gradient-to-r from-green-700 to-teal-600 shadow-lg' 
+                              : 'bg-gray-700 group-hover:bg-gray-600'
+                          } transition-all duration-500`}>
+                            <Timer className="h-6 w-6 text-white" />
+                          </div>
+                          <h4 className="text-xl font-semibold">مع مؤقت زمني</h4>
+                        </div>
+                        {timerMode === 'total' && (
+                          <div className="p-2 bg-gradient-to-r from-green-700 to-teal-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-base leading-relaxed mb-6">
+                        تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
+                      </p>
+                      
+                      {timerMode === 'total' && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+                          {timerDurations.slice(0, 6).map((timer) => (
+                            <button
+                              key={timer.value}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                updateSetting('selectedTimerDuration', timer.value);
+                              }}
+                              className={`relative p-4 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                                selectedTimerDuration === timer.value
+                                  ? 'bg-gradient-to-r from-green-700 to-teal-600 text-white shadow-lg'
+                                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                              }`}
+                            >
+                              {timer.recommended && (
+                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                              )}
+                              {timer.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
 
+              {/* Reading Comprehension Order */}
               {(questionTypeFilter === 'all' || (questionTypeFilter === 'specific' && selectedQuestionType === 'rc')) && (
-                <div className="mt-16 p-10 bg-gradient-to-r from-teal-900/20 to-purple-900/20 rounded-3xl border border-teal-700/30 shadow-xl">
+                <div className="mt-16 p-10 bg-gradient-to-r from-amber-900/20 to-orange-900/20 rounded-3xl border border-amber-700/30 shadow-xl">
                   <h3 className="text-2xl font-bold flex items-center gap-4 mb-8">
-                    <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-amber-700 to-orange-600 rounded-xl shadow-lg">
                       <BookText className="h-6 w-6 text-white" />
                     </div>
                     ترتيب أسئلة استيعاب المقروء
@@ -585,14 +614,14 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       onClick={() => updateSetting('rcQuestionOrder', 'sequential')}
                       className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
                         rcQuestionOrder === 'sequential'
-                          ? 'border-teal-500 bg-teal-900/40 shadow-2xl shadow-teal-500/30'
+                          ? 'border-amber-700 bg-amber-900/40 shadow-2xl shadow-amber-500/30'
                           : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-6">
                         <h4 className="text-xl font-semibold">ترتيب متتالي</h4>
                         {rcQuestionOrder === 'sequential' && (
-                          <div className="p-2 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full shadow-lg">
+                          <div className="p-2 bg-gradient-to-r from-amber-700 to-orange-600 rounded-full shadow-lg">
                             <Check className="h-5 w-5 text-white" />
                           </div>
                         )}
@@ -606,14 +635,14 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       onClick={() => updateSetting('rcQuestionOrder', 'random')}
                       className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
                         rcQuestionOrder === 'random'
-                          ? 'border-teal-500 bg-teal-900/40 shadow-2xl shadow-teal-500/30'
+                          ? 'border-amber-700 bg-amber-900/40 shadow-2xl shadow-amber-500/30'
                           : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-6">
                         <h4 className="text-xl font-semibold">ترتيب عشوائي</h4>
                         {rcQuestionOrder === 'random' && (
-                          <div className="p-2 bg-gradient-to-r from-teal-600 to-purple-600 rounded-full shadow-lg">
+                          <div className="p-2 bg-gradient-to-r from-amber-700 to-orange-600 rounded-full shadow-lg">
                             <Check className="h-5 w-5 text-white" />
                           </div>
                         )}
@@ -628,16 +657,17 @@ const StartScreen = ({ onShowFolderManagement }) => {
             </div>
           )}
 
+          {/* Step 3: Review & Start */}
           {currentStep === 3 && (
             <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-6' : 'opacity-100 translate-y-0'}`}>
               <div className="text-center mb-16">
                 <div className="relative inline-block">
-                  <div className="p-6 bg-gradient-to-r from-teal-600 to-purple-600 rounded-3xl shadow-2xl shadow-teal-500/30 mb-6">
+                  <div className="p-6 bg-gradient-to-r from-green-700 to-teal-600 rounded-3xl shadow-2xl shadow-green-500/30 mb-6">
                     <Rocket className="h-20 w-20 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-teal-400 to-purple-400 bg-clip-text text-transparent animate-gradient">
+                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent animate-gradient">
                   كل شيء جاهز!
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
@@ -645,10 +675,12 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 </p>
               </div>
 
+              {/* Premium Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-                <div className="p-8 bg-gradient-to-br from-purple-900/30 to-teal-900/30 rounded-2xl border border-purple-700/30 shadow-xl shadow-teal-500/20">
+                {/* Question Type Summary */}
+                <div className="p-8 bg-gradient-to-br from-purple-900/30 to-indigo-900/30 rounded-2xl border border-purple-700/30 shadow-xl shadow-purple-500/20">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-xl shadow-lg">
                       <Brain className="h-6 w-6 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold">نوع التدريب</h3>
@@ -658,7 +690,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                       {questionTypeFilter === 'all' ? 'تدريب شامل' : 'تدريب مُركز'}
                     </p>
                     {questionTypeFilter === 'specific' && (
-                      <p className="text-teal-300 text-base">
+                      <p className="text-purple-300 text-base">
                         {getCurrentQuestionType()?.title}
                       </p>
                     )}
@@ -668,9 +700,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                   </div>
                 </div>
 
-                <div className="p-8 bg-gradient-to-br from-teal-900/30 to-purple-900/30 rounded-2xl border border-teal-700/30 shadow-xl shadow-purple-500/20">
+                {/* Exam Mode Summary */}
+                <div className="p-8 bg-gradient-to-br from-purple-900/30 to-indigo-900/30 rounded-2xl border border-purple-700/30 shadow-xl shadow-purple-500/20">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-gradient-to-r from-teal-600 to-purple-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-purple-700 to-indigo-600 rounded-xl shadow-lg">
                       <Layers className="h-6 w-6 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold">نمط الاختبار</h3>
@@ -687,9 +720,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                   </div>
                 </div>
 
-                <div className="p-8 bg-gradient-to-br from-purple-900/30 to-teal-900/30 rounded-2xl border border-purple-700/30 shadow-xl shadow-teal-500/20">
+                {/* Timer Summary */}
+                <div className="p-8 bg-gradient-to-br from-green-900/30 to-teal-900/30 rounded-2xl border border-green-700/30 shadow-xl shadow-green-500/20">
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="p-3 bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl shadow-lg">
+                    <div className="p-3 bg-gradient-to-r from-green-700 to-teal-600 rounded-xl shadow-lg">
                       <Timer className="h-6 w-6 text-white" />
                     </div>
                     <h3 className="text-xl font-semibold">المؤقت</h3>
@@ -698,19 +732,20 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     <p className="text-white font-medium text-lg">
                       {timerMode === 'none' ? 'بدون مؤقت' : getSelectedTimerInfo()?.label}
                     </p>
-                    <p className="text-teal-300 text-base">
+                    <p className="text-green-300 text-base">
                       {timerMode === 'none' ? 'وقت مفتوح' : 'تدريب واقعي'}
                     </p>
                   </div>
                 </div>
               </div>
 
+              {/* Premium Start Button */}
               <div className="text-center">
                 <button
                   onClick={handleStartExam}
-                  className="group relative inline-flex items-center gap-4 px-16 py-8 text-2xl font-bold text-white bg-gradient-to-r from-teal-600 to-purple-600 rounded-3xl shadow-2xl shadow-teal-500/40 hover:shadow-teal-500/60 transition-all duration-500 hover:scale-105 overflow-hidden"
+                  className="group relative inline-flex items-center gap-4 px-16 py-8 text-2xl font-bold text-white bg-gradient-to-r from-green-700 via-teal-600 to-green-700 rounded-3xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 transition-all duration-500 hover:scale-105 overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-600 via-teal-500 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
                   <div className="relative flex items-center gap-4">
                     <Rocket className="h-8 w-8 group-hover:translate-y-1 transition-transform duration-500" />
@@ -727,7 +762,8 @@ const StartScreen = ({ onShowFolderManagement }) => {
           )}
         </div>
 
-        <div className="sticky bottom-0 bg-black/60 backdrop-blur-2xl border-t border-teal-900/20">
+        {/* Premium Navigation */}
+        <div className="sticky bottom-0 bg-black/60 backdrop-blur-2xl border-t border-white/10">
           <div className="max-w-6xl mx-auto px-6 py-6">
             <div className="flex justify-between items-center">
               <button
@@ -754,7 +790,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
               {currentStep < 3 ? (
                 <button
                   onClick={handleNext}
-                  className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-teal-600 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-500 shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50"
+                  className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-green-700 to-teal-600 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-500 shadow-lg shadow-green-500/30 hover:shadow-green-500/50"
                 >
                   التالي
                   <ChevronLeft className="h-6 w-6" />
