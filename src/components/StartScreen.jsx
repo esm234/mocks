@@ -237,28 +237,29 @@ const StartScreen = ({ onShowFolderManagement }) => {
               </div>
               
               {/* Luxury Progress Steps */}
-              <div className="flex items-center space-x-6 space-x-reverse">
-                {[1, 2, 3].map((step) => (
-                  <button
-                    key={step}
-                    onClick={() => handleStepChange(step)}
-                    className={`relative w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
-                      currentStep >= step
-                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl shadow-purple-500/30'
-                        : 'bg-gray-800/50 text-gray-500 hover:bg-gray-700/50'
-                    }`}
-                  >
-                    {currentStep > step ? (
-                      <Check className="h-6 w-6" />
-                    ) : (
-                      <span className="text-lg">{step}</span>
-                    )}
-                    {currentStep >= step && (
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 animate-pulse"></div>
-                    )}
-                  </button>
-                ))}
-              </div>
+<div className="flex items-center justify-center space-x-6 space-x-reverse flex-wrap">
+  {[1, 2, 3].map((step) => (
+    <button
+      key={step}
+      onClick={() => handleStepChange(step)}
+      className={`relative w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
+        currentStep >= step
+          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl shadow-purple-500/30'
+          : 'bg-gray-800/50 text-gray-500 hover:bg-gray-700/50'
+      }`}
+    >
+      {currentStep > step ? (
+        <Check className="h-6 w-6" />
+      ) : (
+        <span className="text-lg md:text-xl">{step}</span> // Adjusted font size for responsiveness
+      )}
+      {currentStep >= step && (
+        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 animate-pulse"></div>
+      )}
+    </button>
+  ))}
+</div>
+
             </div>
             
             {/* Elegant Progress Bar */}
