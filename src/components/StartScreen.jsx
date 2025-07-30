@@ -187,57 +187,60 @@ const StartScreen = ({ onShowFolderManagement }) => {
       </div>
 
       <div className="relative z-10">
-        {/* Header with Dynamic Progress */}
-        <div className="sticky top-0 bg-black/40 backdrop-blur-xl border-b border-gray-700/50 z-40">
-          <div className="max-w-7xl mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3 space-x-reverse">
-                <div className="p-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl">
-                  <Flame className="h-8 w-8 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    محاكي أور جول 
-                  </h1>
-                  <p className="text-sm text-gray-400">المرحلة {currentStep} من 3</p>
-                </div>
-              </div>
+{/* Header with Dynamic Progress */}
+<div className="sticky top-0 bg-black/40 backdrop-blur-xl border-b border-gray-700/50 z-40">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
+    <div className="flex items-center justify-between">
+      {/* Right section with title (without flame icon) */}
+      <div className="flex items-center">
+        <div>
+          <h1 className="text-base sm:text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <span className="hidden sm:inline">محاكي أور جول</span>
+            <span className="sm:hidden">أور جول</span>
+          </h1>
+          <p className="text-xs sm:text-sm text-gray-400">المرحلة {currentStep} من 3</p>
+        </div>
+      </div>
 
-              {/* Middle section with My Folders button */}
-              <div className="flex items-center">
-                <button
-                  onClick={onShowFolderManagement}
-                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg"
-                >
-                  <FolderOpen className="h-5 w-5" />
-                  مجلداتي
-                </button>
-              </div>
-                      
-              {/* Progress Steps */}
-              <div className="flex items-center space-x-4 space-x-reverse">
-                {[1, 2, 3].map((step) => (
-                  <button
-                    key={step}
-                    onClick={() => handleStepChange(step)}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
-                      currentStep >= step
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
-                        : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
-                    }`}
-                  >
-                    {currentStep > step ? <Check className="h-5 w-5" /> : step}
-                  </button>
-                ))}
-              </div>
-            </div>
-            
-            {/* Progress Bar */}
-            <div className="mt-4 w-full bg-gray-700/50 rounded-full h-1">
-              <div 
-                className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${(currentStep / 3) * 100}%` }}
-              ></div>
+      {/* Middle section with Progress Steps */}
+      <div className="flex items-center space-x-2 sm:space-x-4 space-x-reverse">
+        {[1, 2, 3].map((step) => (
+          <button
+            key={step}
+            onClick={() => handleStepChange(step)}
+            className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold transition-all duration-300 text-sm sm:text-base ${
+              currentStep >= step
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
+                : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+            }`}
+          >
+            {currentStep > step ? <Check className="h-4 w-4 sm:h-5 sm:w-5" /> : step}
+          </button>
+        ))}
+      </div>
+
+      {/* Left section with My Folders button */}
+      <div className="flex items-center">
+        <button
+          onClick={onShowFolderManagement}
+          className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base"
+        >
+          <FolderOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="hidden sm:inline">مجلداتي</span>
+        </button>
+      </div>
+    </div>
+    
+    {/* Progress Bar */}
+    <div className="mt-4 w-full bg-gray-700/50 rounded-full h-1">
+      <div 
+        className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out"
+        style={{ width: `${(currentStep / 3) * 100}%` }}
+      ></div>
+    </div>
+  </div>
+</div>
+
             </div>
           </div>
         </div>
