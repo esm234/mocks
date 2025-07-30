@@ -32,7 +32,7 @@ import QuestionToFolderDialog from './QuestionToFolderDialog';
 const QuestionDisplay = () => {
   const [isTextEnlarged, setIsTextEnlarged] = useState(false);
   const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== '' ? window.innerWidth : 1024);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [isFolderDialogOpen, setIsFolderDialogOpen] = useState(false);
 
   const {
@@ -562,21 +562,21 @@ const QuestionDisplay = () => {
 
         {/* عمود التعليمات - يظهر فقط على الشاشات الكبيرة */}
         {!isMobile && (
-          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-between p-12">
-            <div>
+          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col p-12">
+            <div className="flex-1">
               <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
                 {currentInstructions.title}
               </div>
-              <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
+              <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line mb-8">
                 {currentInstructions.text}
               </div>
             </div>
             
             {/* زر إضافة إلى مجلد */}
-            <div className="mt-8">
+            <div className="mt-auto">
               <button
                 onClick={() => setIsFolderDialogOpen(true)}
-                className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg font-bold border border-blue-600 hover:bg-blue-600 transition flex items-center justify-center gap-2"
+                className="w-full px-4 py-3 bg-white text-gray-700 rounded-lg font-medium border-2 border-gray-300 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
               >
                 <FolderPlus className="h-5 w-5" />
                 إضافة السؤال لمجلد
@@ -639,3 +639,4 @@ const QuestionDisplay = () => {
 };
 
 export default QuestionDisplay;
+ 
