@@ -1,7 +1,7 @@
 {
   "name": "ourgoal",
   "short_name": "محاكي اور جول",
-  "description": ",
+  "description": "محاكي اور جول اوفلاين",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
