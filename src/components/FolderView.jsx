@@ -42,7 +42,7 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
         passage: question.passage
       });
       
-      const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 16);
+      const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
       const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
 
       return {
