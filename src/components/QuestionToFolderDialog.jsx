@@ -116,7 +116,8 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                 <Button
                   variant="outline"
                   onClick={handleClose}
-                  className="flex-1 px-4 py-3 border-gray-600 text-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
+                  // Added explicit text color and hover background for better control
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
                 >
                   إلغاء
                 </Button>
@@ -151,7 +152,8 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                 <Button
                   variant="outline"
                   onClick={() => setShowNewFolderInput(false)}
-                  className="flex-1 px-4 py-3 border-gray-600 text-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
+                  // Added explicit text color and hover background for better control
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
                 >
                   رجوع
                 </Button>
