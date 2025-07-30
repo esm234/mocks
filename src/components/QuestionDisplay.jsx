@@ -32,7 +32,7 @@ import QuestionToFolderDialog from './QuestionToFolderDialog';
 const QuestionDisplay = () => {
   const [isTextEnlarged, setIsTextEnlarged] = useState(false);
   const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== '' ? window.innerWidth : 1024);
   const [isFolderDialogOpen, setIsFolderDialogOpen] = useState(false);
 
   const {
@@ -434,32 +434,31 @@ const QuestionDisplay = () => {
 
   // تعليمات حسب النوع
   const INSTRUCTIONS = {
-  'analogy': {
-    title: 'التناظر اللفظي',
-    text: 'في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة'
-  },
-  'completion': {
-    title: 'إكمال الجمل',
-    text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالاً صحيحاً. المطلوب هو: اختيار الإجابة الصحيحة'
-  },
-  'error': {
-    title: 'الخطأ السياقي',
-    text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ. المطلوب هو: تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة، (الخطأ ليس إملائياً ولا نحوياً)'
-  },
-  'rc': {
-    title: 'استيعاب المقروء',
-    text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
-  },
-  'reading': {
-    title: 'استيعاب المقروء',
-    text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
-  },
-  'odd': {
-    title: 'المفردة الشاذة',
-    text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة'
-  }
-};
-
+    'analogy': {
+      title: 'التناظر اللفظي',
+      text: 'في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة'
+    },
+    'completion': {
+      title: 'إكمال الجمل',
+      text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالاً صحيحاً. المطلوب هو: اختيار الإجابة الصحيحة'
+    },
+    'error': {
+      title: 'الخطأ السياقي',
+      text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ. المطلوب هو: تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة، (الخطأ ليس إملائياً ولا نحوياً)'
+    },
+    'rc': {
+      title: 'استيعاب المقروء',
+      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
+    },
+    'reading': {
+      title: 'استيعاب المقروء',
+      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
+    },
+    'odd': {
+      title: 'المفردة الشاذة',
+      text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة'
+    }
+  };
 
   const currentInstructions = INSTRUCTIONS[currentQuestion.type] || { title: '', text: '' };
 
@@ -468,72 +467,68 @@ const QuestionDisplay = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white" dir="rtl">
-{/* الشريط العلوي */}
-<div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
-  {/* اسم الاختبار */}
-  <div className="font-bold text-white text-sm sm:text-lg">
-    أنت الآن في القسم {currentSection + 0}
-  </div>
-  
-  {/* باقي العناصر */}
-  <div className="flex items-center gap-2 sm:gap-3 flex-row-reverse">
-    {!isMobile && (
-      <select className="rounded px-2 py-1 text-black bg-white text-sm">
-        <option>خط عادي</option>
-        <option>خط كبير</option>
-      </select>
-    )}
-    
-    {/* زر التمييز بأيقونة العلم */}
-    <button
-      className={`p-2 rounded transition-all duration-200 ${
-        isDeferred 
-          ? 'bg-yellow-500 text-white shadow-lg' 
-          : 'bg-white/30 text-white hover:bg-white/40'
-      }`}
-      onClick={handleDeferToggle}
-      type="button"
-      title={isDeferred ? 'إلغاء التمييز' : 'تمييز السؤال للمراجعة'}
-    >
-      <Flag className={`w-5 h-5 ${isDeferred ? 'fill-current' : ''}`} />
-    </button>
-    
-    <span className="text-white text-sm sm:text-base">
-      {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
-    </span>
-    
-    {timerActive && (
-      <span className="text-white flex items-center gap-1 text-sm sm:text-base">
-        <span className="hidden sm:inline">الوقت المتبقي:</span>
-        <Clock className="w-4 h-4" />
-        <span>{formatTime(timeRemaining)}</span>
-      </span>
-    )}
-  </div>
-</div>
-
-  
-
+      {/* الشريط العلوي */}
+      <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
+        {/* اسم الاختبار */}
+        <div className="font-bold text-white text-sm sm:text-lg">
+          أنت الآن في القسم {currentSection + 0}
+        </div>
+        
+        {/* باقي العناصر */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-row-reverse">
+          {!isMobile && (
+            <select className="rounded px-2 py-1 text-black bg-white text-sm">
+              <option>خط عادي</option>
+              <option>خط كبير</option>
+            </select>
+          )}
+          
+          {/* زر التمييز بأيقونة العلم */}
+          <button
+            className={`p-2 rounded transition-all duration-200 ${
+              isDeferred 
+                ? 'bg-yellow-500 text-white shadow-lg' 
+                : 'bg-white/30 text-white hover:bg-white/40'
+            }`}
+            onClick={handleDeferToggle}
+            type="button"
+            title={isDeferred ? 'إلغاء التمييز' : 'تمييز السؤال للمراجعة'}
+          >
+            <Flag className={`w-5 h-5 ${isDeferred ? 'fill-current' : ''}`} />
+          </button>
+          
+          <span className="text-white text-sm sm:text-base">
+            {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
+          </span>
+          
+          {timerActive && (
+            <span className="text-white flex items-center gap-1 text-sm sm:text-base">
+              <span className="hidden sm:inline">الوقت المتبقي:</span>
+              <Clock className="w-4 h-4" />
+              <span>{formatTime(timeRemaining)}</span>
+            </span>
+          )}
+        </div>
+      </div>
 
       {/* محتوى الصفحة */}
       <div className="flex-1 flex flex-row">
         {/* عمود السؤال والاختيارات */}
         <div className={`${isMobile ? 'w-full' : 'w-1/2'} flex flex-col justify-start items-start p-4 md:p-12`}>
           {/* نص الاستيعاب */}
-{(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-  <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
-    {currentQuestion.passage}
-  </div>
-)}
+          {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
+            <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
+              {currentQuestion.passage}
+            </div>
+          )}
 
-{/* السؤال */}
-<div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
-  {currentQuestion.type === 'error' ? 
-    renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
-    currentQuestion.question
-  }
-</div>
-
+          {/* السؤال */}
+          <div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
+            {currentQuestion.type === 'error' ? 
+              renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
+              currentQuestion.question
+            }
+          </div>
           
           {/* الخيارات */}
           <div className="flex flex-col gap-4 md:gap-6 w-full">
@@ -567,12 +562,25 @@ const QuestionDisplay = () => {
 
         {/* عمود التعليمات - يظهر فقط على الشاشات الكبيرة */}
         {!isMobile && (
-          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-start p-12">
-            <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
-              {currentInstructions.title}
+          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col justify-between p-12">
+            <div>
+              <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
+                {currentInstructions.title}
+              </div>
+              <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
+                {currentInstructions.text}
+              </div>
             </div>
-            <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
-              {currentInstructions.text}
+            
+            {/* زر إضافة إلى مجلد */}
+            <div className="mt-8">
+              <button
+                onClick={() => setIsFolderDialogOpen(true)}
+                className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg font-bold border border-blue-600 hover:bg-blue-600 transition flex items-center justify-center gap-2"
+              >
+                <FolderPlus className="h-5 w-5" />
+                إضافة السؤال لمجلد
+              </button>
             </div>
           </div>
         )}
@@ -588,16 +596,16 @@ const QuestionDisplay = () => {
           ▶ السابق
         </button>
 
-        {/* زر إضافة إلى مجلد */}
-        <button
-          onClick={() => setIsFolderDialogOpen(true)}
-          className="mx-2 md:mx-4 px-3 md:px-6 py-2 bg-blue-500 text-white rounded-lg font-bold border border-blue-600 hover:bg-blue-600 transition text-sm md:text-base"
-        >
-          <FolderPlus className="h-4 w-4 inline ml-2" />
-          إضافة لمجلد
-        </button>
-
-
+        {/* زر إضافة إلى مجلد - يظهر فقط على الموبايل */}
+        {isMobile && (
+          <button
+            onClick={() => setIsFolderDialogOpen(true)}
+            className="mx-2 px-3 py-2 bg-blue-500 text-white rounded-lg font-bold border border-blue-600 hover:bg-blue-600 transition text-sm"
+          >
+            <FolderPlus className="h-4 w-4 inline ml-2" />
+            إضافة لمجلد
+          </button>
+        )}
 
         {/* زر مراجعة القسم */}
         {shouldShowSectionReviewButton() && (
