@@ -13,7 +13,8 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
   const [showNewFolderInput, setShowNewFolderInput] = useState(false);
 
   const handleAddToFolder = () => {
-    if (selectedFolderId) {
+    if (selectedFolderId && questionId) {
+      console.log('Adding question to folder:', questionId, selectedFolderId);
       addQuestionToFolder(selectedFolderId, questionId);
       onClose();
       setSelectedFolderId('');
@@ -21,12 +22,12 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
   };
 
   const handleCreateNewFolder = () => {
-    if (newFolderName.trim()) {
-      const newFolderId = Date.now().toString();
-      addFolder(newFolderName.trim());
+    if (newFolderName.trim() && questionId) {
+      console.log('Creating new folder and adding question:', newFolderName, questionId);
+      const newFolder = addFolder(newFolderName.trim());
       // Add question to the newly created folder
       setTimeout(() => {
-        addQuestionToFolder(newFolderId, questionId);
+        addQuestionToFolder(newFolder.id, questionId);
       }, 100);
       setNewFolderName('');
       setShowNewFolderInput(false);
@@ -61,6 +62,9 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
             <p className="text-sm text-gray-300 line-clamp-2">
               {questionText || 'السؤال المحدد'}
             </p>
+            {process.env.NODE_ENV === 'development' && questionId && (
+              <p className="text-xs text-gray-500 mt-1">ID: {questionId}</p>
+            )}
           </div>
 
           {!showNewFolderInput ? (
@@ -82,7 +86,7 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                             <Folder className="w-4 h-4 text-blue-400" />
                             {folder.name}
                             <span className="text-xs text-gray-400">
-                              ({folder.questionIds.length} سؤال)
+                              ({folder.questionIds?.length || 0} سؤال)
                             </span>
                           </div>
                         </SelectItem>
@@ -118,7 +122,7 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                 </Button>
                 <Button
                   onClick={handleAddToFolder}
-                  disabled={!selectedFolderId}
+                  disabled={!selectedFolderId || !questionId}
                   className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50"
                 >
                   إضافة
@@ -152,7 +156,7 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                 </Button>
                 <Button
                   onClick={handleCreateNewFolder}
-                  disabled={!newFolderName.trim()}
+                  disabled={!newFolderName.trim() || !questionId}
                   className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50"
                 >
                   <Plus className="w-4 h-4 ml-2" />
@@ -168,6 +172,3 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
 };
 
 export default QuestionToFolderDialog;
-
-
-
