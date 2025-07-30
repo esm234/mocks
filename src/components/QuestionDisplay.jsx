@@ -471,39 +471,48 @@ const QuestionDisplay = () => {
 {/* الشريط العلوي */}
 <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
   {/* اسم الاختبار */}
-  <div className="font-bold text-white text-lg">
+  <div className="font-bold text-white text-sm sm:text-lg">
     أنت الآن في القسم {currentSection + 0}
   </div>
   
   {/* باقي العناصر */}
-  <div className="flex items-center gap-3 flex-row-reverse">
+  <div className="flex items-center gap-2 sm:gap-3 flex-row-reverse">
     {!isMobile && (
-      <select className="rounded px-2 py-1 text-black bg-white">
+      <select className="rounded px-2 py-1 text-black bg-white text-sm">
         <option>خط عادي</option>
         <option>خط كبير</option>
       </select>
     )}
     
+    {/* زر التمييز بأيقونة العلم */}
     <button
-      className={`bg-white/30 text-white px-3 py-1 rounded border border-white/50 ${isDeferred ? 'ring-2 ring-yellow-400' : ''}`}
+      className={`p-2 rounded transition-all duration-200 ${
+        isDeferred 
+          ? 'bg-yellow-500 text-white shadow-lg' 
+          : 'bg-white/30 text-white hover:bg-white/40'
+      }`}
       onClick={handleDeferToggle}
-      type="button">
-      {isDeferred ? '★ مميز للمراجعة' : 'تمييز السؤال للمراجعة'}
+      type="button"
+      title={isDeferred ? 'إلغاء التمييز' : 'تمييز السؤال للمراجعة'}
+    >
+      <Flag className={`w-5 h-5 ${isDeferred ? 'fill-current' : ''}`} />
     </button>
     
-    <span className="text-white">
+    <span className="text-white text-sm sm:text-base">
       {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
     </span>
     
     {timerActive && (
-      <span className="text-white flex items-center gap-1">
-        <span>الوقت المتبقي:</span>
+      <span className="text-white flex items-center gap-1 text-sm sm:text-base">
+        <span className="hidden sm:inline">الوقت المتبقي:</span>
         <Clock className="w-4 h-4" />
         <span>{formatTime(timeRemaining)}</span>
       </span>
     )}
   </div>
 </div>
+
+  
 
 
       {/* محتوى الصفحة */}
