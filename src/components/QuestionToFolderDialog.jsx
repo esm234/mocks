@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FolderPlus, Folder, Plus } from 'lucide-react';
+import { FolderPlus, Folder, Plus, Check } from 'lucide-react';
 import { useFolderStore } from '../store/folderStore';
 
 const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) => {
@@ -48,22 +48,22 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-gray-900 border-gray-700 text-white max-w-md" dir="rtl">
+      <DialogContent className="bg-gradient-to-br from-gray-900 to-slate-900 border-gray-700 text-white rounded-xl shadow-2xl max-w-md" dir="rtl">
         <DialogHeader>
-          <DialogTitle className="text-right flex items-center gap-2">
-            <Folder className="w-5 h-5 text-blue-400" />
+          <DialogTitle className="text-right flex items-center gap-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <Folder className="w-6 h-6 text-blue-400" />
             إضافة السؤال إلى مجلد
           </DialogTitle>
         </DialogHeader>
         
-        <div className="space-y-4">
+        <div className="space-y-6 mt-4">
           {/* Question Preview */}
-          <div className="bg-gray-800/50 p-3 rounded-lg border border-gray-700">
-            <p className="text-sm text-gray-300 line-clamp-2">
+          <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700 shadow-inner">
+            <p className="text-base text-gray-300 line-clamp-2 font-medium">
               {questionText || 'السؤال المحدد'}
             </p>
             {process.env.NODE_ENV === 'development' && questionId && (
-              <p className="text-xs text-gray-500 mt-1">ID: {questionId}</p>
+              <p className="text-xs text-gray-500 mt-2">ID: {questionId}</p>
             )}
           </div>
 
@@ -71,21 +71,21 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
             <>
               {/* Existing Folders Selection */}
               {folders.length > 0 ? (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <label className="text-sm font-medium text-gray-300">
                     اختر مجلد موجود:
                   </label>
                   <Select value={selectedFolderId} onValueChange={setSelectedFolderId}>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3">
                       <SelectValue placeholder="اختر مجلد..." />
                     </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-600">
+                    <SelectContent className="bg-gray-800 border-gray-600 text-white rounded-lg shadow-lg">
                       {folders.map((folder) => (
-                        <SelectItem key={folder.id} value={folder.id} className="text-white">
-                          <div className="flex items-center gap-2">
-                            <Folder className="w-4 h-4 text-blue-400" />
-                            {folder.name}
-                            <span className="text-xs text-gray-400">
+                        <SelectItem key={folder.id} value={folder.id} className="text-white hover:bg-gray-700 focus:bg-gray-700 cursor-pointer py-2">
+                          <div className="flex items-center gap-3">
+                            <Folder className="w-5 h-5 text-blue-400" />
+                            <span className="font-medium">{folder.name}</span>
+                            <span className="text-sm text-gray-400">
                               ({folder.questionIds?.length || 0} سؤال)
                             </span>
                           </div>
@@ -95,9 +95,9 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                   </Select>
                 </div>
               ) : (
-                <div className="text-center py-4">
-                  <Folder className="w-12 h-12 mx-auto mb-2 text-gray-500" />
-                  <p className="text-gray-400 text-sm">لا توجد مجلدات</p>
+                <div className="text-center py-6 bg-gray-800/30 border border-gray-700 rounded-lg shadow-inner">
+                  <Folder className="w-14 h-14 mx-auto mb-3 text-gray-500" />
+                  <p className="text-gray-400 text-base">لا توجد مجلدات حالياً.</p>
                 </div>
               )}
 
@@ -105,26 +105,27 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
               <Button
                 variant="outline"
                 onClick={() => setShowNewFolderInput(true)}
-                className="w-full border-gray-600 text-gray-300 hover:bg-gray-800"
+                className="w-full flex items-center gap-2 px-4 py-3 border-blue-500 text-blue-300 rounded-lg font-semibold hover:bg-blue-900/30 hover:text-blue-200 transition-all duration-300 shadow-md"
               >
-                <FolderPlus className="w-4 h-4 ml-2" />
+                <FolderPlus className="w-5 h-5" />
                 إنشاء مجلد جديد
               </Button>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 pt-2">
+              <div className="flex gap-3 pt-2">
                 <Button
                   variant="outline"
                   onClick={handleClose}
-                  className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-800"
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 >
                   إلغاء
                 </Button>
                 <Button
                   onClick={handleAddToFolder}
                   disabled={!selectedFolderId || !questionId}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 transition-all duration-300 shadow-md"
                 >
+                  <Check className="w-5 h-5 ml-2" />
                   إضافة
                 </Button>
               </div>
@@ -132,7 +133,7 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
           ) : (
             <>
               {/* New Folder Creation */}
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <label className="text-sm font-medium text-gray-300">
                   اسم المجلد الجديد:
                 </label>
@@ -140,26 +141,26 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                   placeholder="أدخل اسم المجلد"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3"
                   onKeyPress={(e) => e.key === 'Enter' && handleCreateNewFolder()}
                 />
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 pt-2">
+              <div className="flex gap-3 pt-2">
                 <Button
                   variant="outline"
                   onClick={() => setShowNewFolderInput(false)}
-                  className="flex-1 border-gray-600 text-gray-300 hover:bg-gray-800"
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                 >
                   رجوع
                 </Button>
                 <Button
                   onClick={handleCreateNewFolder}
                   disabled={!newFolderName.trim() || !questionId}
-                  className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:opacity-50"
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 transition-all duration-300 shadow-md"
                 >
-                  <Plus className="w-4 h-4 ml-2" />
+                  <Plus className="w-5 h-5 ml-2" />
                   إنشاء وإضافة
                 </Button>
               </div>
