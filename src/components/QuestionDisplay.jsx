@@ -84,21 +84,11 @@ const QuestionDisplay = () => {
 
       const currentQuestionNumber = currentQuestionIndex + 1;
       const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-      
-      let shouldShowDeferredButton = false;
-      
-      if (examMode === 'combined') {
-        shouldShowDeferredButton = isLastQuestion && hasDeferredQuestionsInCurrentSection();
-      } else {
-        shouldShowDeferredButton = 
-          (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned' && hasDeferredQuestionsInCurrentSection()) ||
-          (isLastQuestion && hasDeferredQuestionsInCurrentSection());
-      }
 
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault();
-          if (canProceed && !shouldShowDeferredButton) {
+          if (canProceed) {
             handleNext();
           }
           break;
@@ -287,27 +277,6 @@ const QuestionDisplay = () => {
       .filter(q => q.section === currentSection)
       .some(q => deferredQuestions[q.question_number]);
   };
-  
-  const getFirstDeferredQuestionIndexInCurrentSection = () => {
-    const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
-
-    if (isLastQuestion) {
-        for (let i = 0; i < examQuestions.length; i++) {
-            const question = examQuestions[i];
-            if (deferredQuestions[question.question_number]) {
-                return i;
-            }
-        }
-        return -1;
-    }
-    for (let i = 0; i < examQuestions.length; i++) {
-      const question = examQuestions[i];
-      if (question.section === currentSection && deferredQuestions[question.question_number]) {
-        return i;
-      }
-    }
-    return -1;
-  };
 
   const handleAnswerSelect = (choiceIndex) => {
     selectAnswer(currentQuestion.question_number, choiceIndex);
@@ -317,42 +286,26 @@ const QuestionDisplay = () => {
     toggleDeferred(currentQuestion.question_number);
   };
 
+  // الدالة المُحدثة لمعالجة الانتقال للسؤال التالي
   const handleNext = () => {
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
     
-    if (examMode === 'combined') {
-      if (isLastQuestion && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
-    } else {
-      if (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned' && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
-      
-      if (isLastQuestion && hasDeferredQuestionsInCurrentSection()) {
-        const firstDeferredIndex = getFirstDeferredQuestionIndexInCurrentSection();
-        if (firstDeferredIndex !== -1) {
-          if (typeof goToQuestion === 'function') {
-            goToQuestion(firstDeferredIndex);
-          }
-          return;
-        }
-      }
+    // إذا كنا في آخر سؤال في القسم وليس آخر سؤال في الامتحان (في النمط المقسم)
+    if (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned') {
+      // الانتقال مباشرة لصفحة مراجعة القسم
+      goToSectionReview();
+      return;
     }
     
+    // إذا كنا في آخر سؤال في الامتحان بالكامل
+    if (isLastQuestion) {
+      // الانتقال مباشرة لصفحة مراجعة القسم الأخير
+      goToSectionReview();
+      return;
+    }
+    
+    // في الحالات العادية، متابعة للسؤال التالي
     nextQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -639,4 +592,3 @@ const QuestionDisplay = () => {
 };
 
 export default QuestionDisplay;
- 
