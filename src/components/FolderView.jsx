@@ -13,50 +13,49 @@ import {
   Brain,
   Lightbulb,
   Sparkles,
-  FileText,
-  TrendingUp,
-  Clock,
-  Star
+  FileText
 } from 'lucide-react';
+import { useFolderStore } from '../store/folderStore';
+import { useExamStore } from '../store/examStore';
+import { getAllQuestions } from '../utils/dataLoader';
 
 const FolderView = ({ folderId, onBack, onStartTest }) => {
-  const [folders] = useState([
-    { 
-      id: 1, 
-      name: 'أسئلة التناظر اللفظي', 
-      questionIds: [1, 2, 3] 
-    }
-  ]);
+  const { folders, removeQuestionFromFolder } = useFolderStore();
+  const [allQuestions, setAllQuestions] = useState([]);
   
-  const [allQuestions] = useState([
-    {
-      id: 1,
-      type: 'analogy',
-      question: 'العلاقة بين الكلمات التالية: كتاب : مكتبة',
-      choices: ['طالب : مدرسة', 'سيارة : طريق', 'طعام : مطبخ', 'مريض : مستشفى'],
-      answer: 0,
-      passage: null
-    },
-    {
-      id: 2,
-      type: 'completion',
-      question: 'أكمل الجملة التالية: العلم نور والجهل ...',
-      choices: ['ظلام', 'نهار', 'ضوء', 'شمس'],
-      answer: 0,
-      passage: null
-    },
-    {
-      id: 3,
-      type: 'rc',
-      question: 'ما الفكرة الرئيسية للنص؟',
-      choices: ['التعليم مهم', 'القراءة مفيدة', 'العلم أساس التقدم', 'المعرفة قوة'],
-      answer: 2,
-      passage: 'العلم هو أساس التقدم والحضارة. بدون العلم لا يمكن للمجتمعات أن تتطور وتزدهر. إن الاستثمار في التعليم والبحث العلمي هو استثمار في مستقبل الأمم.'
+  const folder = folders.find(f => f.id === folderId);
+
+  useEffect(() => {
+    // Use the getAllQuestions function from dataLoader
+    const questions = getAllQuestions();
+    setAllQuestions(questions);
+    console.log('Loaded questions in FolderView:', questions.length);
+  }, []);
+
+  if (!folder) {
+    return (
+      <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl font-bold text-red-400 mb-4">المجلد غير موجود</h2>
+          <Button onClick={onBack} className="bg-gray-700 hover:bg-gray-600">
+            <ArrowLeft className="w-4 h-4 ml-2" />
+            العودة
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const folderQuestions = allQuestions.filter(q => {
+    const isIncluded = folder.questionIds.includes(q.id);
+    if (isIncluded) {
+      console.log('Found question in folder:', q.id, q.question.substring(0, 50));
     }
-  ]);
-  
-  const folder = folders.find(f => f.id === parseInt(folderId)) || folders[0];
-  const folderQuestions = allQuestions.filter(q => folder.questionIds.includes(q.id));
+    return isIncluded;
+  });
+
+  console.log('Folder questions found:', folderQuestions.length);
+  console.log('Folder question IDs:', folder.questionIds);
 
   const getQuestionTypeIcon = (type) => {
     switch (type) {
@@ -80,20 +79,20 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
     }
   };
 
-  const getQuestionTypeGradient = (type) => {
+  const getQuestionTypeColor = (type) => {
     switch (type) {
-      case 'analogy': return 'from-purple-500 to-pink-500';
-      case 'completion': return 'from-emerald-500 to-teal-500';
-      case 'error': return 'from-rose-500 to-red-500';
-      case 'rc': return 'from-amber-500 to-orange-500';
-      case 'odd': return 'from-cyan-500 to-blue-500';
-      default: return 'from-gray-500 to-slate-500';
+      case 'analogy': return 'bg-purple-600';
+      case 'completion': return 'bg-emerald-600';
+      case 'error': return 'bg-rose-600';
+      case 'rc': return 'bg-amber-600';
+      case 'odd': return 'bg-cyan-600';
+      default: return 'bg-gray-600';
     }
   };
 
   const handleRemoveQuestion = (questionId) => {
     if (window.confirm('هل أنت متأكد من إزالة هذا السؤال من المجلد؟')) {
-      console.log('Remove question:', questionId);
+      removeQuestionFromFolder(folderId, questionId);
     }
   };
 
@@ -102,9 +101,10 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
       alert('لا توجد أسئلة في هذا المجلد لبدء الاختبار');
       return;
     }
-    onStartTest && onStartTest(folderQuestions);
+    onStartTest(folderQuestions);
   };
 
+  // Helper function to get correct answer text
   const getCorrectAnswerText = (question) => {
     if (!question.choices || question.choices.length === 0) {
       return question.answer;
@@ -118,219 +118,165 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
       return question.answer;
     }
     
-    return question.choices[0];
+    return question.choices[0]; // fallback
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-900 text-white" dir="rtl">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-500/5 rounded-full blur-2xl animate-ping"></div>
-      </div>
-
-      <div className="relative z-10 p-6">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8 p-6 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="outline"
-                onClick={onBack}
-                className="border-white/20 text-gray-300 hover:bg-white/10 hover:border-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-105"
-              >
-                <ArrowLeft className="w-4 h-4 ml-2" />
-                العودة
-              </Button>
-              <div className="flex items-center gap-4">
-                <div className="p-3 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl backdrop-blur-sm">
-                  <Folder className="w-8 h-8 text-blue-400" />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    {folder.name}
-                  </h1>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-gray-400">{folderQuestions.length} سؤال</span>
-                    <div className="flex items-center gap-1 text-amber-400">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="text-sm">مجلد مميز</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {folderQuestions.length > 0 && (
-              <Button
-                onClick={handleStartTest}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 text-white font-semibold px-6 py-3"
-              >
-                <Play className="w-5 h-5 ml-2" />
-                بدء الاختبار
-              </Button>
-            )}
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur-sm rounded-xl p-4 border border-blue-500/20">
-              <div className="flex items-center gap-3">
-                <TrendingUp className="w-6 h-6 text-blue-400" />
-                <div>
-                  <p className="text-sm text-gray-400">إجمالي الأسئلة</p>
-                  <p className="text-xl font-bold text-blue-400">{folderQuestions.length}</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20">
-              <div className="flex items-center gap-3">
-                <Clock className="w-6 h-6 text-purple-400" />
-                <div>
-                  <p className="text-sm text-gray-400">الوقت المتوقع</p>
-                  <p className="text-xl font-bold text-purple-400">{folderQuestions.length * 2} دقيقة</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-sm rounded-xl p-4 border border-emerald-500/20">
-              <div className="flex items-center gap-3">
-                <Star className="w-6 h-6 text-emerald-400" />
-                <div>
-                  <p className="text-sm text-gray-400">مستوى الصعوبة</p>
-                  <p className="text-xl font-bold text-emerald-400">متوسط</p>
-                </div>
+    <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={onBack}
+              className="border-gray-600 text-gray-300 hover:bg-gray-800"
+            >
+              <ArrowLeft className="w-4 h-4 ml-2" />
+              العودة
+            </Button>
+            <div className="flex items-center gap-3">
+              <Folder className="w-8 h-8 text-blue-400" />
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  {folder.name}
+                </h1>
+                <p className="text-gray-400">{folderQuestions.length} سؤال</p>
               </div>
             </div>
           </div>
 
-          {/* Questions List */}
-          {folderQuestions.length === 0 ? (
-            <div className="text-center py-16 bg-black/20 backdrop-blur-xl rounded-2xl border border-white/10">
-              <div className="animate-bounce mb-6">
-                <FileText className="w-20 h-20 mx-auto text-gray-500" />
-              </div>
-              <h3 className="text-2xl font-semibold text-gray-300 mb-3">لا توجد أسئلة</h3>
-              <p className="text-gray-500 text-lg">لم يتم إضافة أي أسئلة إلى هذا المجلد بعد</p>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {folderQuestions.map((question, index) => {
-                const TypeIcon = getQuestionTypeIcon(question.type);
-                const correctAnswerText = getCorrectAnswerText(question);
-                const gradientClass = getQuestionTypeGradient(question.type);
-                
-                return (
-                  <Card key={question.id} className="bg-black/30 backdrop-blur-xl border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/10 group">
-                    <CardHeader className="pb-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <Badge className={`bg-gradient-to-r ${gradientClass} text-white shadow-lg px-3 py-1 text-sm font-medium`}>
-                            <TypeIcon className="w-4 h-4 ml-1" />
-                            {getQuestionTypeLabel(question.type)}
-                          </Badge>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm text-gray-400 bg-white/5 px-3 py-1 rounded-full">
-                              السؤال #{index + 1}
-                            </span>
-                            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-                          </div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleRemoveQuestion(question.id)}
-                          className="text-red-400 hover:text-red-300 hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Question Text */}
-                      <div className="p-4 bg-gradient-to-r from-white/5 to-white/10 rounded-xl border border-white/10">
-                        <p className="text-white leading-relaxed text-lg font-medium">
-                          {question.question}
-                        </p>
-                      </div>
-
-                      {/* Passage (for RC questions) */}
-                      {question.passage && (
-                        <div className="p-4 bg-gradient-to-br from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20 backdrop-blur-sm">
-                          <h4 className="text-amber-300 font-semibold mb-3 flex items-center gap-2">
-                            <BookOpen className="w-4 h-4" />
-                            النص:
-                          </h4>
-                          <p className="text-gray-200 leading-relaxed">
-                            {question.passage}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Choices */}
-                      {question.choices && question.choices.length > 0 && (
-                        <div className="space-y-3">
-                          <h4 className="text-gray-300 font-semibold mb-3 flex items-center gap-2">
-                            <Target className="w-4 h-4" />
-                            الخيارات:
-                          </h4>
-                          <div className="grid gap-3">
-                            {question.choices.map((choice, choiceIndex) => {
-                              const isCorrect = (
-                                (typeof question.answer === 'number' && choiceIndex === question.answer) ||
-                                (typeof question.answer === 'string' && choice === question.answer)
-                              );
-                              
-                              return (
-                                <div
-                                  key={choiceIndex}
-                                  className={`p-4 rounded-xl border transition-all duration-300 ${
-                                    isCorrect
-                                      ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/50 text-green-100 shadow-lg shadow-green-500/10'
-                                      : 'bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20'
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                      <span className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                                        isCorrect ? 'bg-green-500 text-white' : 'bg-white/10 text-gray-400'
-                                      }`}>
-                                        {String.fromCharCode(65 + choiceIndex)}
-                                      </span>
-                                      <span className="font-medium">{choice}</span>
-                                    </div>
-                                    {isCorrect && (
-                                      <Badge className="bg-green-500 text-white text-xs px-2 py-1 animate-pulse">
-                                        ✓ الإجابة الصحيحة
-                                      </Badge>
-                                    )}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Show correct answer if no choices available */}
-                      {(!question.choices || question.choices.length === 0) && question.answer && (
-                        <div className="p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/50 rounded-xl">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                              <span className="text-white text-xs font-bold">✓</span>
-                            </div>
-                            <span className="text-green-200 font-medium">الإجابة الصحيحة: </span>
-                            <span className="text-green-100 font-semibold">{question.answer}</span>
-                          </div>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
+          {folderQuestions.length > 0 && (
+            <Button
+              onClick={handleStartTest}
+              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+            >
+              <Play className="w-4 h-4 ml-2" />
+              بدء الاختبار
+            </Button>
           )}
         </div>
+
+        {/* Debug info */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mb-4 p-3 bg-gray-800/50 rounded-lg text-xs">
+            <p>Total questions loaded: {allQuestions.length}</p>
+            <p>Folder question IDs count: {folder.questionIds.length}</p>
+            <p>Matched questions: {folderQuestions.length}</p>
+          </div>
+        )}
+
+        {/* Questions List */}
+        {folderQuestions.length === 0 ? (
+          <div className="text-center py-12">
+            <FileText className="w-16 h-16 mx-auto mb-4 text-gray-500" />
+            <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد أسئلة</h3>
+            <p className="text-gray-500">لم يتم إضافة أي أسئلة إلى هذا المجلد بعد</p>
+            {folder.questionIds.length > 0 && (
+              <p className="text-red-400 text-sm mt-2">
+                تحذير: يحتوي المجلد على {folder.questionIds.length} معرف سؤال لكن لم يتم العثور على الأسئلة المطابقة
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {folderQuestions.map((question, index) => {
+              const TypeIcon = getQuestionTypeIcon(question.type);
+              const correctAnswerText = getCorrectAnswerText(question);
+              
+              return (
+                <Card key={question.id} className="bg-gray-800/50 border-gray-700">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Badge className={`${getQuestionTypeColor(question.type)} text-white`}>
+                          <TypeIcon className="w-3 h-3 ml-1" />
+                          {getQuestionTypeLabel(question.type)}
+                        </Badge>
+                        <span className="text-sm text-gray-400">
+                          السؤال #{index + 1}
+                        </span>
+                        {process.env.NODE_ENV === 'development' && (
+                          <span className="text-xs text-gray-500">
+                            ID: {question.id}
+                          </span>
+                        )}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemoveQuestion(question.id)}
+                        className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {/* Question Text */}
+                    <div className="mb-4">
+                      <p className="text-white leading-relaxed">
+                        {question.question}
+                      </p>
+                    </div>
+
+                    {/* Passage (for RC questions) */}
+                    {question.passage && (
+                      <div className="mb-4 p-4 bg-gray-700/50 rounded-lg border border-gray-600">
+                        <h4 className="text-sm font-semibold text-gray-300 mb-2">النص:</h4>
+                        <p className="text-gray-200 text-sm leading-relaxed">
+                          {question.passage}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Choices */}
+                    {question.choices && question.choices.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-semibold text-gray-300 mb-2">الخيارات:</h4>
+                        {question.choices.map((choice, choiceIndex) => {
+                          const isCorrect = (
+                            (typeof question.answer === 'number' && choiceIndex === question.answer) ||
+                            (typeof question.answer === 'string' && choice === question.answer)
+                          );
+                          
+                          return (
+                            <div
+                              key={choiceIndex}
+                              className={`p-3 rounded-lg border ${
+                                isCorrect
+                                  ? 'bg-green-900/30 border-green-600 text-green-200'
+                                  : 'bg-gray-700/30 border-gray-600 text-gray-300'
+                              }`}
+                            >
+                              <span className="font-medium ml-2">
+                                {String.fromCharCode(65 + choiceIndex)}.
+                              </span>
+                              {choice}
+                              {isCorrect && (
+                                <Badge className="bg-green-600 text-white mr-2 text-xs">
+                                  الإجابة الصحيحة
+                                </Badge>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Show correct answer if no choices available */}
+                    {(!question.choices || question.choices.length === 0) && question.answer && (
+                      <div className="mt-4 p-3 bg-green-900/30 border border-green-600 rounded-lg">
+                        <span className="text-green-200 font-medium">الإجابة الصحيحة: </span>
+                        <span className="text-green-100">{question.answer}</span>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
