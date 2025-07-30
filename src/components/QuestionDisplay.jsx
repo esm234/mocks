@@ -597,20 +597,7 @@ const QuestionDisplay = () => {
           إضافة لمجلد
         </button>
 
-        {/* زر التأجيل في الوسط */}
-        {!hideDeferButton && (
-          <button
-            onClick={handleDeferToggle}
-            className={`mx-2 md:mx-4 px-3 md:px-6 py-2 rounded-lg font-bold border transition text-sm md:text-base ${
-              isDeferred
-                ? 'bg-yellow-500 text-black border-yellow-600'
-                : 'bg-white/20 text-white border-white/50'
-            }`}
-          >
-            <Bookmark className="h-4 w-4 inline ml-2" />
-            {isDeferred ? 'إلغاء التأجيل' : 'تأجيل'}
-          </button>
-        )}
+
 
         {/* زر مراجعة القسم */}
         {shouldShowSectionReviewButton() && (
