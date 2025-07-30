@@ -35,12 +35,28 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
   useEffect(() => {
     // Combine all question data
     const normalizeQuestion = (question, type, sourceIndex) => {
-      const contentString = JSON.stringify({
-        question: question.question,
-        choices: question.choices,
+        const normalizeQuestion = (question, type, sourceIndex) => {
+      // Create a simpler, more direct unique ID.
+      // Using sourceIndex (which is the array index) and type should be unique enough
+      // within the context of how these JSON files are structured.
+      // Adding a small hash of the question text can further reduce accidental collisions
+      // if sourceIndex somehow repeats across different data loads (unlikely but safer).
+      const questionTextHash = btoa(unescape(encodeURIComponent(question.question || ''))).substring(0, 8); // Short hash of question text
+      const uniqueId = `${type}-${sourceIndex}-${questionTextHash}`; // More robust ID
+
+      return {
+        id: uniqueId,
+        question_number: question.question_number || sourceIndex + 1,
+        question: question.question || '',
+        type: type,
+        choices: question.choices || [],
         answer: question.answer,
-        passage: question.passage
-      });
+        passage: question.passage || null,
+        category: question.category || type,
+        exam: question.exam || ''
+      };
+    };
+    
       
       const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
       const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
