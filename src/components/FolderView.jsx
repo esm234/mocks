@@ -17,14 +17,7 @@ import {
 } from 'lucide-react';
 import { useFolderStore } from '../store/folderStore';
 import { useExamStore } from '../store/examStore';
-
-// Import all question data to display questions
-import analogyData from '../data/analogy.json';
-import completionData from '../data/completion.json';
-import errorData from '../data/error.json';
-import rcBank4Data from '../data/rcbank4.json';
-import rcBank5Data from '../data/rcbank5.json';
-import oddData from '../data/odd.json';
+import { getAllQuestions } from '../utils/dataLoader';
 
 const FolderView = ({ folderId, onBack, onStartTest }) => {
   const { folders, removeQuestionFromFolder } = useFolderStore();
@@ -33,82 +26,10 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
   const folder = folders.find(f => f.id === folderId);
 
   useEffect(() => {
-    // Combine all question data
-    const normalizeQuestion = (question, type, sourceIndex) => {
-      const contentString = JSON.stringify({
-        question: question.question,
-        choices: question.choices,
-        answer: question.answer,
-        passage: question.passage
-      });
-      
-      const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
-      const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
-
-      return {
-        id: uniqueId,
-        question_number: question.question_number || sourceIndex + 1,
-        question: question.question || '',
-        type: type,
-        choices: question.choices || [],
-        answer: question.answer,
-        passage: question.passage || null,
-        category: question.category || type,
-        exam: question.exam || ''
-      };
-    };
-
-    const questions = [];
-    
-    if (analogyData && Array.isArray(analogyData)) {
-      analogyData.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'analogy', index));
-        }
-      });
-    }
-    
-    if (completionData && Array.isArray(completionData)) {
-      completionData.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'completion', index));
-        }
-      });
-    }
-    
-    if (errorData && Array.isArray(errorData)) {
-      errorData.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'error', index));
-        }
-      });
-    }
-    
-    if (rcBank4Data && Array.isArray(rcBank4Data)) {
-      rcBank4Data.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'rc', index));
-        }
-      });
-    }
-    
-    if (rcBank5Data && Array.isArray(rcBank5Data)) {
-      rcBank5Data.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
-        }
-      });
-    }
-    
-    if (oddData && Array.isArray(oddData)) {
-      oddData.forEach((q, index) => {
-        if (q && (q.question || q.choices)) {
-          questions.push(normalizeQuestion(q, 'odd', index));
-        }
-      });
-    }
-
+    // Use the getAllQuestions function from dataLoader
+    const questions = getAllQuestions();
     setAllQuestions(questions);
+    console.log('Loaded questions in FolderView:', questions.length);
   }, []);
 
   if (!folder) {
@@ -125,7 +46,16 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
     );
   }
 
-  const folderQuestions = allQuestions.filter(q => folder.questionIds.includes(q.id));
+  const folderQuestions = allQuestions.filter(q => {
+    const isIncluded = folder.questionIds.includes(q.id);
+    if (isIncluded) {
+      console.log('Found question in folder:', q.id, q.question.substring(0, 50));
+    }
+    return isIncluded;
+  });
+
+  console.log('Folder questions found:', folderQuestions.length);
+  console.log('Folder question IDs:', folder.questionIds);
 
   const getQuestionTypeIcon = (type) => {
     switch (type) {
@@ -174,6 +104,23 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
     onStartTest(folderQuestions);
   };
 
+  // Helper function to get correct answer text
+  const getCorrectAnswerText = (question) => {
+    if (!question.choices || question.choices.length === 0) {
+      return question.answer;
+    }
+    
+    if (typeof question.answer === 'number' && question.answer < question.choices.length) {
+      return question.choices[question.answer];
+    }
+    
+    if (typeof question.answer === 'string') {
+      return question.answer;
+    }
+    
+    return question.choices[0]; // fallback
+  };
+
   return (
     <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
       <div className="max-w-6xl mx-auto">
@@ -210,17 +157,33 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
           )}
         </div>
 
+        {/* Debug info */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mb-4 p-3 bg-gray-800/50 rounded-lg text-xs">
+            <p>Total questions loaded: {allQuestions.length}</p>
+            <p>Folder question IDs count: {folder.questionIds.length}</p>
+            <p>Matched questions: {folderQuestions.length}</p>
+          </div>
+        )}
+
         {/* Questions List */}
         {folderQuestions.length === 0 ? (
           <div className="text-center py-12">
             <FileText className="w-16 h-16 mx-auto mb-4 text-gray-500" />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد أسئلة</h3>
             <p className="text-gray-500">لم يتم إضافة أي أسئلة إلى هذا المجلد بعد</p>
+            {folder.questionIds.length > 0 && (
+              <p className="text-red-400 text-sm mt-2">
+                تحذير: يحتوي المجلد على {folder.questionIds.length} معرف سؤال لكن لم يتم العثور على الأسئلة المطابقة
+              </p>
+            )}
           </div>
         ) : (
           <div className="space-y-4">
             {folderQuestions.map((question, index) => {
               const TypeIcon = getQuestionTypeIcon(question.type);
+              const correctAnswerText = getCorrectAnswerText(question);
+              
               return (
                 <Card key={question.id} className="bg-gray-800/50 border-gray-700">
                   <CardHeader className="pb-3">
@@ -233,6 +196,11 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
                         <span className="text-sm text-gray-400">
                           السؤال #{index + 1}
                         </span>
+                        {process.env.NODE_ENV === 'development' && (
+                          <span className="text-xs text-gray-500">
+                            ID: {question.id}
+                          </span>
+                        )}
                       </div>
                       <Button
                         variant="ghost"
@@ -266,37 +234,6 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
                     {question.choices && question.choices.length > 0 && (
                       <div className="space-y-2">
                         <h4 className="text-sm font-semibold text-gray-300 mb-2">الخيارات:</h4>
-                        {question.choices.map((choice, choiceIndex) => (
-                          <div
-                            key={choiceIndex}
-                            className={`p-3 rounded-lg border ${
-                              choiceIndex === question.answer
-                                ? 'bg-green-900/30 border-green-600 text-green-200'
-                                : 'bg-gray-700/30 border-gray-600 text-gray-300'
-                            }`}
-                          >
-                            <span className="font-medium ml-2">
-                              {String.fromCharCode(65 + choiceIndex)}.
-                            </span>
-                            {choice}
-                            {choiceIndex === question.answer && (
-                              <Badge className="bg-green-600 text-white mr-2 text-xs">
-                                الإجابة الصحيحة
-                              </Badge>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default FolderView;
+                        {question.choices.map((choice, choiceIndex) => {
+                          const isCorrect = (
+                            (typeof question.answer === 'number' && choiceIndex ===
