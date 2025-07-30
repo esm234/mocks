@@ -1,3 +1,24 @@
+import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { 
+  ArrowLeft, 
+  Folder, 
+  Trash2, 
+  Edit2, 
+  Play, 
+  BookOpen,
+  Target,
+  Brain,
+  Lightbulb,
+  Sparkles,
+  FileText
+} from 'lucide-react';
+import { useFolderStore } from '../store/folderStore';
+import { useExamStore } from '../store/examStore';
+
+// Import all question data to display questions
 import analogyData from '../data/analogy.json';
 import completionData from '../data/completion.json';
 import errorData from '../data/error.json';
@@ -5,57 +26,44 @@ import rcBank4Data from '../data/rcbank4.json';
 import rcBank5Data from '../data/rcbank5.json';
 import oddData from '../data/odd.json';
 
-// Normalize question data structure and assign a truly unique ID
-const normalizeQuestion = (question, type, sourceIndex) => {
-  const contentString = JSON.stringify({
-    question: question.question,
-    choices: question.choices,
-    answer: question.answer,
-    passage: question.passage
-  });
+const FolderView = ({ folderId, onBack, onStartTest }) => {
+  const { folders, removeQuestionFromFolder } = useFolderStore();
+  const [allQuestions, setAllQuestions] = useState([]);
   
-  const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 16);
-  const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
+  const folder = folders.find(f => f.id === folderId);
 
-  return {
-    id: uniqueId,
-    question_number: question.question_number || sourceIndex + 1,
-    question: question.question || '',
-    type: type,
-    choices: question.choices || [],
-    answer: question.answer,
-    passage: question.passage || null,
-    category: question.category || type,
-    exam: question.exam || '',
-    passage_id: question.passage ? btoa(unescape(encodeURIComponent(question.passage))).substring(0, 12) : null
-  };
-};
+  useEffect(() => {
+    // Combine all question data
+    const normalizeQuestion = (question, type, sourceIndex) => {
+      const contentString = JSON.stringify({
+        question: question.question,
+        choices: question.choices,
+        answer: question.answer,
+        passage: question.passage
+      });
+      
+      const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
+      const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
 
-// Shuffle array function
-const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
+      return {
+        id: uniqueId,
+        question_number: question.question_number || sourceIndex + 1,
+        question: question.question || '',
+        type: type,
+        choices: question.choices || [],
+        answer: question.answer,
+        passage: question.passage || null,
+        category: question.category || type,
+        exam: question.exam || ''
+      };
+    };
 
-// Load and process all question data once when the module is loaded
-const initialQuestionPools = (() => {
-  const pools = {
-    analogy: [],
-    completion: [],
-    error: [],
-    rc: [],
-    odd: []
-  };
-  
-  try {
+    const questions = [];
+    
     if (analogyData && Array.isArray(analogyData)) {
       analogyData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.analogy.push(normalizeQuestion(q, 'analogy', index));
+          questions.push(normalizeQuestion(q, 'analogy', index));
         }
       });
     }
@@ -63,7 +71,7 @@ const initialQuestionPools = (() => {
     if (completionData && Array.isArray(completionData)) {
       completionData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.completion.push(normalizeQuestion(q, 'completion', index));
+          questions.push(normalizeQuestion(q, 'completion', index));
         }
       });
     }
@@ -71,7 +79,7 @@ const initialQuestionPools = (() => {
     if (errorData && Array.isArray(errorData)) {
       errorData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.error.push(normalizeQuestion(q, 'error', index));
+          questions.push(normalizeQuestion(q, 'error', index));
         }
       });
     }
@@ -79,7 +87,7 @@ const initialQuestionPools = (() => {
     if (rcBank4Data && Array.isArray(rcBank4Data)) {
       rcBank4Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.rc.push(normalizeQuestion(q, 'rc', index));
+          questions.push(normalizeQuestion(q, 'rc', index));
         }
       });
     }
@@ -87,7 +95,7 @@ const initialQuestionPools = (() => {
     if (rcBank5Data && Array.isArray(rcBank5Data)) {
       rcBank5Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.rc.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
+          questions.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
         }
       });
     }
@@ -95,316 +103,201 @@ const initialQuestionPools = (() => {
     if (oddData && Array.isArray(oddData)) {
       oddData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
-          pools.odd.push(normalizeQuestion(q, 'odd', index));
+          questions.push(normalizeQuestion(q, 'odd', index));
         }
       });
     }
-    
-    console.log('Question pools loaded:', {
-      analogy: pools.analogy.length,
-      completion: pools.completion.length,
-      error: pools.error.length,
-      rc: pools.rc.length,
-      odd: pools.odd.length
-    });
-    
-  } catch (error) {
-    console.error('Error loading question data:', error);
-  }
-  
-  return pools;
-})();
 
-// Group RC questions by passage for sequential ordering and limit per passage
-export const groupRCQuestionsByPassage = (rcQuestions, maxQuestionsPerPassage) => {
-  const passageGroups = new Map();
-  
-  rcQuestions.forEach(question => {
-    const passageKey = question.passage_id || question.passage || 'no-passage';
-    if (!passageGroups.has(passageKey)) {
-      passageGroups.set(passageKey, []);
-    }
-    passageGroups.get(passageKey).push(question);
-  });
-  
-  const finalPassageGroups = [];
-  passageGroups.forEach((questions, passageKey) => {
-    // Sort questions within each passage by their original question number
-    questions.sort((a, b) => (a.question_number || 0) - (b.question_number || 0));
-    // Take only the first maxQuestionsPerPassage questions from each passage
-    finalPassageGroups.push(questions.slice(0, maxQuestionsPerPassage));
-  });
-  
-  return finalPassageGroups;
-};
+    setAllQuestions(questions);
+  }, []);
 
-// Generate exam with exactly 65 questions (5 sections × 13 questions each)
-export const generateExam = (config = {}) => {
-  console.log('generateExam called with config:', config);
-  
-  const {
-    shuffleQuestions = false,
-    shuffleChoices = false,
-    examMode = 'sectioned',
-    rcQuestionOrder = 'sequential',
-    questionTypeFilter = 'all',
-    selectedQuestionType = null
-  } = config;
-
-  let examQuestions = [];
-  const usedQuestionIds = new Set();
-
-  // Determine if this is single section mode
-  const isSingleMode = examMode === 'single' || questionTypeFilter === 'specific';
-  const singleSectionType = selectedQuestionType;
-
-  console.log('Mode detection:', { isSingleMode, singleSectionType, examMode, questionTypeFilter });
-
-  // Single section mode - only questions from one type
-  if (isSingleMode && singleSectionType) {
-    console.log(`Generating single section exam for type: ${singleSectionType}`);
-    
-    let pool = [...(initialQuestionPools[singleSectionType] || [])];
-    
-    if (pool.length === 0) {
-      console.warn(`No questions available for single section type: ${singleSectionType}`);
-      return {
-        questions: [],
-        totalQuestions: 0,
-        totalSections: 1,
-        questionsPerSection: 0,
-        structure: { [singleSectionType]: 0 }
-      };
-    }
-
-    let selectedQuestions = [];
-
-    if (singleSectionType === 'rc') {
-      // For RC questions, handle random vs sequential ordering
-      if (rcQuestionOrder === 'random') {
-        // Shuffle all RC questions randomly
-        pool = shuffleArray(pool);
-        selectedQuestions = pool.slice(0, 65);
-      } else {
-        // Group by passage and ensure sequential order within each passage
-        // But shuffle the passages themselves to get variety
-        const groupedRC = groupRCQuestionsByPassage(pool, 4);
-        const shuffledPassages = shuffleArray(groupedRC);
-        
-        let flattenedQuestions = [];
-        shuffledPassages.forEach(passageGroup => {
-          flattenedQuestions.push(...passageGroup);
-        });
-        selectedQuestions = flattenedQuestions.slice(0, 65);
-      }
-    } else {
-      // For other question types, shuffle to get variety
-      pool = shuffleArray(pool);
-      selectedQuestions = pool.slice(0, 65);
-    }
-
-    // If we don't have enough questions, repeat them
-    if (selectedQuestions.length < 65 && selectedQuestions.length > 0) {
-      const remainingSlots = 65 - selectedQuestions.length;
-      for (let i = 0; i < remainingSlots; i++) {
-        const sourceQuestion = selectedQuestions[i % selectedQuestions.length];
-        selectedQuestions.push({
-          ...sourceQuestion,
-          id: `${sourceQuestion.id}-repeat-${i}`,
-          question_number: selectedQuestions.length + 1
-        });
-      }
-    }
-
-    // Process questions for single mode
-    selectedQuestions.forEach((q, index) => {
-      const processedQuestion = {
-        ...q,
-        question_number: index + 1,
-        section: 1,
-        original_type: q.type
-      };
-
-      // Ensure answer is converted to index if it's stored as text
-      if (typeof processedQuestion.answer === 'string' && processedQuestion.choices) {
-        const answerIndex = processedQuestion.choices.findIndex(choice => choice === processedQuestion.answer);
-        processedQuestion.answer = answerIndex >= 0 ? answerIndex : 0;
-      }
-
-      // Shuffle choices if requested
-      if (shuffleChoices && processedQuestion.choices && processedQuestion.choices.length > 0) {
-        const originalChoices = [...processedQuestion.choices];
-        const originalAnswer = processedQuestion.answer;
-        let originalCorrectChoice;
-        
-        if (typeof originalAnswer === 'number') {
-          originalCorrectChoice = originalChoices[originalAnswer];
-        } else {
-          originalCorrectChoice = originalAnswer;
-        }
-        
-        const shuffledChoices = shuffleArray(originalChoices);
-        const newAnswerIndex = shuffledChoices.findIndex(choice => choice === originalCorrectChoice);
-        
-        processedQuestion.choices = shuffledChoices;
-        processedQuestion.answer = newAnswerIndex >= 0 ? newAnswerIndex : 0;
-      }
-
-      examQuestions.push(processedQuestion);
-    });
-
-    console.log(`Generated ${examQuestions.length} questions for single section type: ${singleSectionType}`);
-    
-    return {
-      questions: examQuestions,
-      totalQuestions: 65,
-      totalSections: 1,
-      questionsPerSection: 65,
-      structure: { [singleSectionType]: 65 }
-    };
+  if (!folder) {
+    return (
+      <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl font-bold text-red-400 mb-4">المجلد غير موجود</h2>
+          <Button onClick={onBack} className="bg-gray-700 hover:bg-gray-600">
+            <ArrowLeft className="w-4 h-4 ml-2" />
+            العودة
+          </Button>
+        </div>
+      </div>
+    );
   }
 
-  // Multi-section mode - balanced questions across all types
-  // Fixed order: analogy, completion, error, rc, odd
-  const questionOrder = ['analogy', 'completion', 'error', 'rc', 'odd'];
-  
-  const sectionStructures = [
-    // Section 1
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 2
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 3 (Special)
-    { analogy: 2, completion: 2, error: 2, rc: 5, odd: 2, rc_max_per_passage: 5 },
-    // Section 4
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 5
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 }
-  ];
+  const folderQuestions = allQuestions.filter(q => folder.questionIds.includes(q.id));
 
-  // Create pools for each question type
-  const questionPools = {
-    analogy: [...initialQuestionPools.analogy],
-    completion: [...initialQuestionPools.completion],
-    error: [...initialQuestionPools.error],
-    rc: [...initialQuestionPools.rc],
-    odd: [...initialQuestionPools.odd]
+  const getQuestionTypeIcon = (type) => {
+    switch (type) {
+      case 'analogy': return Brain;
+      case 'completion': return BookOpen;
+      case 'error': return Target;
+      case 'rc': return Lightbulb;
+      case 'odd': return Sparkles;
+      default: return FileText;
+    }
   };
 
-  // Shuffle pools if requested
-  if (shuffleQuestions) {
-    Object.keys(questionPools).forEach(type => {
-      if (type !== 'rc' || rcQuestionOrder === 'random') {
-        questionPools[type] = shuffleArray(questionPools[type]);
-      }
-    });
-  }
-
-  for (let section = 1; section <= 5; section++) {
-    let sectionQuestions = [];
-    const structure = sectionStructures[section - 1];
-
-    // Add questions in the specified order
-    for (const questionType of questionOrder) {
-      const count = structure[questionType] || 0;
-      if (count === 0) continue;
-
-      let availableQuestions = questionPools[questionType].filter(q => !usedQuestionIds.has(q.id));
-      let questionsToAdd = [];
-
-      if (questionType === 'rc') {
-        // For RC questions, handle random vs sequential ordering
-        if (rcQuestionOrder === 'random') {
-          // Shuffle available RC questions and take the required count
-          availableQuestions = shuffleArray(availableQuestions);
-          questionsToAdd = availableQuestions.slice(0, count);
-        } else {
-          // Group by passage and maintain sequential order within passages
-          // But shuffle the passages themselves to get variety
-          const groupedRC = groupRCQuestionsByPassage(availableQuestions, structure.rc_max_per_passage);
-          const shuffledPassages = shuffleArray(groupedRC);
-          
-          for (const passageGroup of shuffledPassages) {
-            if (questionsToAdd.length + passageGroup.length <= count) {
-              questionsToAdd.push(...passageGroup);
-            } else {
-              const remaining = count - questionsToAdd.length;
-              questionsToAdd.push(...passageGroup.slice(0, remaining));
-              break;
-            }
-          }
-        }
-      } else {
-        questionsToAdd = availableQuestions.slice(0, count);
-      }
-
-      // Mark questions as used
-      questionsToAdd.forEach(q => usedQuestionIds.add(q.id));
-
-      // Process questions
-      questionsToAdd.forEach(q => {
-        const processedQuestion = {
-          ...q,
-          section: section,
-          original_type: q.type
-        };
-
-        // Ensure answer is converted to index if it's stored as text
-        if (typeof processedQuestion.answer === 'string' && processedQuestion.choices) {
-          const answerIndex = processedQuestion.choices.findIndex(choice => choice === processedQuestion.answer);
-          processedQuestion.answer = answerIndex >= 0 ? answerIndex : 0;
-        }
-
-        // Shuffle choices if requested
-        if (shuffleChoices && processedQuestion.choices && processedQuestion.choices.length > 0) {
-          const originalChoices = [...processedQuestion.choices];
-          const originalAnswer = processedQuestion.answer;
-          let originalCorrectChoice;
-          
-          if (typeof originalAnswer === 'number') {
-            originalCorrectChoice = originalChoices[originalAnswer];
-          } else {
-            originalCorrectChoice = originalAnswer;
-          }
-          
-          const shuffledChoices = shuffleArray(originalChoices);
-          const newAnswerIndex = shuffledChoices.findIndex(choice => choice === originalCorrectChoice);
-          
-          processedQuestion.choices = shuffledChoices;
-          processedQuestion.answer = newAnswerIndex >= 0 ? newAnswerIndex : 0;
-        }
-
-        sectionQuestions.push(processedQuestion);
-      });
-    }
-
-    examQuestions.push(...sectionQuestions);
-  }
-
-  // Re-number questions sequentially
-  examQuestions.forEach((q, index) => {
-    q.question_number = index + 1;
-  });
-
-  console.log(`Generated ${examQuestions.length} questions across ${5} sections`);
-
-  return {
-    questions: examQuestions,
-    totalQuestions: 65,
-    totalSections: 5,
-    questionsPerSection: 13,
-    structure: {
-      analogy: 18,
-      completion: 10,
-      error: 10,
-      rc: 25,
-      odd: 2
+  const getQuestionTypeLabel = (type) => {
+    switch (type) {
+      case 'analogy': return 'التناظر اللفظي';
+      case 'completion': return 'إكمال الجمل';
+      case 'error': return 'الخطأ السياقي';
+      case 'rc': return 'استيعاب المقروء';
+      case 'odd': return 'المفردة الشاذة';
+      default: return type;
     }
   };
+
+  const getQuestionTypeColor = (type) => {
+    switch (type) {
+      case 'analogy': return 'bg-purple-600';
+      case 'completion': return 'bg-emerald-600';
+      case 'error': return 'bg-rose-600';
+      case 'rc': return 'bg-amber-600';
+      case 'odd': return 'bg-cyan-600';
+      default: return 'bg-gray-600';
+    }
+  };
+
+  const handleRemoveQuestion = (questionId) => {
+    if (window.confirm('هل أنت متأكد من إزالة هذا السؤال من المجلد؟')) {
+      removeQuestionFromFolder(folderId, questionId);
+    }
+  };
+
+  const handleStartTest = () => {
+    if (folderQuestions.length === 0) {
+      alert('لا توجد أسئلة في هذا المجلد لبدء الاختبار');
+      return;
+    }
+    onStartTest(folderQuestions);
+  };
+
+  return (
+    <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={onBack}
+              className="border-gray-600 text-gray-300 hover:bg-gray-800"
+            >
+              <ArrowLeft className="w-4 h-4 ml-2" />
+              العودة
+            </Button>
+            <div className="flex items-center gap-3">
+              <Folder className="w-8 h-8 text-blue-400" />
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  {folder.name}
+                </h1>
+                <p className="text-gray-400">{folderQuestions.length} سؤال</p>
+              </div>
+            </div>
+          </div>
+
+          {folderQuestions.length > 0 && (
+            <Button
+              onClick={handleStartTest}
+              className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700"
+            >
+              <Play className="w-4 h-4 ml-2" />
+              بدء الاختبار
+            </Button>
+          )}
+        </div>
+
+        {/* Questions List */}
+        {folderQuestions.length === 0 ? (
+          <div className="text-center py-12">
+            <FileText className="w-16 h-16 mx-auto mb-4 text-gray-500" />
+            <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد أسئلة</h3>
+            <p className="text-gray-500">لم يتم إضافة أي أسئلة إلى هذا المجلد بعد</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {folderQuestions.map((question, index) => {
+              const TypeIcon = getQuestionTypeIcon(question.type);
+              return (
+                <Card key={question.id} className="bg-gray-800/50 border-gray-700">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Badge className={`${getQuestionTypeColor(question.type)} text-white`}>
+                          <TypeIcon className="w-3 h-3 ml-1" />
+                          {getQuestionTypeLabel(question.type)}
+                        </Badge>
+                        <span className="text-sm text-gray-400">
+                          السؤال #{index + 1}
+                        </span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemoveQuestion(question.id)}
+                        className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    {/* Question Text */}
+                    <div className="mb-4">
+                      <p className="text-white leading-relaxed">
+                        {question.question}
+                      </p>
+                    </div>
+
+                    {/* Passage (for RC questions) */}
+                    {question.passage && (
+                      <div className="mb-4 p-4 bg-gray-700/50 rounded-lg border border-gray-600">
+                        <h4 className="text-sm font-semibold text-gray-300 mb-2">النص:</h4>
+                        <p className="text-gray-200 text-sm leading-relaxed">
+                          {question.passage}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Choices */}
+                    {question.choices && question.choices.length > 0 && (
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-semibold text-gray-300 mb-2">الخيارات:</h4>
+                        {question.choices.map((choice, choiceIndex) => (
+                          <div
+                            key={choiceIndex}
+                            className={`p-3 rounded-lg border ${
+                              choiceIndex === question.answer
+                                ? 'bg-green-900/30 border-green-600 text-green-200'
+                                : 'bg-gray-700/30 border-gray-600 text-gray-300'
+                            }`}
+                          >
+                            <span className="font-medium ml-2">
+                              {String.fromCharCode(65 + choiceIndex)}.
+                            </span>
+                            {choice}
+                            {choiceIndex === question.answer && (
+                              <Badge className="bg-green-600 text-white mr-2 text-xs">
+                                الإجابة الصحيحة
+                              </Badge>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default {
-  generateExam,
-  groupRCQuestionsByPassage,
-  shuffleArray
-};
+export default FolderView;
 
