@@ -516,13 +516,13 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     </div>
 
                     <div
-                      onClick={() => updateSetting('timerMode', 'total')}
-                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
-                        timerMode === 'total'
-                          ? 'border-purple-500 bg-gradient-to-r from-purple-900/40 to-teal-900/40 shadow-2xl shadow-purple-500/30'
-                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
-                      }`}
-                    >
+  onClick={() => updateSetting('timerMode', 'total')}
+  className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+    timerMode === 'total'
+      ? 'border-purple-500 bg-gradient-to-r from-purple-900/40 to-teal-900/40 shadow-2xl shadow-purple-500/30'
+      : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+  }`}
+>
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-4">
                           <div className={`p-3 rounded-xl ${
