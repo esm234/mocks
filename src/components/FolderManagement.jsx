@@ -80,53 +80,57 @@ const FolderManagement = ({ onBack }) => {
   }
 
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800 text-white" dir="rtl">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5"></div>
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cdefs%3E%3Cpattern%20id%3D%22grid%22%20width%3D%2220%22%20height%3D%2220%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20d%3D%22M%2020%200%20L%200%200%200%2020%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-width%3D%220.5%22%20opacity%3D%220.03%22/%3E%3C/pattern%3E%3C/defs%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23grid)%22/%3E%3C/svg%3E')] opacity-30"></div>
+
+      <div className="relative z-10 max-w-6xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-4">
             <Button
               variant="outline"
               onClick={onBack}
-              className="border-gray-600 text-gray-300 hover:bg-gray-800"
+              className="flex items-center gap-2 px-4 py-2 bg-gray-800 border-gray-700 text-gray-300 rounded-lg font-medium hover:bg-gray-700 hover:text-white transition-all duration-300 shadow-md"
             >
-              <ArrowLeft className="w-4 h-4 ml-2" />
+              <ArrowLeft className="w-4 h-4" />
               العودة للرئيسية
             </Button>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               مجلداتي
             </h1>
           </div>
           
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                <FolderPlus className="w-4 h-4 ml-2" />
-                إضافة مجلد
+              <Button className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
+                <FolderPlus className="w-5 h-5" />
+                إضافة مجلد جديد
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-gray-900 border-gray-700 text-white" dir="rtl">
+            <DialogContent className="bg-gray-900 border-gray-700 text-white rounded-xl shadow-2xl" dir="rtl">
               <DialogHeader>
-                <DialogTitle className="text-right">إضافة مجلد جديد</DialogTitle>
+                <DialogTitle className="text-right text-2xl font-bold text-blue-400">إضافة مجلد جديد</DialogTitle>
               </DialogHeader>
-              <div className="space-y-4">
+              <div className="space-y-6 mt-4">
                 <Input
                   placeholder="اسم المجلد"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3"
                   onKeyPress={(e) => e.key === 'Enter' && handleAddFolder()}
                 />
-                <div className="flex gap-2 justify-end">
+                <div className="flex gap-3 justify-end">
                   <Button
                     variant="outline"
                     onClick={() => setIsDialogOpen(false)}
-                    className="border-gray-600 text-gray-300 hover:bg-gray-800"
+                    className="px-5 py-2 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-800 hover:text-white transition-all duration-300"
                   >
                     إلغاء
                   </Button>
                   <Button
                     onClick={handleAddFolder}
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    className="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-md"
                   >
                     إضافة
                   </Button>
@@ -137,53 +141,52 @@ const FolderManagement = ({ onBack }) => {
         </div>
 
         {folders.length === 0 ? (
-          <div className="text-center py-12">
-            <Folder className="w-16 h-16 mx-auto mb-4 text-gray-500" />
-            <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد مجلدات</h3>
-            <p className="text-gray-500 mb-6">ابدأ بإنشاء مجلد جديد لتنظيم أسئلتك</p>
+          <div className="text-center py-20 bg-gray-800/40 border border-gray-700 rounded-2xl shadow-xl">
+            <Folder className="w-20 h-20 mx-auto mb-6 text-gray-500 animate-bounce-slow" />
+            <h3 className="text-3xl font-bold text-gray-300 mb-4">لا توجد مجلدات بعد</h3>
+            <p className="text-gray-400 text-lg mb-8">ابدأ بإنشاء مجلد جديد لتنظيم أسئلتك المفضلة.</p>
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <FolderPlus className="w-4 h-4 ml-2" />
+                <Button className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
+                  <FolderPlus className="w-6 h-6" />
                   إنشاء مجلد جديد
                 </Button>
               </DialogTrigger>
             </Dialog>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {folders.map((folder) => (
               <div
                 key={folder.id}
-                className="bg-gray-800/50 border border-gray-700 rounded-lg p-6 hover:bg-gray-800/70 transition-all duration-200"
+                className="bg-gray-800/60 border border-gray-700 rounded-2xl p-8 shadow-xl hover:shadow-2xl hover:scale-102 transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center">
-                    <Folder className="w-6 h-6 text-blue-400 ml-3" />
-                    <h3 className="text-lg font-semibold">{folder.name}</h3>
+                    <Folder className="w-8 h-8 text-blue-400 ml-4" />
+                    <h3 className="text-2xl font-bold text-white">{folder.name}</h3>
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleDeleteFolder(folder.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDeleteFolder(folder.id)}
+                    className="text-red-400 hover:text-red-300 hover:bg-red-900/30 rounded-full p-2 transition-all duration-300"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </Button>
                 </div>
                 
-                <div className="text-sm text-gray-400 mb-4">
-                  {folder.questionIds.length} سؤال
+                <div className="text-lg text-gray-400 mb-6">
+                  <span className="font-semibold text-blue-300">{folder.questionIds.length}</span> سؤال
                 </div>
                 
                 <Button
                   variant="outline"
-                  className="w-full border-gray-600 text-gray-300 hover:bg-gray-700"
+                  className="w-full flex items-center gap-2 px-6 py-3 border-blue-500 text-blue-300 rounded-xl font-semibold hover:bg-blue-900/30 hover:text-blue-200 transition-all duration-300 shadow-md"
                   onClick={() => handleViewFolder(folder.id)}
                 >
                   عرض الأسئلة
+                  <ArrowLeft className="w-4 h-4" />
                 </Button>
               </div>
             ))}
