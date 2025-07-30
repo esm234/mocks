@@ -37,23 +37,23 @@ const FolderManagement = ({ onBack }) => {
   };
 
   const handleStartTest = (questions) => {
-    if (questions.length === 0) {
+    if (!questions || questions.length === 0) {
       alert('لا توجد أسئلة في هذا المجلد لبدء الاختبار');
       return;
     }
 
     console.log('Starting folder test with questions:', questions.length);
-    console.log('First question:', questions[0]);
+    console.log('First question sample:', questions[0]);
 
     try {
       // Initialize exam with folder questions
       initializeExam({
-        examMode: 'folder', // Use folder mode instead of single
+        examMode: 'folder', // Use folder mode
         timerMode: 'none', // No timer by default for folder tests
         timerDuration: 0,
         shuffleQuestions: false, // Don't shuffle folder questions by default
         shuffleChoices: false,
-        questionTypeFilter: 'folder',
+        questionTypeFilter: 'folder', // Mark as folder type
         selectedQuestionType: null,
         rcQuestionOrder: 'sequential',
         folderQuestions: questions // Pass the questions directly
@@ -64,7 +64,7 @@ const FolderManagement = ({ onBack }) => {
       onBack(); // This should trigger the exam to start
     } catch (error) {
       console.error('Error starting folder test:', error);
-      alert('حدث خطأ أثناء بدء الاختبار');
+      alert('حدث خطأ أثناء بدء الاختبار: ' + error.message);
     }
   };
 
