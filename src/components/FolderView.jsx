@@ -236,4 +236,50 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
                         <h4 className="text-sm font-semibold text-gray-300 mb-2">الخيارات:</h4>
                         {question.choices.map((choice, choiceIndex) => {
                           const isCorrect = (
-                            (typeof question.answer === 'number' && choiceIndex ===
+                            (typeof question.answer === 'number' && choiceIndex === question.answer) ||
+                            (typeof question.answer === 'string' && choice === question.answer)
+                          );
+                          
+                          return (
+                            <div
+                              key={choiceIndex}
+                              className={`p-3 rounded-lg border ${
+                                isCorrect
+                                  ? 'bg-green-900/30 border-green-600 text-green-200'
+                                  : 'bg-gray-700/30 border-gray-600 text-gray-300'
+                              }`}
+                            >
+                              <span className="font-medium ml-2">
+                                {String.fromCharCode(65 + choiceIndex)}.
+                              </span>
+                              {choice}
+                              {isCorrect && (
+                                <Badge className="bg-green-600 text-white mr-2 text-xs">
+                                  الإجابة الصحيحة
+                                </Badge>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {/* Show correct answer if no choices available */}
+                    {(!question.choices || question.choices.length === 0) && question.answer && (
+                      <div className="mt-4 p-3 bg-green-900/30 border border-green-600 rounded-lg">
+                        <span className="text-green-200 font-medium">الإجابة الصحيحة: </span>
+                        <span className="text-green-100">{question.answer}</span>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default FolderView;
