@@ -144,15 +144,8 @@ const FolderManagement = ({ onBack }) => {
           <div className="text-center py-20 bg-gray-800/40 border border-gray-700 rounded-2xl shadow-xl">
             <Folder className="w-20 h-20 mx-auto mb-6 text-gray-500 animate-bounce-slow" />
             <h3 className="text-3xl font-bold text-gray-300 mb-4">لا توجد مجلدات بعد</h3>
-            <p className="text-gray-400 text-lg mb-8">ابدأ بإنشاء مجلد جديد لتنظيم أسئلتك المفضلة.</p>
-            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-              <DialogTrigger asChild>
-                <Button className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
-                  <FolderPlus className="w-6 h-6" />
-                  إنشاء مجلد جديد
-                </Button>
-              </DialogTrigger>
-            </Dialog>
+            <p className="text-gray-400 text-lg mb-8">استخدم زر "إضافة مجلد جديد" في الأعلى لإنشاء مجلدك الأول.</p>
+            {/* Removed the duplicate button here */}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
