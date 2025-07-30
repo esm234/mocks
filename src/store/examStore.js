@@ -6,7 +6,7 @@ export const useExamStore = create(
   persist(
     (set, get) => ({
       // Exam configuration with user settings persistence
-      examMode: 'sectioned', // 'sectioned' or 'single'
+      examMode: 'sectioned', // 'sectioned', 'single', or 'folder'
       timerMode: 'none', // 'none', 'total', 'section'
       timerDuration: 13, // minutes
       shuffleQuestions: true, // Default to true for random questions
@@ -14,7 +14,7 @@ export const useExamStore = create(
       rcQuestionOrder: 'sequential', // New: 'sequential' or 'random' for RC questions
       
       // New configuration for question type filtering
-      questionTypeFilter: 'all', // 'all' or 'specific'
+      questionTypeFilter: 'all', // 'all', 'specific', or 'folder'
       selectedQuestionType: null, // 'analogy', 'completion', 'error', 'rc', 'odd'
       
       // Exam state
@@ -109,40 +109,69 @@ export const useExamStore = create(
             folderQuestions: config.folderQuestions || null // New: for folder-based exams
           };
 
-          let generatedQuestions;
+          let processedQuestions = [];
 
           // Check if this is a folder-based exam
-          if (examConfig.folderQuestions && Array.isArray(examConfig.folderQuestions)) {
+          if (examConfig.folderQuestions && Array.isArray(examConfig.folderQuestions) && examConfig.folderQuestions.length > 0) {
             console.log('Initializing folder-based exam with', examConfig.folderQuestions.length, 'questions');
-            generatedQuestions = examConfig.folderQuestions;
+            
+            // Process folder questions directly
+            processedQuestions = examConfig.folderQuestions.map((question, index) => {
+              // Ensure proper answer format
+              let processedAnswer = question.answer;
+              
+              // If answer is stored as string and we have choices, convert to index
+              if (typeof processedAnswer === 'string' && question.choices && Array.isArray(question.choices)) {
+                const answerIndex = question.choices.findIndex(choice => choice === processedAnswer);
+                if (answerIndex >= 0) {
+                  processedAnswer = answerIndex;
+                }
+              }
+              
+              // Ensure answer is a number
+              if (typeof processedAnswer !== 'number') {
+                processedAnswer = 0;
+              }
+
+              return {
+                ...question,
+                question_number: index + 1,
+                section: 1, // All folder questions in one section
+                answer: processedAnswer,
+                original_type: question.type,
+                original_question_number: question.question_number || index + 1
+              };
+            });
+            
           } else {
             // Generate exam questions using the generateExam function from dataLoader
             const { questions } = generateExam(examConfig);
-            generatedQuestions = questions;
+            processedQuestions = questions;
           }
           
-          console.log('Generated exam questions:', generatedQuestions.length);
+          console.log('Generated exam questions:', processedQuestions.length);
           
-          if (!generatedQuestions || generatedQuestions.length === 0) {
+          if (!processedQuestions || processedQuestions.length === 0) {
             throw new Error('Failed to generate exam questions');
           }
 
-          let processedQuestions = generatedQuestions;
+          // For non-folder exams, re-number questions sequentially and assign sections
+          if (!examConfig.folderQuestions) {
+            processedQuestions = processedQuestions.map((question, index) => ({
+              ...question,
+              question_number: index + 1,
+              original_question_number: question.question_number, // Keep original for reference
+            }));
 
-          // Re-number questions sequentially
-          processedQuestions = processedQuestions.map((question, index) => ({
-            ...question,
-            question_number: index + 1,
-            original_question_number: question.question_number, // Keep original for reference
-          }));
-
-          // Assign sections based on question_number (13 questions per section)
-          processedQuestions = processedQuestions.map((question, index) => ({
-            ...question,
-            section: Math.floor(index / 13) + 1,
-          }));
+            // Assign sections based on question_number (13 questions per section)
+            processedQuestions = processedQuestions.map((question, index) => ({
+              ...question,
+              section: Math.floor(index / 13) + 1,
+            }));
+          }
 
           console.log('Final processed questions:', processedQuestions.length);
+          console.log('Sample question:', processedQuestions[0]);
 
           // Set up timer
           const timerDuration = config.timerMode === 'none' ? 0 : (config.timerDuration || 13) * 60;
@@ -214,7 +243,8 @@ export const useExamStore = create(
       getCurrentExamInfo: () => {
         const state = get();
         return {
-          type: state.questionTypeFilter === 'specific' ? state.selectedQuestionType : 'all',
+          type: state.questionTypeFilter === 'specific' ? state.selectedQuestionType : 
+                state.questionTypeFilter === 'folder' ? 'folder' : 'all',
           mode: state.examMode,
           totalQuestions: state.examQuestions.length,
           currentSection: state.currentSection,
@@ -300,6 +330,7 @@ export const useExamStore = create(
       // Select answer
       selectAnswer: (questionNumber, choiceIndex) => {
         const { userAnswers, deferredQuestions } = get();
+        console.log('Selecting answer:', questionNumber, choiceIndex);
         set({
           userAnswers: {
             ...userAnswers,
@@ -428,6 +459,11 @@ export const useExamStore = create(
       completeExam: () => {
         const { examQuestions, userAnswers, deferredQuestions, timerInterval, resultHistory } = get();
         
+        console.log('Completing exam...');
+        console.log('Exam questions:', examQuestions.length);
+        console.log('User answers:', Object.keys(userAnswers).length);
+        console.log('Sample answers:', userAnswers);
+        
         // Stop timer
         if (timerInterval) {
           clearInterval(timerInterval);
@@ -442,6 +478,8 @@ export const useExamStore = create(
           const isDeferred = deferredQuestions[question.question_number];
           const isAnswered = userAnswer !== undefined;
           const isCorrect = isAnswered && (userAnswer === question.answer);
+
+          console.log(`Question ${question.question_number}: User: ${userAnswer}, Correct: ${question.answer}, IsCorrect: ${isCorrect}`);
 
           if (isCorrect) {
             correctAnswers++;
@@ -471,6 +509,8 @@ export const useExamStore = create(
           detailedResults,
           timestamp: new Date().toISOString()
         };
+
+        console.log('Final results:', results);
 
         set({
           examCompleted: true,
