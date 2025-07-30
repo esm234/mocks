@@ -201,7 +201,16 @@ const StartScreen = () => {
                   <p className="text-sm text-gray-400">المرحلة {currentStep} من 3</p>
                 </div>
               </div>
-              
+                       {/* Folder Management Button */}
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={onShowFolderManagement}
+                  className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/30"
+                >
+                  <Folder className="h-4 w-4" />
+                  مجلداتي
+                </button>
+              </div>
               {/* Progress Steps */}
               <div className="flex items-center space-x-4 space-x-reverse">
                 {[1, 2, 3].map((step) => (
