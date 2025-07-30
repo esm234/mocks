@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v16'; // Increment version for updates
+const CACHE_NAME = 'pwa-cache-v17'; // Increment version for updates
 const urlsToCache = [
   '/',
   '/index.html',
