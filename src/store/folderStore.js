@@ -5,57 +5,88 @@ export const useFolderStore = create(
   persist(
     (set, get) => ({
       folders: [],
-
-      // Add a new folder
-      addFolder: (folderName) => {
+      
+      addFolder: (name) => {
+        const newFolder = {
+          id: Date.now().toString(),
+          name,
+          questionIds: [],
+          createdAt: new Date().toISOString()
+        };
+        
         set((state) => ({
-          folders: [
-            ...state.folders,
-            { id: Date.now().toString(), name: folderName, questionIds: [] },
-          ],
+          folders: [...state.folders, newFolder]
         }));
+        
+        console.log('Added new folder:', newFolder);
+        return newFolder; // Return the created folder
       },
-
-      // Delete a folder
+      
       deleteFolder: (folderId) => {
         set((state) => ({
-          folders: state.folders.filter((folder) => folder.id !== folderId),
+          folders: state.folders.filter(folder => folder.id !== folderId)
         }));
+        console.log('Deleted folder:', folderId);
       },
-
-      // Add a question to a folder
+      
       addQuestionToFolder: (folderId, questionId) => {
+        if (!questionId) {
+          console.warn('Cannot add question to folder: questionId is empty');
+          return;
+        }
+        
         set((state) => ({
-          folders: state.folders.map((folder) =>
-            folder.id === folderId
-              ? { ...folder, questionIds: [...folder.questionIds, questionId] }
-              : folder
-          ),
+          folders: state.folders.map(folder => {
+            if (folder.id === folderId) {
+              // Check if question is already in folder
+              if (folder.questionIds.includes(questionId)) {
+                console.log('Question already in folder:', questionId);
+                return folder;
+              }
+              
+              console.log('Adding question to folder:', questionId, 'to folder:', folderId);
+              return {
+                ...folder,
+                questionIds: [...folder.questionIds, questionId]
+              };
+            }
+            return folder;
+          })
         }));
       },
-
-      // Remove a question from a folder
+      
       removeQuestionFromFolder: (folderId, questionId) => {
         set((state) => ({
-          folders: state.folders.map((folder) =>
-            folder.id === folderId
-              ? { ...folder, questionIds: folder.questionIds.filter((id) => id !== questionId) }
-              : folder
-          ),
+          folders: state.folders.map(folder => {
+            if (folder.id === folderId) {
+              console.log('Removing question from folder:', questionId, 'from folder:', folderId);
+              return {
+                ...folder,
+                questionIds: folder.questionIds.filter(id => id !== questionId)
+              };
+            }
+            return folder;
+          })
         }));
       },
-
-      // Get questions for a specific folder
-      getQuestionsInFolder: (folderId, allQuestions) => {
-        const folder = get().folders.find((f) => f.id === folderId);
-        if (!folder) return [];
-        return allQuestions.filter((q) => folder.questionIds.includes(q.id));
+      
+      updateFolderName: (folderId, newName) => {
+        set((state) => ({
+          folders: state.folders.map(folder => 
+            folder.id === folderId 
+              ? { ...folder, name: newName }
+              : folder
+          )
+        }));
       },
+      
+      clearAllFolders: () => {
+        set({ folders: [] });
+      }
     }),
     {
-      name: 'folder-storage', // unique name for localStorage
+      name: 'folder-storage',
+      version: 1,
     }
   )
 );
-
-
