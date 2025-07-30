@@ -1,7 +1,7 @@
 {
-  "name": "Exam Our Site PWA",
-  "short_name": "Exam PWA",
-  "description": "A Progressive Web App for Exam Our Site",
+  "name": "ourgoal",
+  "short_name": "محاكي اور جول",
+  "description": ",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
