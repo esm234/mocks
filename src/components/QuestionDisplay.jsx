@@ -434,32 +434,32 @@ const QuestionDisplay = () => {
 
   // تعليمات حسب النوع
   const INSTRUCTIONS = {
-    'analogy': {
-      title: 'التناظر اللفظي',
-      text: `في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة
+  'analogy': {
+    title: 'التناظر اللفظي',
+    text: 'في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة'
+  },
+  'completion': {
+    title: 'إكمال الجمل',
+    text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالاً صحيحاً. المطلوب هو: اختيار الإجابة الصحيحة'
+  },
+  'error': {
+    title: 'الخطأ السياقي',
+    text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ. المطلوب هو: تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة، (الخطأ ليس إملائياً ولا نحوياً)'
+  },
+  'rc': {
+    title: 'استيعاب المقروء',
+    text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
+  },
+  'reading': {
+    title: 'استيعاب المقروء',
+    text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة'
+  },
+  'odd': {
+    title: 'المفردة الشاذة',
+    text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة'
+  }
+};
 
-},
-    'completion': {
-      title: 'إكمال الجمل',
-      text: 'تلي كل جملة من الجمل الآتية أربعة اختيارات، أحدها يكمل الفراغ أو الفراغات في الجملة إكمالاً صحيحاً. المطلوب هو: اختيار الإجابة الصحيحة',
-    },
-    'error': {
-      title: 'الخطأ السياقي',
-      text: 'في كل جملة مما يأتي أربع كلمات كل منها مكتوبة بخط غليظ. المطلوب هو: تحديد الكلمة التي لا يتفق معناها مع المعنى العام للجملة، (الخطأ ليس إملائياً ولا نحوياً)',
-    },
-    'rc': {
-      title: 'استيعاب المقروء',
-      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة',
-    },
-    'reading': {
-      title: 'استيعاب المقروء',
-      text: 'السؤال التالي يتعلق بالنص المرفق، بعد السؤال هناك أربع اختيارات، واحد منها صحيح. المطلوب هو: قراءة النص بعناية، ثم اختيار الإجابة الصحيحة',
-    },
-    'odd': {
-      title: 'المفردة الشاذة',
-      text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة',
-    }
-  };
 
   const currentInstructions = INSTRUCTIONS[currentQuestion.type] || { title: '', text: '' };
 
@@ -468,64 +468,63 @@ const QuestionDisplay = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-white" dir="rtl">
-      {/* الشريط العلوي */}
-      <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
-        {/* اسم الاختبار */}
-        <div className="font-bold text-white text-lg">
-            أنت الآن في القسم {currentSection + 0}
-        </div>
-        
-        {/* باقي العناصر */}
-        <div className="flex items-center gap-3 flex-row-reverse">
-          {!isMobile && (
-            <select className="rounded px-2 py-1 text-black bg-white">
-              <option>خط عادي</option>
-              <option>خط كبير</option>
-            </select>
-          )}
-          
-          <button
-            className={`bg-white/30 text-white px-3 py-1 rounded border border-white/50 ${isDeferred ? 'ring-2 ring-yellow-400' : ''}`}
-            onClick={handleDeferToggle}
-            type="button"
-          >
-            {isDeferred ? '★ مميز للمراجعة' : 'تمييز السؤال للمراجعة'}
-          </button>
-          
-          <span className="text-white">
-            {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
-          </span>
-          
-          {timerActive && (
-            <span className="text-white flex items-center gap-1">
-              <span>الوقت المتبقي:</span>
-              <Clock className="w-4 h-4" />
-              <span>{formatTime(timeRemaining)}</span>
-            </span>
-          )}
-        </div>
-      </div>
+{/* الشريط العلوي */}
+<div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
+  {/* اسم الاختبار */}
+  <div className="font-bold text-white text-lg">
+    أنت الآن في القسم {currentSection + 0}
+  </div>
+  
+  {/* باقي العناصر */}
+  <div className="flex items-center gap-3 flex-row-reverse">
+    {!isMobile && (
+      <select className="rounded px-2 py-1 text-black bg-white">
+        <option>خط عادي</option>
+        <option>خط كبير</option>
+      </select>
+    )}
+    
+    <button
+      className={`bg-white/30 text-white px-3 py-1 rounded border border-white/50 ${isDeferred ? 'ring-2 ring-yellow-400' : ''}`}
+      onClick={handleDeferToggle}
+      type="button">
+      {isDeferred ? '★ مميز للمراجعة' : 'تمييز السؤال للمراجعة'}
+    </button>
+    
+    <span className="text-white">
+      {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
+    </span>
+    
+    {timerActive && (
+      <span className="text-white flex items-center gap-1">
+        <span>الوقت المتبقي:</span>
+        <Clock className="w-4 h-4" />
+        <span>{formatTime(timeRemaining)}</span>
+      </span>
+    )}
+  </div>
+</div>
+
 
       {/* محتوى الصفحة */}
       <div className="flex-1 flex flex-row">
         {/* عمود السؤال والاختيارات */}
         <div className={`${isMobile ? 'w-full' : 'w-1/2'} flex flex-col justify-start items-start p-4 md:p-12`}>
           {/* نص الاستيعاب */}
-          {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-            <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
-              {currentQuestion.passage}
-            </div>
-          )}
-          
-          {/*还不أحتاج إلى هذا النص
+{(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
+  <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
+    {currentQuestion.passage}
+  </div>
+)}
 
-          {/* السؤال */}
-          <div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
-            {currentQuestion.type === 'error' ? 
-              renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
-              currentQuestion.question
-            }
-          </div>
+{/* السؤال */}
+<div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
+  {currentQuestion.type === 'error' ? 
+    renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
+    currentQuestion.question
+  }
+</div>
+
           
           {/* الخيارات */}
           <div className="flex flex-col gap-4 md:gap-6 w-full">
