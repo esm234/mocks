@@ -9,6 +9,7 @@ import FolderView from './FolderView';
 
 const FolderManagement = ({ onBack }) => {
   const { folders, addFolder, deleteFolder } = useFolderStore();
+  const { initializeExam } = useExamStore();
   const [newFolderName, setNewFolderName] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
@@ -41,24 +42,26 @@ const FolderManagement = ({ onBack }) => {
       return;
     }
 
-    // Initialize exam with folder questions
-    const { initializeExam } = useExamStore.getState();
-    
+    console.log('Starting folder test with questions:', questions.length);
+    console.log('First question:', questions[0]);
+
     try {
+      // Initialize exam with folder questions
       initializeExam({
-        examMode: 'single', // Use single mode for folder tests
+        examMode: 'folder', // Use folder mode instead of single
         timerMode: 'none', // No timer by default for folder tests
         timerDuration: 0,
-        shuffleQuestions: true,
+        shuffleQuestions: false, // Don't shuffle folder questions by default
         shuffleChoices: false,
         questionTypeFilter: 'folder',
         selectedQuestionType: null,
         rcQuestionOrder: 'sequential',
-        folderQuestions: questions
+        folderQuestions: questions // Pass the questions directly
       });
       
       // Navigate back to main app (exam will start)
       setSelectedFolderId(null);
+      onBack(); // This should trigger the exam to start
     } catch (error) {
       console.error('Error starting folder test:', error);
       alert('حدث خطأ أثناء بدء الاختبار');
@@ -192,4 +195,3 @@ const FolderManagement = ({ onBack }) => {
 };
 
 export default FolderManagement;
-
