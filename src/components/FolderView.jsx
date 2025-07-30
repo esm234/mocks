@@ -29,116 +29,88 @@ import oddData from '../data/odd.json';
 const FolderView = ({ folderId, onBack, onStartTest }) => {
   const { folders, removeQuestionFromFolder } = useFolderStore();
   const [allQuestions, setAllQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
   
   const folder = folders.find(f => f.id === folderId);
 
   useEffect(() => {
-    try {
-      // Combine all question data with improved ID generation
-      const normalizeQuestion = (question, type, sourceIndex) => {
-        // Create a more robust unique ID that avoids collisions
-        // Using sourceIndex (array position) + type + a small hash of question text
-        const questionTextHash = question.question 
-          ? btoa(unescape(encodeURIComponent(question.question))).substring(0, 8)
-          : Math.random().toString(36).substring(2, 10); // fallback random string
-        
-        const uniqueId = `${type}-${sourceIndex}-${questionTextHash}`;
+    // Combine all question data
+    const normalizeQuestion = (question, type, sourceIndex) => {
+      const contentString = JSON.stringify({
+        question: question.question,
+        choices: question.choices,
+        answer: question.answer,
+        passage: question.passage
+      });
+      
+      const uniqueContentHash = btoa(unescape(encodeURIComponent(contentString))).substring(0, 32); // Increased hash length
+      const uniqueId = `${type}-${question.question_number || sourceIndex}-${uniqueContentHash}`;
 
-        return {
-          id: uniqueId,
-          question_number: question.question_number || sourceIndex + 1,
-          question: question.question || '',
-          type: type,
-          choices: question.choices || [],
-          answer: question.answer,
-          passage: question.passage || null,
-          category: question.category || type,
-          exam: question.exam || ''
-        };
+      return {
+        id: uniqueId,
+        question_number: question.question_number || sourceIndex + 1,
+        question: question.question || '',
+        type: type,
+        choices: question.choices || [],
+        answer: question.answer,
+        passage: question.passage || null,
+        category: question.category || type,
+        exam: question.exam || ''
       };
+    };
 
-      const questions = [];
-      
-      // Process analogy questions
-      if (analogyData && Array.isArray(analogyData)) {
-        analogyData.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            questions.push(normalizeQuestion(q, 'analogy', index));
-          }
-        });
-      }
-      
-      // Process completion questions
-      if (completionData && Array.isArray(completionData)) {
-        completionData.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            questions.push(normalizeQuestion(q, 'completion', index));
-          }
-        });
-      }
-      
-      // Process error questions
-      if (errorData && Array.isArray(errorData)) {
-        errorData.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            questions.push(normalizeQuestion(q, 'error', index));
-          }
-        });
-      }
-      
-      // Process RC Bank 4 questions
-      if (rcBank4Data && Array.isArray(rcBank4Data)) {
-        rcBank4Data.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            questions.push(normalizeQuestion(q, 'rc', index));
-          }
-        });
-      }
-      
-      // Process RC Bank 5 questions
-      if (rcBank5Data && Array.isArray(rcBank5Data)) {
-        rcBank5Data.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            // Add rcBank4Data length to avoid index collision
-            questions.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
-          }
-        });
-      }
-      
-      // Process odd questions
-      if (oddData && Array.isArray(oddData)) {
-        oddData.forEach((q, index) => {
-          if (q && (q.question || q.choices)) {
-            questions.push(normalizeQuestion(q, 'odd', index));
-          }
-        });
-      }
-
-      console.log('Total questions loaded:', questions.length);
-      console.log('Sample question IDs:', questions.slice(0, 5).map(q => q.id));
-      
-      setAllQuestions(questions);
-    } catch (error) {
-      console.error('Error loading questions:', error);
-    } finally {
-      setLoading(false);
+    const questions = [];
+    
+    if (analogyData && Array.isArray(analogyData)) {
+      analogyData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'analogy', index));
+        }
+      });
     }
+    
+    if (completionData && Array.isArray(completionData)) {
+      completionData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'completion', index));
+        }
+      });
+    }
+    
+    if (errorData && Array.isArray(errorData)) {
+      errorData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'error', index));
+        }
+      });
+    }
+    
+    if (rcBank4Data && Array.isArray(rcBank4Data)) {
+      rcBank4Data.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'rc', index));
+        }
+      });
+    }
+    
+    if (rcBank5Data && Array.isArray(rcBank5Data)) {
+      rcBank5Data.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'rc', index + (rcBank4Data?.length || 0)));
+        }
+      });
+    }
+    
+    if (oddData && Array.isArray(oddData)) {
+      oddData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          questions.push(normalizeQuestion(q, 'odd', index));
+        }
+      });
+    }
+
+    setAllQuestions(questions);
   }, []);
 
-  // Show loading state
-  if (loading) {
-    return (
-      <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-300">جاري تحميل الأسئلة...</h2>
-        </div>
-      </div>
-    );
-  }
-
-  // Show error if folder not found
   if (!folder) {
     return (
       <div className="p-6 bg-gradient-to-br from-gray-950 via-slate-950 to-gray-900 text-white min-h-screen" dir="rtl">
@@ -153,17 +125,7 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
     );
   }
 
-  // Filter questions that belong to this folder
-  const folderQuestions = allQuestions.filter(q => {
-    const isIncluded = folder.questionIds.includes(q.id);
-    if (isIncluded) {
-      console.log('Question found in folder:', q.id, q.question.substring(0, 50));
-    }
-    return isIncluded;
-  });
-
-  console.log('Folder question IDs:', folder.questionIds);
-  console.log('Matching questions found:', folderQuestions.length);
+  const folderQuestions = allQuestions.filter(q => folder.questionIds.includes(q.id));
 
   const getQuestionTypeIcon = (type) => {
     switch (type) {
@@ -248,22 +210,12 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
           )}
         </div>
 
-        {/* Debug Info (remove in production) */}
-        <div className="mb-4 p-4 bg-gray-800 rounded-lg text-sm">
-          <p>إجمالي الأسئلة المحملة: {allQuestions.length}</p>
-          <p>أسئلة المجلد: {folderQuestions.length}</p>
-          <p>معرفات الأسئلة في المجلد: {folder.questionIds.join(', ')}</p>
-        </div>
-
         {/* Questions List */}
         {folderQuestions.length === 0 ? (
           <div className="text-center py-12">
             <FileText className="w-16 h-16 mx-auto mb-4 text-gray-500" />
             <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد أسئلة</h3>
             <p className="text-gray-500">لم يتم إضافة أي أسئلة إلى هذا المجلد بعد</p>
-            <p className="text-gray-500 text-sm mt-2">
-              قد تحتاج إلى مسح البيانات المحفوظة وإعادة إضافة الأسئلة
-            </p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -280,9 +232,6 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
                         </Badge>
                         <span className="text-sm text-gray-400">
                           السؤال #{index + 1}
-                        </span>
-                        <span className="text-xs text-gray-500">
-                          ID: {question.id}
                         </span>
                       </div>
                       <Button
