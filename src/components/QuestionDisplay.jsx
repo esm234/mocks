@@ -23,14 +23,17 @@ import {
   ArrowLeft,
   Timer,
   Award,
-  Bookmark
+  Bookmark,
+  FolderPlus
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
+import QuestionToFolderDialog from './QuestionToFolderDialog';
 
 const QuestionDisplay = () => {
   const [isTextEnlarged, setIsTextEnlarged] = useState(false);
   const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  const [isFolderDialogOpen, setIsFolderDialogOpen] = useState(false);
 
   const {
     examQuestions,
@@ -582,6 +585,15 @@ const QuestionDisplay = () => {
           ▶ السابق
         </button>
 
+        {/* زر إضافة إلى مجلد */}
+        <button
+          onClick={() => setIsFolderDialogOpen(true)}
+          className="mx-2 md:mx-4 px-3 md:px-6 py-2 bg-blue-500 text-white rounded-lg font-bold border border-blue-600 hover:bg-blue-600 transition text-sm md:text-base"
+        >
+          <FolderPlus className="h-4 w-4 inline ml-2" />
+          إضافة لمجلد
+        </button>
+
         {/* زر التأجيل في الوسط */}
         {!hideDeferButton && (
           <button
@@ -616,6 +628,14 @@ const QuestionDisplay = () => {
           التالي ◀
         </button>
       </div>
+
+      {/* Dialog for adding question to folder */}
+      <QuestionToFolderDialog
+        isOpen={isFolderDialogOpen}
+        onClose={() => setIsFolderDialogOpen(false)}
+        questionId={currentQuestion?.id}
+        questionText={currentQuestion?.question}
+      />
     </div>
   );
 };

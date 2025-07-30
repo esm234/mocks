@@ -105,11 +105,22 @@ export const useExamStore = create(
             rcQuestionOrder: config.rcQuestionOrder || 'sequential',
             questionTypeFilter: config.questionTypeFilter || 'all',
             selectedQuestionType: config.selectedQuestionType || null,
-            singleSectionType: config.selectedQuestionType || null
+            singleSectionType: config.selectedQuestionType || null,
+            folderQuestions: config.folderQuestions || null // New: for folder-based exams
           };
 
-          // Generate exam questions using the generateExam function from dataLoader
-          const { questions: generatedQuestions } = generateExam(examConfig);
+          let generatedQuestions;
+
+          // Check if this is a folder-based exam
+          if (examConfig.folderQuestions && Array.isArray(examConfig.folderQuestions)) {
+            console.log('Initializing folder-based exam with', examConfig.folderQuestions.length, 'questions');
+            generatedQuestions = examConfig.folderQuestions;
+          } else {
+            // Generate exam questions using the generateExam function from dataLoader
+            const { questions } = generateExam(examConfig);
+            generatedQuestions = questions;
+          }
+          
           console.log('Generated exam questions:', generatedQuestions.length);
           
           if (!generatedQuestions || generatedQuestions.length === 0) {
