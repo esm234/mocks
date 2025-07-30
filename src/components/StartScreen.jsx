@@ -139,15 +139,9 @@ const StartScreen = ({ onShowFolderManagement }) => {
   ];
 
   const timerDurations = [
-    { value: 5, label: '5 دقائق', recommended: false },
-    { value: 10, label: '10 دقائق', recommended: false },
-    { value: 13, label: '13 دقيقة', recommended: true },
-    { value: 15, label: '15 دقيقة', recommended: false },
-    { value: 20, label: '20 دقيقة', recommended: false },
-    { value: 25, label: '25 دقيقة', recommended: false },
-    { value: 30, label: '30 دقيقة', recommended: true },
+    { value: 30, label: '30 دقيقة', recommended: false },
     { value: 45, label: '45 دقيقة', recommended: false },
-    { value: 60, label: 'ساعة كاملة', recommended: false },
+    { value: 60, label: 'ساعة كاملة', recommended: true },
     { value: 90, label: 'ساعة ونصف', recommended: false },
     { value: 120, label: 'ساعتان', recommended: false }
   ];
@@ -204,13 +198,8 @@ const StartScreen = ({ onShowFolderManagement }) => {
         <div className="absolute bottom-20 left-10 w-[500px] h-[500px] bg-gradient-to-r from-emerald-600/8 to-cyan-600/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-gradient-to-r from-amber-600/5 to-rose-600/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
         
-        {/* Subtle Grid Pattern - Fixed */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="w-full h-full" style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
-          }}></div>
-        </div>
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.02%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
         
         {/* Light Beams */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-white/1 to-transparent transform rotate-45"></div>
@@ -236,8 +225,8 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 </div>
               </div>
               
-              <div className="flex items-center gap-6">
-                {/* Folder Management Button */}
+              {/* Folder Management Button */}
+              <div className="flex items-center gap-4">
                 <button
                   onClick={onShowFolderManagement}
                   className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg shadow-blue-500/30"
@@ -245,30 +234,30 @@ const StartScreen = ({ onShowFolderManagement }) => {
                   <Folder className="h-4 w-4" />
                   مجلداتي
                 </button>
-
-                {/* Luxury Progress Steps */}
-                <div className="flex items-center space-x-6 space-x-reverse">
-                  {[1, 2, 3].map((step) => (
-                    <button
-                      key={step}
-                      onClick={() => handleStepChange(step)}
-                      className={`relative w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
-                        currentStep >= step
-                          ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl shadow-purple-500/30'
-                          : 'bg-gray-800/50 text-gray-500 hover:bg-gray-700/50'
-                      }`}
-                    >
-                      {currentStep > step ? (
-                        <Check className="h-6 w-6" />
-                      ) : (
-                        <span className="text-lg">{step}</span>
-                      )}
-                      {currentStep >= step && (
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 animate-pulse"></div>
-                      )}
-                    </button>
-                  ))}
-                </div>
+              </div>
+              
+              {/* Luxury Progress Steps */}
+              <div className="flex items-center space-x-6 space-x-reverse">
+                {[1, 2, 3].map((step) => (
+                  <button
+                    key={step}
+                    onClick={() => handleStepChange(step)}
+                    className={`relative w-14 h-14 rounded-full flex items-center justify-center font-bold transition-all duration-500 ${
+                      currentStep >= step
+                        ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-xl shadow-purple-500/30'
+                        : 'bg-gray-800/50 text-gray-500 hover:bg-gray-700/50'
+                    }`}
+                  >
+                    {currentStep > step ? (
+                      <Check className="h-6 w-6" />
+                    ) : (
+                      <span className="text-lg">{step}</span>
+                    )}
+                    {currentStep >= step && (
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 animate-pulse"></div>
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
             
@@ -396,47 +385,24 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         onClick={() => updateSetting('selectedQuestionType', type.id)}
                         className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl ${
                           selectedQuestionType === type.id
-                            ? `${type.borderColor} ${type.bgColor} shadow-2xl ${type.shadow}`
-                            : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
+                            ? `border-white ${type.bgColor} shadow-2xl ${type.shadow}`
+                            : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
                         }`}
                       >
-                        <div className={`absolute inset-0 bg-gradient-to-r ${type.color.replace('from-', 'from-').replace('to-', 'to-')}/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                        <div className="relative">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className={`p-4 rounded-xl ${
-                              selectedQuestionType === type.id 
-                                ? `bg-gradient-to-r ${type.color} shadow-lg ${type.shadow}` 
-                                : 'bg-gray-700 group-hover:bg-gray-600'
-                            } transition-all duration-500`}>
-                              <IconComponent className="h-8 w-8 text-white" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="relative flex items-center justify-between mb-6">
+                          <div className={`p-4 rounded-xl bg-gradient-to-r ${type.color} shadow-lg`}>
+                            <IconComponent className="h-8 w-8 text-white" />
+                          </div>
+                          {selectedQuestionType === type.id && (
+                            <div className="p-2 bg-white rounded-full shadow-lg">
+                              <Check className="h-5 w-5 text-gray-900" />
                             </div>
-                            {selectedQuestionType === type.id && (
-                              <div className={`p-2 bg-gradient-to-r ${type.color} rounded-full shadow-lg`}>
-                                <Check className="h-5 w-5 text-white" />
-                              </div>
-                            )}
-                          </div>
-                          <h3 className={`text-2xl font-bold mb-3 ${
-                            selectedQuestionType === type.id 
-                              ? `bg-gradient-to-r ${type.color.replace('600', '400')} bg-clip-text text-transparent`
-                              : 'text-white'
-                          }`}>
-                            {type.title}
-                          </h3>
-                          <p className="text-gray-300 mb-4 text-base leading-relaxed">
-                            {type.subtitle}
-                          </p>
-                          <div className="flex items-center justify-between">
-                            <span className={`px-3 py-1 ${
-                              selectedQuestionType === type.id 
-                                ? `bg-gradient-to-r ${type.color}/20 text-${type.color.split('-')[1]}-300`
-                                : 'bg-gray-700/50 text-gray-400'
-                            } rounded-full text-sm font-medium`}>
-                              متخصص
-                            </span>
-                            <span className="text-gray-400 font-medium text-sm">{type.stats}</span>
-                          </div>
+                          )}
                         </div>
+                        <h4 className="text-xl font-bold mb-3">{type.title}</h4>
+                        <p className="text-gray-400 text-base mb-4 leading-relaxed">{type.subtitle}</p>
+                        <div className="text-sm text-gray-500 font-medium">{type.stats}</div>
                       </div>
                     );
                   })}
@@ -445,490 +411,394 @@ const StartScreen = ({ onShowFolderManagement }) => {
             </div>
           )}
 
-          {/* Step 2: Exam Mode Selection */}
+          {/* Step 2: Exam Mode & Timer */}
           {currentStep === 2 && (
             <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-6' : 'opacity-100 translate-y-0'}`}>
               <div className="text-center mb-16">
                 <div className="relative inline-block">
-                  <div className="p-6 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-3xl shadow-2xl shadow-emerald-500/30 mb-6">
+                  <div className="p-6 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-3xl shadow-2xl shadow-blue-500/30 mb-6">
                     <Settings2 className="h-20 w-20 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-cyan-400 rounded-full animate-pulse"></div>
                 </div>
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent animate-gradient">
-                  إعدادات الاختبار
+                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent animate-gradient">
+                  إعدادات التجربة
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                  اختر طريقة عرض الأسئلة والتوقيت المناسب لك
+                  اختر نمط الاختبار والمؤقت المناسب لمستواك
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Exam Mode Selection */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                {/* Exam Mode Section */}
                 <div className="space-y-8">
-                  <div className="text-center mb-8">
-                    <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                      طريقة العرض
-                    </h3>
-                    <p className="text-gray-300 text-lg">اختر كيفية تنظيم الأسئلة</p>
+                  <h3 className="text-3xl font-bold flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg">
+                      <Shuffle className="h-7 w-7 text-white" />
+                    </div>
+                    نمط الاختبار
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    <div
+                      onClick={() => updateSetting('examMode', 'sectioned')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        examMode === 'sectioned'
+                          ? 'border-blue-500 bg-gradient-to-r from-blue-900/40 to-cyan-900/40 shadow-2xl shadow-blue-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-xl ${
+                            examMode === 'sectioned' 
+                              ? 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-lg' 
+                              : 'bg-gray-700 group-hover:bg-gray-600'
+                          } transition-all duration-500`}>
+                            <Layers className="h-6 w-6 text-white" />
+                          </div>
+                          <h4 className="text-xl font-semibold">أقسام مع مراجعة</h4>
+                        </div>
+                        {examMode === 'sectioned' && (
+                          <div className="p-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        الاختبار مقسم إلى أجزاء مع إمكانية مراجعة ومعاينة الإجابات
+                      </p>
+                    </div>
+
+                    <div
+                      onClick={() => updateSetting('examMode', 'single')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        examMode === 'single'
+                          ? 'border-blue-500 bg-gradient-to-r from-blue-900/40 to-cyan-900/40 shadow-2xl shadow-blue-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-xl ${
+                            examMode === 'single' 
+                              ? 'bg-gradient-to-r from-blue-600 to-cyan-600 shadow-lg' 
+                              : 'bg-gray-700 group-hover:bg-gray-600'
+                          } transition-all duration-500`}>
+                            <Zap className="h-6 w-6 text-white" />
+                          </div>
+                          <h4 className="text-xl font-semibold">متتالي ومجمع</h4>
+                        </div>
+                        {examMode === 'single' && (
+                          <div className="p-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        جميع الأسئلة في قسم واحد متواصل بدون توقف أو مراجعة
+                      </p>
+                    </div>
                   </div>
-
-                  <RadioGroup value={examMode} onValueChange={(value) => updateSetting('examMode', value)} className="space-y-6">
-                    {/* Sectioned Mode */}
-                    <div className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
-                      examMode === 'sectioned'
-                        ? 'border-emerald-500 bg-gradient-to-br from-emerald-900/30 to-teal-900/30 shadow-2xl shadow-emerald-500/30'
-                        : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/5 to-teal-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="relative flex items-center space-x-4 space-x-reverse">
-                        <RadioGroupItem value="sectioned" id="sectioned" className="text-emerald-500" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`p-4 rounded-xl ${
-                              examMode === 'sectioned' 
-                                ? 'bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg shadow-emerald-500/30' 
-                                : 'bg-gray-700 group-hover:bg-gray-600'
-                            } transition-all duration-500`}>
-                              <Layers className="h-8 w-8 text-white" />
-                            </div>
-                            {examMode === 'sectioned' && (
-                              <div className="p-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-lg">
-                                <Check className="h-5 w-5 text-white" />
-                              </div>
-                            )}
-                          </div>
-                          <Label htmlFor="sectioned" className="text-2xl font-bold text-white cursor-pointer">
-                            عرض مقسم
-                          </Label>
-                          <p className="text-gray-300 mt-2 text-lg leading-relaxed">
-                            تنظيم الأسئلة حسب النوع مع إمكانية التنقل بينها
-                          </p>
-                          <div className="flex items-center mt-4">
-                            <span className="px-3 py-1 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 text-emerald-300 rounded-full text-sm font-medium">
-                              الأكثر تنظيماً
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Mixed Mode */}
-                    <div className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
-                      examMode === 'mixed'
-                        ? 'border-purple-500 bg-gradient-to-br from-purple-900/30 to-pink-900/30 shadow-2xl shadow-purple-500/30'
-                        : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-pink-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="relative flex items-center space-x-4 space-x-reverse">
-                        <RadioGroupItem value="mixed" id="mixed" className="text-purple-500" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`p-4 rounded-xl ${
-                              examMode === 'mixed' 
-                                ? 'bg-gradient-to-r from-purple-600 to-pink-600 shadow-lg shadow-purple-500/30' 
-                                : 'bg-gray-700 group-hover:bg-gray-600'
-                            } transition-all duration-500`}>
-                              <Shuffle className="h-8 w-8 text-white" />
-                            </div>
-                            {examMode === 'mixed' && (
-                              <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full shadow-lg">
-                                <Check className="h-5 w-5 text-white" />
-                              </div>
-                            )}
-                          </div>
-                          <Label htmlFor="mixed" className="text-2xl font-bold text-white cursor-pointer">
-                            عرض مختلط
-                          </Label>
-                          <p className="text-gray-300 mt-2 text-lg leading-relaxed">
-                            خلط جميع أنواع الأسئلة في تسلسل عشوائي
-                          </p>
-                          <div className="flex items-center mt-4">
-                            <span className="px-3 py-1 bg-gradient-to-r from-purple-600/20 to-pink-600/20 text-purple-300 rounded-full text-sm font-medium">
-                              الأكثر تحدياً
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </RadioGroup>
-
-                  {/* RC Question Order (only for specific RC type) */}
-                  {questionTypeFilter === 'specific' && selectedQuestionType === 'rc' && (
-                    <div className="mt-12 p-8 bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-2xl border border-amber-500/30">
-                      <h4 className="text-2xl font-bold mb-6 bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                        ترتيب أسئلة استيعاب المقروء
-                      </h4>
-                      <RadioGroup value={rcQuestionOrder} onValueChange={(value) => updateSetting('rcQuestionOrder', value)} className="space-y-4">
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <RadioGroupItem value="sequential" id="sequential" className="text-amber-500" />
-                          <Label htmlFor="sequential" className="text-lg text-white cursor-pointer">
-                            تسلسلي - عرض الأسئلة مع نصوصها
-                          </Label>
-                        </div>
-                        <div className="flex items-center space-x-3 space-x-reverse">
-                          <RadioGroupItem value="grouped" id="grouped" className="text-amber-500" />
-                          <Label htmlFor="grouped" className="text-lg text-white cursor-pointer">
-                            مجمع - عرض النص مع جميع أسئلته
-                          </Label>
-                        </div>
-                      </RadioGroup>
-                    </div>
-                  )}
                 </div>
 
                 {/* Timer Settings */}
                 <div className="space-y-8">
-                  <div className="text-center mb-8">
-                    <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                      إعدادات التوقيت
-                    </h3>
-                    <p className="text-gray-300 text-lg">حدد مدة الاختبار</p>
-                  </div>
-
-                  <RadioGroup value={timerMode} onValueChange={(value) => updateSetting('timerMode', value)} className="space-y-6">
-                    {/* No Timer */}
-                    <div className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
-                      timerMode === 'none'
-                        ? 'border-gray-500 bg-gradient-to-br from-gray-800/50 to-gray-900/50 shadow-2xl shadow-gray-500/30'
-                        : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-gray-600/5 to-gray-700/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="relative flex items-center space-x-4 space-x-reverse">
-                        <RadioGroupItem value="none" id="none" className="text-gray-400" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`p-4 rounded-xl ${
-                              timerMode === 'none' 
-                                ? 'bg-gradient-to-r from-gray-600 to-gray-700 shadow-lg shadow-gray-500/30' 
-                                : 'bg-gray-700 group-hover:bg-gray-600'
-                            } transition-all duration-500`}>
-                              <Zap className="h-8 w-8 text-white" />
-                            </div>
-                            {timerMode === 'none' && (
-                              <div className="p-2 bg-gradient-to-r from-gray-600 to-gray-700 rounded-full shadow-lg">
-                                <Check className="h-5 w-5 text-white" />
-                              </div>
-                            )}
+                  <h3 className="text-3xl font-bold flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg">
+                      <Timer className="h-7 w-7 text-white" />
+                    </div>
+                    إعدادات المؤقت
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    <div
+                      onClick={() => updateSetting('timerMode', 'none')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        timerMode === 'none'
+                          ? 'border-emerald-500 bg-gradient-to-r from-emerald-900/40 to-teal-900/40 shadow-2xl shadow-emerald-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-xl ${
+                            timerMode === 'none' 
+                              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg' 
+                              : 'bg-gray-700 group-hover:bg-gray-600'
+                          } transition-all duration-500`}>
+                            <Star className="h-6 w-6 text-white" />
                           </div>
-                          <Label htmlFor="none" className="text-2xl font-bold text-white cursor-pointer">
-                            بدون توقيت
-                          </Label>
-                          <p className="text-gray-300 mt-2 text-lg leading-relaxed">
-                            تدرب بدون ضغط الوقت
-                          </p>
-                          <div className="flex items-center mt-4">
-                            <span className="px-3 py-1 bg-gradient-to-r from-gray-600/20 to-gray-700/20 text-gray-300 rounded-full text-sm font-medium">
-                              مريح
-                            </span>
-                          </div>
+                          <h4 className="text-xl font-semibold">بدون مؤقت</h4>
                         </div>
+                        {timerMode === 'none' && (
+                          <div className="p-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
                       </div>
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        وقت مفتوح للتركيز الكامل على الإجابات بدون ضغط زمني
+                      </p>
                     </div>
 
-                    {/* Timed Mode */}
-                    <div className={`group relative p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-105 ${
-                      timerMode === 'timed'
-                        ? 'border-rose-500 bg-gradient-to-br from-rose-900/30 to-pink-900/30 shadow-2xl shadow-rose-500/30'
-                        : 'border-gray-700 bg-gradient-to-br from-gray-800/30 to-gray-900/30 hover:border-gray-600'
-                    }`}>
-                      <div className="absolute inset-0 bg-gradient-to-r from-rose-600/5 to-pink-600/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="relative flex items-center space-x-4 space-x-reverse">
-                        <RadioGroupItem value="timed" id="timed" className="text-rose-500" />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-4">
-                            <div className={`p-4 rounded-xl ${
-                              timerMode === 'timed' 
-                                ? 'bg-gradient-to-r from-rose-600 to-pink-600 shadow-lg shadow-rose-500/30' 
-                                : 'bg-gray-700 group-hover:bg-gray-600'
-                            } transition-all duration-500`}>
-                              <Timer className="h-8 w-8 text-white" />
-                            </div>
-                            {timerMode === 'timed' && (
-                              <div className="p-2 bg-gradient-to-r from-rose-600 to-pink-600 rounded-full shadow-lg">
-                                <Check className="h-5 w-5 text-white" />
-                              </div>
-                            )}
+                    <div
+                      onClick={() => updateSetting('timerMode', 'total')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        timerMode === 'total'
+                          ? 'border-emerald-500 bg-gradient-to-r from-emerald-900/40 to-teal-900/40 shadow-2xl shadow-emerald-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className={`p-3 rounded-xl ${
+                            timerMode === 'total' 
+                              ? 'bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg' 
+                              : 'bg-gray-700 group-hover:bg-gray-600'
+                          } transition-all duration-500`}>
+                            <Timer className="h-6 w-6 text-white" />
                           </div>
-                          <Label htmlFor="timed" className="text-2xl font-bold text-white cursor-pointer">
-                            مع توقيت
-                          </Label>
-                          <p className="text-gray-300 mt-2 text-lg leading-relaxed">
-                            محاكاة ظروف الاختبار الحقيقي
-                          </p>
-                          <div className="flex items-center mt-4">
-                            <span className="px-3 py-1 bg-gradient-to-r from-rose-600/20 to-pink-600/20 text-rose-300 rounded-full text-sm font-medium">
-                              واقعي
-                            </span>
-                          </div>
+                          <h4 className="text-xl font-semibold">مع مؤقت زمني</h4>
                         </div>
+                        {timerMode === 'total' && (
+                          <div className="p-2 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </RadioGroup>
-
-                  {/* Timer Duration Selection */}
-                  {timerMode === 'timed' && (
-                    <div className="mt-8 p-8 bg-gradient-to-br from-rose-900/20 to-pink-900/20 rounded-2xl border border-rose-500/30 animate-in slide-in-from-bottom-6 duration-700">
-                      <h4 className="text-2xl font-bold mb-6 bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
-                        مدة الاختبار
-                      </h4>
-                      <Select value={selectedTimerDuration.toString()} onValueChange={(value) => updateSetting('selectedTimerDuration', parseInt(value))}>
-                        <SelectTrigger className="w-full bg-gray-800/50 border-gray-600 text-white text-lg p-4 rounded-xl">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gray-800 border-gray-600">
-                          {timerDurations.map((duration) => (
-                            <SelectItem 
-                              key={duration.value} 
-                              value={duration.value.toString()}
-                              className="text-white hover:bg-gray-700 text-lg py-3"
-                            >
-                              <div className="flex items-center justify-between w-full">
-                                <span>{duration.label}</span>
-                                {duration.recommended && (
-                                  <span className="mr-2 px-2 py-1 bg-gradient-to-r from-rose-600/20 to-pink-600/20 text-rose-300 rounded-full text-xs font-medium">
-                                    مُوصى
-                                  </span>
-                                )}
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <p className="text-gray-300 text-base leading-relaxed mb-6">
+                        تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
+                      </p>
                       
-                      {getSelectedTimerInfo()?.recommended && (
-                        <div className="mt-4 p-4 bg-gradient-to-r from-rose-600/10 to-pink-600/10 rounded-xl border border-rose-500/20">
-                          <div className="flex items-center space-x-2 space-x-reverse">
-                            <Star className="h-5 w-5 text-rose-400" />
-                            <span className="text-rose-300 font-medium">مدة موصى بها للتدريب الفعال</span>
-                          </div>
+                      {timerMode === 'total' && (
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+                          {timerDurations.slice(0, 6).map((timer) => (
+                            <button
+                              key={timer.value}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                updateSetting('selectedTimerDuration', timer.value);
+                              }}
+                              className={`relative p-4 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                                selectedTimerDuration === timer.value
+                                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+                                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                              }`}
+                            >
+                              {timer.recommended && (
+                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
+                              )}
+                              {timer.label}
+                            </button>
+                          ))}
                         </div>
                       )}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
+
+              {/* Reading Comprehension Order */}
+              {(questionTypeFilter === 'all' || (questionTypeFilter === 'specific' && selectedQuestionType === 'rc')) && (
+                <div className="mt-16 p-10 bg-gradient-to-r from-amber-900/20 to-orange-900/20 rounded-3xl border border-amber-700/30 shadow-xl">
+                  <h3 className="text-2xl font-bold flex items-center gap-4 mb-8">
+                    <div className="p-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl shadow-lg">
+                      <BookText className="h-6 w-6 text-white" />
+                    </div>
+                    ترتيب أسئلة استيعاب المقروء
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div
+                      onClick={() => updateSetting('rcQuestionOrder', 'sequential')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        rcQuestionOrder === 'sequential'
+                          ? 'border-amber-500 bg-amber-900/40 shadow-2xl shadow-amber-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <h4 className="text-xl font-semibold">ترتيب متتالي</h4>
+                        {rcQuestionOrder === 'sequential' && (
+                          <div className="p-2 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        أسئلة النص الواحد تأتي متتابعة ومجمعة
+                      </p>
+                    </div>
+
+                    <div
+                      onClick={() => updateSetting('rcQuestionOrder', 'random')}
+                      className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
+                        rcQuestionOrder === 'random'
+                          ? 'border-amber-500 bg-amber-900/40 shadow-2xl shadow-amber-500/30'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-6">
+                        <h4 className="text-xl font-semibold">ترتيب عشوائي</h4>
+                        {rcQuestionOrder === 'random' && (
+                          <div className="p-2 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full shadow-lg">
+                            <Check className="h-5 w-5 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-base leading-relaxed">
+                        توزيع عشوائي كامل لجميع الأسئلة
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Step 3: Final Review */}
+          {/* Step 3: Review & Start */}
           {currentStep === 3 && (
             <div className={`transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-6' : 'opacity-100 translate-y-0'}`}>
               <div className="text-center mb-16">
                 <div className="relative inline-block">
-                  <div className="p-6 bg-gradient-to-r from-amber-600 to-orange-600 rounded-3xl shadow-2xl shadow-amber-500/30 mb-6">
+                  <div className="p-6 bg-gradient-to-r from-emerald-600 to-green-600 rounded-3xl shadow-2xl shadow-emerald-500/30 mb-6">
                     <Rocket className="h-20 w-20 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse"></div>
                 </div>
-                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-400 bg-clip-text text-transparent animate-gradient">
-                  مراجعة الإعدادات
+                <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-emerald-400 via-green-400 to-emerald-400 bg-clip-text text-transparent animate-gradient">
+                  كل شيء جاهز!
                 </h2>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                  تأكد من إعداداتك قبل بدء رحلة التدريب
+                  راجع إعداداتك النهائية قبل بدء رحلة التدريب
                 </p>
               </div>
 
-              {/* Settings Summary */}
-              <div className="max-w-4xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                  {/* Question Type Summary */}
-                  <div className="p-8 bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-2xl border border-purple-500/30 shadow-2xl shadow-purple-500/20">
-                    <div className="flex items-center mb-6">
-                      <div className="p-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl shadow-lg shadow-purple-500/30 ml-4">
-                        {questionTypeFilter === 'all' ? (
-                          <Gem className="h-8 w-8 text-white" />
-                        ) : (
-                          <Target className="h-8 w-8 text-white" />
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                          نمط التدريب
-                        </h3>
-                        <p className="text-gray-300">
-                          {questionTypeFilter === 'all' ? 'تدريب شامل' : 'تدريب مُركز'}
-                        </p>
-                      </div>
+              {/* Premium Summary Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                {/* Question Type Summary */}
+                <div className="p-8 bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-2xl border border-purple-700/30 shadow-xl shadow-purple-500/20">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl shadow-lg">
+                      <Brain className="h-6 w-6 text-white" />
                     </div>
+                    <h3 className="text-xl font-semibold">نوع التدريب</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="text-white font-medium text-lg">
+                      {questionTypeFilter === 'all' ? 'تدريب شامل' : 'تدريب مُركز'}
+                    </p>
                     {questionTypeFilter === 'specific' && (
-                      <div className="p-4 bg-gradient-to-r from-purple-600/10 to-pink-600/10 rounded-xl border border-purple-500/20">
-                        <div className="flex items-center">
-                          {getCurrentQuestionType() && (
-                            <>
-                              <div className="p-2 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg ml-3">
-                                {React.createElement(getCurrentQuestionType().icon, { className: "h-5 w-5 text-white" })}
-                              </div>
-                              <div>
-                                <p className="text-white font-medium">{getCurrentQuestionType().title}</p>
-                                <p className="text-gray-300 text-sm">{getCurrentQuestionType().stats}</p>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </div>
+                      <p className="text-purple-300 text-base">
+                        {getCurrentQuestionType()?.title}
+                      </p>
                     )}
-                  </div>
-
-                  {/* Exam Mode Summary */}
-                  <div className="p-8 bg-gradient-to-br from-emerald-900/30 to-teal-900/30 rounded-2xl border border-emerald-500/30 shadow-2xl shadow-emerald-500/20">
-                    <div className="flex items-center mb-6">
-                      <div className="p-4 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg shadow-emerald-500/30 ml-4">
-                        {examMode === 'sectioned' ? (
-                          <Layers className="h-8 w-8 text-white" />
-                        ) : (
-                          <Shuffle className="h-8 w-8 text-white" />
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                          طريقة العرض
-                        </h3>
-                        <p className="text-gray-300">
-                          {examMode === 'sectioned' ? 'عرض مقسم' : 'عرض مختلط'}
-                        </p>
-                      </div>
-                    </div>
-                    {questionTypeFilter === 'specific' && selectedQuestionType === 'rc' && (
-                      <div className="p-4 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 rounded-xl border border-emerald-500/20">
-                        <p className="text-white font-medium">
-                          ترتيب أسئلة استيعاب المقروء: {rcQuestionOrder === 'sequential' ? 'تسلسلي' : 'مجمع'}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Timer Summary */}
-                  <div className="p-8 bg-gradient-to-br from-amber-900/30 to-orange-900/30 rounded-2xl border border-amber-500/30 shadow-2xl shadow-amber-500/20">
-                    <div className="flex items-center mb-6">
-                      <div className="p-4 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl shadow-lg shadow-amber-500/30 ml-4">
-                        {timerMode === 'none' ? (
-                          <Zap className="h-8 w-8 text-white" />
-                        ) : (
-                          <Timer className="h-8 w-8 text-white" />
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
-                          التوقيت
-                        </h3>
-                        <p className="text-gray-300">
-                          {timerMode === 'none' ? 'بدون توقيت' : 'مع توقيت'}
-                        </p>
-                      </div>
-                    </div>
-                    {timerMode === 'timed' && (
-                      <div className="p-4 bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-xl border border-amber-500/20">
-                        <div className="flex items-center justify-between">
-                          <p className="text-white font-medium">
-                            المدة: {getSelectedTimerInfo()?.label}
-                          </p>
-                          {getSelectedTimerInfo()?.recommended && (
-                            <span className="px-2 py-1 bg-gradient-to-r from-amber-600/20 to-orange-600/20 text-amber-300 rounded-full text-xs font-medium">
-                              مُوصى
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Performance Prediction */}
-                  <div className="p-8 bg-gradient-to-br from-rose-900/30 to-pink-900/30 rounded-2xl border border-rose-500/30 shadow-2xl shadow-rose-500/20">
-                    <div className="flex items-center mb-6">
-                      <div className="p-4 bg-gradient-to-r from-rose-600 to-pink-600 rounded-xl shadow-lg shadow-rose-500/30 ml-4">
-                        <BarChart3 className="h-8 w-8 text-white" />
-                      </div>
-                      <div>
-                        <h3 className="text-2xl font-bold bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
-                          توقعات الأداء
-                        </h3>
-                        <p className="text-gray-300">تحليل ذكي للإعدادات</p>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between p-3 bg-gradient-to-r from-rose-600/10 to-pink-600/10 rounded-lg border border-rose-500/20">
-                        <span className="text-gray-300">مستوى التحدي</span>
-                        <div className="flex items-center">
-                          {Array.from({ length: 5 }, (_, i) => (
-                            <Star 
-                              key={i} 
-                              className={`h-4 w-4 ${
-                                i < (timerMode === 'timed' ? (examMode === 'mixed' ? 5 : 4) : (examMode === 'mixed' ? 3 : 2))
-                                  ? 'text-rose-400 fill-current' 
-                                  : 'text-gray-600'
-                              }`} 
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between p-3 bg-gradient-to-r from-rose-600/10 to-pink-600/10 rounded-lg border border-rose-500/20">
-                        <span className="text-gray-300">التركيز المطلوب</span>
-                        <div className="flex items-center">
-                          {Array.from({ length: 5 }, (_, i) => (
-                            <Star 
-                              key={i} 
-                              className={`h-4 w-4 ${
-                                i < (questionTypeFilter === 'specific' ? 5 : 3)
-                                  ? 'text-rose-400 fill-current' 
-                                  : 'text-gray-600'
-                              }`} 
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </div>
+                    <p className="text-gray-400 text-sm">
+                      {questionTypeFilter === 'all' ? '5000+ سؤال' : getCurrentQuestionType()?.stats}
+                    </p>
                   </div>
                 </div>
 
-                {/* Start Button */}
-                <div className="text-center">
-                  <Button
-                    onClick={handleStartExam}
-                    className="group relative px-16 py-6 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-600 hover:from-amber-500 hover:via-orange-500 hover:to-amber-500 text-white text-2xl font-bold rounded-2xl shadow-2xl shadow-amber-500/40 hover:shadow-amber-500/60 transition-all duration-500 hover:scale-110 transform"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-orange-400/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="relative flex items-center space-x-4 space-x-reverse">
-                      <Rocket className="h-8 w-8 group-hover:animate-bounce" />
-                      <span>ابدأ التدريب الآن</span>
-                      <ArrowUpRight className="h-8 w-8 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                {/* Exam Mode Summary */}
+                <div className="p-8 bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-2xl border border-blue-700/30 shadow-xl shadow-blue-500/20">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl shadow-lg">
+                      <Layers className="h-6 w-6 text-white" />
                     </div>
-                  </Button>
-                  
-                  <p className="mt-6 text-gray-400 text-lg">
-                    استعد لرحلة تدريبية مميزة تحاكي الاختبار الحقيقي
-                  </p>
+                    <h3 className="text-xl font-semibold">نمط الاختبار</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="text-white font-medium text-lg">
+                      {examMode === 'sectioned' ? 'أقسام مع مراجعة' : 'متتالي ومجمع'}
+                    </p>
+                    <p className="text-blue-300 text-base">
+                      {examMode === 'sectioned' 
+                        ? 'مع إمكانية المراجعة' 
+                        : 'بدون توقف'}
+                    </p>
+                  </div>
                 </div>
+
+                {/* Timer Summary */}
+                <div className="p-8 bg-gradient-to-br from-emerald-900/30 to-teal-900/30 rounded-2xl border border-emerald-700/30 shadow-xl shadow-emerald-500/20">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl shadow-lg">
+                      <Timer className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold">المؤقت</h3>
+                  </div>
+                  <div className="space-y-3">
+                    <p className="text-white font-medium text-lg">
+                      {timerMode === 'none' ? 'بدون مؤقت' : getSelectedTimerInfo()?.label}
+                    </p>
+                    <p className="text-emerald-300 text-base">
+                      {timerMode === 'none' ? 'وقت مفتوح' : 'تدريب واقعي'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Premium Start Button */}
+              <div className="text-center">
+                <button
+                  onClick={handleStartExam}
+                  className="group relative inline-flex items-center gap-4 px-16 py-8 text-2xl font-bold text-white bg-gradient-to-r from-emerald-600 via-green-600 to-teal-600 rounded-3xl shadow-2xl shadow-emerald-500/40 hover:shadow-emerald-500/60 transition-all duration-500 hover:scale-105 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                  <div className="relative flex items-center gap-4">
+                    <Rocket className="h-8 w-8 group-hover:translate-y-1 transition-transform duration-500" />
+                    ابدأ الاختبار الآن
+                    <ArrowUpRight className="h-7 w-7 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" />
+                  </div>
+                </button>
+                
+                <p className="text-gray-400 text-base mt-6">
+                  * يمكنك تغيير الإعدادات في أي وقت من لوحة التحكم
+                </p>
               </div>
             </div>
           )}
+        </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-between items-center mt-16">
-            <Button
-              onClick={handlePrev}
-              disabled={currentStep === 1}
-              className={`flex items-center space-x-2 space-x-reverse px-8 py-4 rounded-xl text-lg font-medium transition-all duration-300 ${
-                currentStep === 1
-                  ? 'bg-gray-800/50 text-gray-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white hover:scale-105 shadow-lg hover:shadow-xl'
-              }`}
-            >
-              <ChevronLeft className="h-5 w-5" />
-              <span>السابق</span>
-            </Button>
-
-            {currentStep < 3 ? (
-              <Button
-                onClick={handleNext}
-                className="flex items-center space-x-2 space-x-reverse px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl text-lg font-medium transition-all duration-300 hover:scale-105 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+        {/* Premium Navigation */}
+        <div className="sticky bottom-0 bg-black/60 backdrop-blur-2xl border-t border-white/10">
+          <div className="max-w-6xl mx-auto px-6 py-6">
+            <div className="flex justify-between items-center">
+              <button
+                onClick={handlePrev}
+                disabled={currentStep === 1}
+                className={`flex items-center gap-3 px-8 py-4 rounded-xl font-semibold transition-all duration-500 ${
+                  currentStep === 1
+                    ? 'text-gray-500 cursor-not-allowed'
+                    : 'text-white bg-gray-800/50 hover:bg-gray-700/50 hover:scale-105'
+                }`}
               >
-                <span>التالي</span>
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            ) : (
-              <div className="w-32"></div> // Spacer to maintain layout
-            )}
+                <ChevronRight className="h-6 w-6" />
+                السابق
+              </button>
+
+              <div className="text-center">
+                <p className="text-gray-400 text-base font-medium">
+                  {currentStep === 1 && 'اختر نمط التدريب المناسب'}
+                  {currentStep === 2 && 'تخصيص إعدادات التجربة'}
+                  {currentStep === 3 && 'مراجعة نهائية وبدء التدريب'}
+                </p>
+              </div>
+
+              {currentStep < 3 ? (
+                <button
+                  onClick={handleNext}
+                  className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold hover:scale-105 transition-all duration-500 shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                >
+                  التالي
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+              ) : (
+                <div className="w-24"></div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -937,4 +807,3 @@ const StartScreen = ({ onShowFolderManagement }) => {
 };
 
 export default StartScreen;
-
