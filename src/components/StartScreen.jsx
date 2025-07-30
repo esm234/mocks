@@ -514,8 +514,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         وقت مفتوح للتركيز الكامل على الإجابات بدون ضغط زمني
                       </p>
                     </div>
-
-                    <div
+<div
   onClick={() => updateSetting('timerMode', 'total')}
   className={`group p-8 rounded-2xl border-2 cursor-pointer transition-all duration-500 hover:scale-102 ${
     timerMode === 'total'
@@ -523,51 +522,51 @@ const StartScreen = ({ onShowFolderManagement }) => {
       : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
   }`}
 >
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center gap-4">
-                          <div className={`p-3 rounded-xl ${
-                            timerMode === 'total' 
-                              ? 'bg-gradient-to-r from-purple-600 to-teal-600 shadow-lg' 
-                              : 'bg-gray-700 group-hover:bg-gray-600'
-                          } transition-all duration-500">
-                            <Timer className="h-6 w-6 text-white" />
-                          </div>
-                          <h4 className="text-xl font-semibold">مع مؤقت زمني</h4>
-                        </div>
-                        {timerMode === 'total' && (
-                          <div className="p-2 bg-gradient-to-r from-purple-600 to-teal-600 rounded-full shadow-lg">
-                            <Check className="h-5 w-5 text-white" />
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-gray-300 text-base leading-relaxed mb-6">
-                        تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
-                      </p>
-                      
-                      {timerMode === 'total' && (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
-                          {timerDurations.slice(0, 6).map((timer) => (
-                            <button
-                              key={timer.value}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                updateSetting('selectedTimerDuration', timer.value);
-                              }}
-                              className={`relative p-4 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 ${
-                                selectedTimerDuration === timer.value
-                                  ? 'bg-gradient-to-r from-purple-600 to-teal-600 text-white shadow-lg'
-                                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                              }`}
-                            >
-                              {timer.recommended && (
-                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-teal-400 rounded-full animate-pulse"></div>
-                              )}
-                              {timer.label}
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center gap-4">
+      <div className={`p-3 rounded-xl ${
+        timerMode === 'total' 
+          ? 'bg-gradient-to-r from-purple-600 to-teal-600 shadow-lg' 
+          : 'bg-gray-700 group-hover:bg-gray-600'
+      } transition-all duration-500`}>
+        <Timer className="h-6 w-6 text-white" />
+      </div>
+      <h4 className="text-xl font-semibold">مع مؤقت زمني</h4>
+    </div>
+    {timerMode === 'total' && (
+      <div className="p-2 bg-gradient-to-r from-purple-600 to-teal-600 rounded-full shadow-lg">
+        <Check className="h-5 w-5 text-white" />
+      </div>
+    )}
+  </div>
+  <p className="text-gray-300 text-base leading-relaxed mb-6">
+    تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
+  </p>
+  
+  {timerMode === 'total' && (
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+      {timerDurations.slice(0, 6).map((timer) => (
+        <button
+          key={timer.value}
+          onClick={(e) => {
+            e.stopPropagation();
+            updateSetting('selectedTimerDuration', timer.value);
+          }}
+          className={`relative p-4 rounded-xl text-sm font-medium transition-all duration-300 hover:scale-105 ${
+            selectedTimerDuration === timer.value
+              ? 'bg-gradient-to-r from-purple-600 to-teal-600 text-white shadow-lg'
+              : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+          }`}
+        >
+          {timer.recommended && (
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-teal-400 rounded-full animate-pulse"></div>
+          )}
+          {timer.label}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
                   </div>
                 </div>
               </div>
