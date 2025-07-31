@@ -108,7 +108,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       subtitle: 'فهم النصوص', 
       icon: Lightbulb,
       color: 'from-amber-500 to-orange-600',
-      stats: '2000+ سؤال'
+      stats: '2800+ سؤال'
     },
     { 
       id: 'odd', 
