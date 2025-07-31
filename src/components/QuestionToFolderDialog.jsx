@@ -3,8 +3,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { FolderPlus, Folder, Plus, Check } from 'lucide-react';
+import { FolderPlus, Folder, Plus, Check, Sparkle } from 'lucide-react'; // Added Sparkle
 import { useFolderStore } from '../store/folderStore';
+import { motion } from 'framer-motion'; // Import Framer Motion
+
+// Framer Motion Variants for buttons
+const buttonVariants = {
+  hover: { scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 10 } },
+  tap: { scale: 0.95 }
+};
 
 const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) => {
   const { folders, addFolder, addQuestionToFolder } = useFolderStore();
@@ -26,9 +33,10 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
       console.log('Creating new folder and adding question:', newFolderName, questionId);
       const newFolder = addFolder(newFolderName.trim());
       // Add question to the newly created folder
+      // Using setTimeout to ensure folder is added to store before adding question
       setTimeout(() => {
         addQuestionToFolder(newFolder.id, questionId);
-      }, 100);
+      }, 100); 
       setNewFolderName('');
       setShowNewFolderInput(false);
       onClose();
@@ -48,10 +56,10 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-gradient-to-br from-gray-900 to-slate-900 border-gray-700 text-white rounded-xl shadow-2xl max-w-md" dir="rtl">
+      <DialogContent className="bg-gradient-to-br from-gray-950 to-slate-950 border-gray-700 text-white rounded-xl shadow-2xl max-w-md font-cairo" dir="rtl">
         <DialogHeader>
-          <DialogTitle className="text-right flex items-center gap-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-            <Folder className="w-6 h-6 text-blue-400" />
+          <DialogTitle className="text-right flex items-center gap-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 drop-shadow-lg">
+            <Folder className="w-6 h-6 text-blue-400 animate-pulse-slow" />
             إضافة السؤال إلى مجلد
           </DialogTitle>
         </DialogHeader>
@@ -76,7 +84,7 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                     اختر مجلد موجود:
                   </label>
                   <Select value={selectedFolderId} onValueChange={setSelectedFolderId}>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3">
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3 text-lg">
                       <SelectValue placeholder="اختر مجلد..." />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-800 border-gray-600 text-white rounded-lg shadow-lg">
@@ -96,39 +104,50 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                 </div>
               ) : (
                 <div className="text-center py-6 bg-gray-800/30 border border-gray-700 rounded-lg shadow-inner">
-                  <Folder className="w-14 h-14 mx-auto mb-3 text-gray-500" />
+                  <Folder className="w-14 h-14 mx-auto mb-3 text-gray-500 animate-bounce-slow" />
                   <p className="text-gray-400 text-base">لا توجد مجلدات حالياً.</p>
                 </div>
               )}
 
               {/* Create New Folder Button */}
-              <Button
+              <motion.button
                 variant="outline"
                 onClick={() => setShowNewFolderInput(true)}
-                className="w-full flex items-center gap-2 px-4 py-3 border-blue-500 text-blue-300 rounded-lg font-semibold hover:bg-blue-900/30 hover:text-blue-200 transition-all duration-300 shadow-md"
+                whileHover="hover"
+                whileTap="tap"
+                variants={buttonVariants}
+                className="w-full flex items-center gap-2 px-4 py-3 border-blue-500 text-blue-300 rounded-lg font-semibold hover:bg-blue-900/30 hover:text-blue-200 transition-all duration-300 shadow-md relative overflow-hidden group"
               >
-                <FolderPlus className="w-5 h-5" />
+                <FolderPlus className="w-5 h-5 group-hover:rotate-6 transition-transform duration-300" />
                 إنشاء مجلد جديد
-              </Button>
+                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+              </motion.button>
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-2">
-                <Button
+                <motion.button
                   variant="outline"
                   onClick={handleClose}
-                  // Added explicit text color and hover background for better control
-                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300 relative overflow-hidden group"
                 >
                   إلغاء
-                </Button>
-                <Button
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+                </motion.button>
+                <motion.button
                   onClick={handleAddToFolder}
                   disabled={!selectedFolderId || !questionId}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 transition-all duration-300 shadow-md"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 transition-all duration-300 shadow-md relative overflow-hidden group"
                 >
-                  <Check className="w-5 h-5 ml-2" />
+                  <Check className="w-5 h-5 ml-2 group-hover:animate-scale-in" />
                   إضافة
-                </Button>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+                </motion.button>
               </div>
             </>
           ) : (
@@ -142,29 +161,36 @@ const QuestionToFolderDialog = ({ isOpen, onClose, questionId, questionText }) =
                   placeholder="أدخل اسم المجلد"
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
-                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3"
+                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-lg p-3 text-lg"
                   onKeyPress={(e) => e.key === 'Enter' && handleCreateNewFolder()}
                 />
               </div>
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-2">
-                <Button
+                <motion.button
                   variant="outline"
                   onClick={() => setShowNewFolderInput(false)}
-                  // Added explicit text color and hover background for better control
-                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  className="flex-1 px-4 py-3 border-gray-600 text-gray-300 rounded-lg hover:bg-gray-700 hover:text-white transition-all duration-300 relative overflow-hidden group"
                 >
                   رجوع
-                </Button>
-                <Button
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+                </motion.button>
+                <motion.button
                   onClick={handleCreateNewFolder}
                   disabled={!newFolderName.trim() || !questionId}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 transition-all duration-300 shadow-md"
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-semibold hover:from-green-700 hover:to-emerald-700 disabled:opacity-50 transition-all duration-300 shadow-md relative overflow-hidden group"
                 >
-                  <Plus className="w-5 h-5 ml-2" />
+                  <Plus className="w-5 h-5 ml-2 group-hover:rotate-90 transition-transform duration-300" />
                   إنشاء وإضافة
-                </Button>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+                </motion.button>
               </div>
             </>
           )}
