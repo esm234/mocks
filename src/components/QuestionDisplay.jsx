@@ -419,7 +419,7 @@ const QuestionDisplay = () => {
   const isMobile = windowWidth <= 768;
 
   return (
-    <div className="min-h-screen flex flex-col bg-white" dir="rtl">
+ <div className="min-h-screen flex flex-col bg-white" dir="rtl" key={currentQuestion.question_number}>
       {/* الشريط العلوي */}
       <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
         {/* اسم الاختبار */}
