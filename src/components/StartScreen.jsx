@@ -92,7 +92,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       subtitle: 'ملء الفراغات بدقة', 
       icon: BookText,
       color: 'from-emerald-500 to-teal-600',
-      stats: '950+ سؤال'
+      stats: '900+ سؤال'
     },
     { 
       id: 'error', 
@@ -108,7 +108,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       subtitle: 'فهم النصوص', 
       icon: Lightbulb,
       color: 'from-amber-500 to-orange-600',
-      stats: '1500+ سؤال'
+      stats: '2000+ سؤال'
     },
     { 
       id: 'odd', 
@@ -116,7 +116,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       subtitle: 'تحديد المختلف', 
       icon: Sparkles,
       color: 'from-cyan-500 to-blue-600',
-      stats: '700+ سؤال'
+      stats: '400+ سؤال'
     }
   ];
 
