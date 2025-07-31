@@ -26,6 +26,7 @@ import {
   Shield,
   Compass,
   Diamond,
+  Badge,
   ArrowUpRight,
   Layers,
   Activity,
