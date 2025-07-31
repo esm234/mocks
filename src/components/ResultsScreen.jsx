@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useExamStore } from '../store/examStore';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
 import { 
   CheckCircle, 
   XCircle, 
@@ -30,7 +29,10 @@ import {
   ArrowUpRight,
   Layers,
   Activity,
-  Radio
+  Radio,
+  Dumbbell, // New icon for practice
+  RefreshCcw, // New icon for active recall
+  MessageSquare // New icon for context
 } from 'lucide-react';
 
 const ResultsScreen = () => {
@@ -189,42 +191,148 @@ const ResultsScreen = () => {
   const performance = getPerformanceLevel(percentage);
   const PerformanceIcon = performance.icon;
 
-  // Smart Insights Generator
+  // NEW: Analyze performance by question type
+  const analyzePerformanceByType = () => {
+    const typeStats = {};
+    const allTypes = ['analogy', 'completion', 'error', 'rc', 'odd']; // Ensure all types are covered
+
+    allTypes.forEach(type => {
+      typeStats[type] = { correct: 0, incorrect: 0, unanswered: 0, total: 0, percentage: 0 };
+    });
+
+    examQuestions.forEach(q => {
+      const type = q.type;
+      if (typeStats[type]) {
+        typeStats[type].total++;
+        const userAnswer = userAnswers[q.question_number];
+        const isAnswered = userAnswer !== undefined && userAnswer !== null;
+        const isCorrect = isAnswered && userAnswer === q.answer;
+
+        if (isCorrect) {
+          typeStats[type].correct++;
+        } else if (isAnswered) {
+          typeStats[type].incorrect++;
+        } else {
+          typeStats[type].unanswered++;
+        }
+      }
+    });
+
+    Object.keys(typeStats).forEach(type => {
+      if (typeStats[type].total > 0) {
+        typeStats[type].percentage = parseFloat(((typeStats[type].correct / typeStats[type].total) * 100).toFixed(1));
+      }
+    });
+
+    return typeStats;
+  };
+
+  const typePerformance = analyzePerformanceByType();
+
+  // NEW: Identify weakest question type
+  const getWeakestQuestionType = () => {
+    let weakestType = null;
+    let highestErrorRate = -1;
+
+    Object.keys(typePerformance).forEach(type => {
+      const stats = typePerformance[type];
+      if (stats.total > 0) { // Only consider types that appeared in the exam
+        const errorRate = (stats.incorrect + stats.unanswered) / stats.total;
+        if (errorRate > highestErrorRate) {
+          highestErrorRate = errorRate;
+          weakestType = type;
+        }
+      }
+    });
+    return weakestType;
+  };
+
+  const weakestType = getWeakestQuestionType();
+
+  // Smart Insights Generator - Updated with more direct recommendations
   const generateSmartInsights = () => {
     const insights = [
       {
         icon: Activity,
-        title: "معدل الدقة",
+        title: "معدل الدقة الكلي",
         value: `${percentage.toFixed(1)}%`,
-        description: percentage >= 85 ? "أداء استثنائي!" : percentage >= 70 ? "أداء جيد ومستقر" : "متاح للتحسين",
+        description: percentage >= 85 ? "أداء استثنائي! استمر في التحدي." : percentage >= 70 ? "أداء جيد ومستقر، ركز على التفاصيل." : "متاح للتحسين، الأساسيات أولاً.",
         color: percentage >= 85 ? "from-green-400 to-emerald-500" : percentage >= 70 ? "from-blue-400 to-cyan-500" : "from-orange-400 to-red-500"
       },
       {
-        icon: Zap, // استخدمنا Zap بدلاً من Lightning
+        icon: Zap,
         title: "معدل الإكمال",
         value: `${Math.round(((examResults.correctAnswers + examResults.incorrectAnswers) / examResults.totalQuestions) * 100)}%`,
-        description: "من الأسئلة تم حلها",
+        description: "من الأسئلة تم حلها. حاول إكمال جميع الأسئلة في الوقت المحدد.",
         color: "from-purple-400 to-pink-500"
       },
       {
         icon: Shield,
         title: "مؤشر الثقة",
-        value: examResults.correctAnswers > examResults.incorrectAnswers ? "عالي" : "متوسط",
-        description: "مستوى الثقة في الإجابات",
-        color: "from-indigo-400 to-purple-500"
+        value: examResults.incorrectAnswers > examResults.correctAnswers / 2 ? "متوسط إلى منخفض" : "عالي",
+        description: examResults.incorrectAnswers > examResults.correctAnswers / 2 ? "راجع إجاباتك قبل التأكيد لزيادة الدقة." : "ثقة عالية ودقة جيدة، استمر!",
+        color: examResults.incorrectAnswers > examResults.correctAnswers / 2 ? "from-red-400 to-orange-500" : "from-indigo-400 to-purple-500"
       },
       {
         icon: Compass,
-        title: "توصية التطوير",
-        value: percentage >= 80 ? "التخصص" : "التوسع",
-        description: percentage >= 80 ? "ركز على مجالات متقدمة" : "عزز المهارات الأساسية",
-        color: "from-teal-400 to-cyan-500"
+        title: "توصية التطوير الرئيسية",
+        value: weakestType ? getQuestionTypeLabel(weakestType) : "أداء متوازن",
+        description: weakestType ? `ركز تدريبك المكثف على أسئلة ${getQuestionTypeLabel(weakestType)} لتحقيق قفزة نوعية.` : "حافظ على هذا المستوى، وتحدى نفسك بأنواع أسئلة جديدة.",
+        color: weakestType ? getQuestionTypeStyle(weakestType) : "from-teal-400 to-cyan-500"
       }
     ];
     return insights;
   };
 
   const smartInsights = generateSmartInsights();
+
+  // NEW: Generate specific recommendations based on weakest type
+  const getSpecificRecommendation = () => {
+    if (!weakestType) {
+      return {
+        title: "أداء ممتاز ومتوازن!",
+        text: "لقد أظهرت أداءً قوياً في جميع أنواع الأسئلة. للحفاظ على هذا المستوى، استمر في التدريب المنتظم وحاول حل اختبارات أكثر تحدياً.",
+        icon: Crown,
+        color: "text-green-400"
+      };
+    }
+
+    let recommendation = {
+      title: `تحسين أدائك في ${getQuestionTypeLabel(weakestType)}`,
+      text: "",
+      icon: Dumbbell,
+      color: "text-red-400"
+    };
+
+    switch (weakestType) {
+      case 'analogy':
+        recommendation.text = "ركز على فهم العلاقات المنطقية بين الكلمات. تدرب على تحديد أنواع العلاقات المختلفة (ترادف، تضاد، جزء من كل، سبب ونتيجة). استخدم تقنية الاسترجاع النشط لمراجعة العلاقات الشائعة.";
+        recommendation.icon = Brain;
+        break;
+      case 'completion':
+        recommendation.text = "عزز مفرداتك وفهمك للسياق العام للجمل. تدرب على قراءة الجملة كاملة قبل اختيار الإجابة، وحاول توقع الكلمة الناقصة. استخدم تقنية Active Recall لمراجعة الكلمات الجديدة.";
+        recommendation.icon = Lightbulb;
+        break;
+      case 'error':
+        recommendation.text = "نمِّ قدرتك على اكتشاف الكلمة التي لا تتناسب مع سياق الجملة. اقرأ الجملة بتمعن وحاول فهم المعنى العام، ثم ابحث عن الكلمة التي تشذ عن هذا المعنى. تدرب على تحليل الجمل المعقدة.";
+        recommendation.icon = Eye;
+        break;
+      case 'rc':
+        recommendation.text = "طور مهاراتك في القراءة السريعة والفهم العميق للنصوص. تدرب على تحديد الفكرة الرئيسية والتفاصيل الداعمة. استخدم تقنية Active Recall لتلخيص الفقرات بعد قراءتها.";
+        recommendation.icon = BookOpen;
+        break;
+      case 'odd':
+        recommendation.text = "عزز قدرتك على التصنيف والتجميع. ابحث عن القاسم المشترك بين ثلاث كلمات، ثم استبعد الكلمة الشاذة. تدرب على مجموعات كلمات متنوعة لزيادة حصيلتك اللغوية.";
+        recommendation.icon = Star;
+        break;
+      default:
+        recommendation.text = "استمر في التدريب المنتظم على جميع أنواع الأسئلة لتعزيز مهاراتك العامة.";
+        recommendation.icon = Dumbbell;
+    }
+    return recommendation;
+  };
+
+  const specificRecommendation = getSpecificRecommendation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 text-white overflow-hidden relative" dir="rtl">
@@ -468,47 +576,78 @@ const ResultsScreen = () => {
               </div>
             </div>
 
-            {/* AI-Powered Recommendations */}
-            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-2xl p-6">
+            {/* NEW: Performance by Question Type */}
+            <div className="mt-12">
+              <h4 className="text-2xl font-bold text-white mb-6 flex items-center justify-center gap-3">
+                <BarChart4 className="h-7 w-7 text-purple-400" />
+                أداءك حسب نوع السؤال
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Object.keys(typePerformance).filter(type => typePerformance[type].total > 0).map(type => {
+                  const stats = typePerformance[type];
+                  const TypeIcon = getQuestionTypeIcon(type);
+                  const typeColor = stats.percentage >= 80 ? "text-green-400" : stats.percentage >= 60 ? "text-yellow-400" : "text-red-400";
+                  const typeBg = stats.percentage >= 80 ? "bg-green-900/20" : stats.percentage >= 60 ? "bg-yellow-900/20" : "bg-red-900/20";
+                  const typeBorder = stats.percentage >= 80 ? "border-green-500/30" : stats.percentage >= 60 ? "border-yellow-500/30" : "border-red-500/30";
+
+                  return (
+                    <div key={type} className={`p-5 rounded-xl ${typeBg} border ${typeBorder} flex items-center gap-4`}>
+                      <div className={`p-3 rounded-lg bg-gradient-to-r ${getQuestionTypeStyle(type)}`}>
+                        <TypeIcon className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h5 className="text-lg font-semibold text-white">{getQuestionTypeLabel(type)}</h5>
+                        <p className="text-gray-400 text-sm">
+                          صحيح: <span className="font-bold text-green-300">{stats.correct}</span> | 
+                          خطأ: <span className="font-bold text-red-300">{stats.incorrect}</span> | 
+                          لم يُجب: <span className="font-bold text-amber-300">{stats.unanswered}</span>
+                        </p>
+                        <div className="w-full bg-gray-700 rounded-full h-2 mt-2">
+                          <div 
+                            className={`h-full rounded-full ${typeColor.replace('text-', 'bg-')}`} 
+                            style={{ width: `${stats.percentage}%` }}
+                          ></div>
+                        </div>
+                        <p className={`text-sm font-bold mt-1 ${typeColor}`}>الدقة: {stats.percentage}%</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+
+            {/* AI-Powered Recommendations - Updated */}
+            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-2xl p-6 mt-12">
               <h5 className="text-xl font-bold text-purple-400 mb-4 flex items-center gap-3">
                 <Brain className="h-6 w-6" />
                 توصيات ذكية مخصصة
               </h5>
               
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-1 gap-6">
                 <div className="space-y-3">
                   <h6 className="font-semibold text-white flex items-center gap-2">
                     <Diamond className="h-5 w-5 text-cyan-400" />
                     نقاط التميز
                   </h6>
-                  {percentage >= 85 ? (
-                    <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
-                      <p className="text-cyan-300 text-sm">أداءك متفوق! ركز على التخصص في المجالات المتقدمة</p>
-                    </div>
-                  ) : percentage >= 70 ? (
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
-                      <p className="text-blue-300 text-sm">مستوى جيد، اعمل على صقل مهارات حل المسائل المعقدة</p>
-                    </div>
-                  ) : (
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                      <p className="text-green-300 text-sm">بناء أساسي قوي، ركز على ترسيخ المفاهيم الأساسية</p>
-                    </div>
-                  )}
+                  <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
+                    <p className="text-cyan-300 text-sm">
+                      {percentage >= 85 ? "أداءك متفوق! استمر في تحدي نفسك باختبارات أكثر صعوبة للحفاظ على مستواك." :
+                       percentage >= 70 ? "مستوى جيد جداً! ركز على تحويل نقاط قوتك إلى إتقان كامل." :
+                       "أداء واعد! استمر في بناء أساس قوي في المجالات التي أتقنتها."}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="space-y-3">
                   <h6 className="font-semibold text-white flex items-center gap-2">
                     <ArrowUpRight className="h-5 w-5 text-emerald-400" />
-                    خطة النمو
+                    خطة النمو المباشرة
                   </h6>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
                     <p className="text-emerald-300 text-sm">
-                      {examResults.incorrectAnswers > 5 
-                        ? "راجع الأسئلة الخاطئة وحلل أنماط الأخطاء" 
-                        : percentage < 80 
-                        ? "توسع في مصادر التعلم وزد من التدريب المنتظم"
-                        : "متابعة ممتازة! حافظ على هذا المستوى واستكشف تحديات أصعب"
-                      }
+                      <specificRecommendation.Icon className={`h-5 w-5 inline ml-2 ${specificRecommendation.color}`} />
+                      <span className="font-bold">{specificRecommendation.title}:</span> {specificRecommendation.text}
                     </p>
                   </div>
                 </div>
@@ -824,7 +963,7 @@ const ResultsScreen = () => {
           
           <p className="text-gray-500 text-sm max-w-2xl mx-auto">
             تم تصميم هذا التحليل باستخدام خوارزميات متقدمة لمساعدتك في تحقيق أقصى استفادة من تجربة التعلم. 
-            نتمنى لك التوفيق في رحلتك الأكاديمية!
+            نتمنى لك التوفيق في رحلة القدرات!
           </p>
         </div>
       </div>
