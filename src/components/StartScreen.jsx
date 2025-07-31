@@ -121,17 +121,12 @@ const StartScreen = ({ onShowFolderManagement }) => {
   ];
 
   const timerDurations = [
-    { value: 5, label: '5 دقائق', recommended: false },
-    { value: 10, label: '10 دقائق', recommended: false },
-    { value: 13, label: '13 دقيقة', recommended: true },
-    { value: 15, label: '15 دقيقة', recommended: false },
-    { value: 20, label: '20 دقيقة', recommended: false },
-    { value: 25, label: '25 دقيقة', recommended: false },
+
+
     { value: 30, label: '30 دقيقة', recommended: true },
     { value: 45, label: '45 دقيقة', recommended: false },
     { value: 60, label: 'ساعة كاملة', recommended: false },
     { value: 90, label: 'ساعة ونصف', recommended: false },
-    { value: 120, label: 'ساعتان', recommended: false }
   ];
 
   const handleStepChange = (step) => {
