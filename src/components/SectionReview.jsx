@@ -53,14 +53,15 @@ const SectionReview = () => {
   };
 
   sectionQuestions.forEach(question => {
-    if (userAnswers[question.question_number] !== undefined) {
-      sectionStats.answered++;
-    } else {
-      sectionStats.unanswered++;
-    }
-    
-    if (deferredQuestions[question.question_number]) {
+    const isAnswered = userAnswers[question.question_number] !== undefined;
+    const isDeferred = deferredQuestions[question.question_number];
+
+    if (isDeferred) { // Priority to deferred
       sectionStats.deferred++;
+    } else if (isAnswered) { // Then answered
+      sectionStats.answered++;
+    } else { // Finally unanswered
+      sectionStats.unanswered++;
     }
   });
 
@@ -299,15 +300,15 @@ const SectionReview = () => {
                 >
                   {/* Status Indicator */}
                   <div className="absolute -top-2 -right-2">
-                    {isAnswered ? (
-                      <div className="bg-green-500 rounded-full p-2 shadow-lg shadow-green-500/50">
-                        <CheckCircle className="h-4 w-4 text-white" />
-                      </div>
-                    ) : isDeferred ? (
+                    {isDeferred ? ( // Check deferred first
                       <div className="bg-amber-500 rounded-full p-2 shadow-lg shadow-amber-500/50">
                         <Clock className="h-4 w-4 text-white" />
                       </div>
-                    ) : (
+                    ) : isAnswered ? ( // Then answered
+                      <div className="bg-green-500 rounded-full p-2 shadow-lg shadow-green-500/50">
+                        <CheckCircle className="h-4 w-4 text-white" />
+                      </div>
+                    ) : ( // Finally unanswered
                       <div className="bg-red-500 rounded-full p-2 shadow-lg shadow-red-500/50">
                         <Circle className="h-4 w-4 text-white" />
                       </div>
@@ -332,13 +333,13 @@ const SectionReview = () => {
                   {/* Status Badge */}
                   <div className="text-center">
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                      isAnswered 
-                        ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
-                        : isDeferred 
+                      isDeferred // Check deferred first
                         ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                        : isAnswered 
+                        ? 'bg-green-500/20 text-green-300 border border-green-500/30' 
                         : 'bg-red-500/20 text-red-300 border border-red-500/30'
                     }`}>
-                      {isAnswered ? 'مُجابة' : isDeferred ? 'مؤجلة' : 'غير مُجابة'}
+                      {isDeferred ? 'مؤجلة' : isAnswered ? 'مُجابة' : 'غير مُجابة'}
                     </span>
                   </div>
 
@@ -446,4 +447,3 @@ const SectionReview = () => {
 };
 
 export default SectionReview;
-
