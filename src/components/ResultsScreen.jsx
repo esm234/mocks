@@ -272,7 +272,10 @@ const ResultsScreen = () => {
           <div className="bg-gradient-to-br from-gray-800/70 to-gray-900/70 border border-gray-700/50 rounded-2xl p-8">
             <div className="text-center mb-8">
               <h3 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-                {categoryIcons[selectedCategory] && <categoryIcons[selectedCategory] className="h-7 w-7" />}
+{categoryIcons[selectedCategory] && (() => {
+  const Icon = categoryIcons[selectedCategory];
+  return <Icon className="h-7 w-7" />;
+})()}
                 {categoryTitles[selectedCategory]} ({displayedQuestions.length})
               </h3>
             </div>
