@@ -41,9 +41,15 @@ const SectionReview = () => {
     moveToNextSectionFromReview
   } = useExamStore();
 
-  const totalSections = Math.max(...examQuestions.map(q => q.section));
-  const isLastSection = currentSection === totalSections;
-  const sectionQuestions = examQuestions.filter(q => q.section === currentSection);
+  // Fix: In single mode, show all questions instead of filtering by section
+  const isSingleMode = examMode === 'single';
+  const totalSections = isSingleMode ? 1 : Math.max(...examQuestions.map(q => q.section));
+  const isLastSection = isSingleMode || currentSection === totalSections;
+  
+  // Fix: Show all questions in single mode, or filter by section in sectioned mode
+  const sectionQuestions = isSingleMode 
+    ? examQuestions // Show all questions in single mode
+    : examQuestions.filter(q => q.section === currentSection);
   
   const sectionStats = {
     total: sectionQuestions.length,
@@ -110,7 +116,7 @@ const SectionReview = () => {
 
   const confirmNextSection = () => {
     setShowConfirmModal(false);
-    if (isLastSection) {
+    if (isLastSection || isSingleMode) {
       completeExam();
     } else {
       moveToNextSectionFromReview();
@@ -124,6 +130,28 @@ const SectionReview = () => {
 
   const getCompletionPercentage = () => {
     return Math.round((sectionStats.answered / sectionStats.total) * 100);
+  };
+
+  // Fix: Dynamic title based on mode
+  const getReviewTitle = () => {
+    if (isSingleMode) {
+      return "مراجعة الاختبار";
+    }
+    return `مراجعة القسم ${currentSection}`;
+  };
+
+  const getReviewSubtitle = () => {
+    if (isSingleMode) {
+      return `${sectionStats.answered} من ${sectionStats.total} مُجابة`;
+    }
+    return `${sectionStats.answered} من ${sectionStats.total} مُجابة`;
+  };
+
+  const getSectionDisplayText = () => {
+    if (isSingleMode) {
+      return "الاختبار الكامل";
+    }
+    return `القسم ${currentSection} من ${totalSections}`;
   };
 
   return (
@@ -146,10 +174,10 @@ const SectionReview = () => {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                    مراجعة القسم {currentSection}
+                    {getReviewTitle()}
                   </h1>
                   <p className="text-sm text-gray-400">
-                    {sectionStats.answered} من {sectionStats.total} مُجابة
+                    {getReviewSubtitle()}
                   </p>
                 </div>
               </div>
@@ -218,10 +246,13 @@ const SectionReview = () => {
             </div>
 
             <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              القسم {currentSection} من {totalSections}
+              {getSectionDisplayText()}
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
-              راجع أداءك وتأكد من إجاباتك قبل المتابعة
+              {isSingleMode 
+                ? "راجع أداءك في جميع الأسئلة قبل إنهاء الاختبار"
+                : "راجع أداءك وتأكد من إجاباتك قبل المتابعة"
+              }
             </p>
           </div>
         </div>
@@ -279,7 +310,9 @@ const SectionReview = () => {
         {/* Questions Grid */}
         <div className="max-w-6xl mx-auto px-6 mb-16">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-200 mb-4">أسئلة القسم</h3>
+            <h3 className="text-3xl font-bold text-gray-200 mb-4">
+              {isSingleMode ? "جميع الأسئلة" : "أسئلة القسم"}
+            </h3>
             <p className="text-gray-400">انقر على أي سؤال للانتقال إليه مباشرة</p>
           </div>
 
@@ -357,9 +390,13 @@ const SectionReview = () => {
             <Button
               onClick={() => { 
                 exitSectionReview(); 
-                const firstQuestionOfSection = examQuestions.find(q => q.section === currentSection);
-                if (firstQuestionOfSection) {
-                  const questionIndex = examQuestions.findIndex(q => q.question_number === firstQuestionOfSection.question_number);
+                // Fix: In single mode, go to first question, in sectioned mode go to first question of current section
+                const targetQuestion = isSingleMode 
+                  ? examQuestions[0] // First question overall
+                  : examQuestions.find(q => q.section === currentSection); // First question of current section
+                
+                if (targetQuestion) {
+                  const questionIndex = examQuestions.findIndex(q => q.question_number === targetQuestion.question_number);
                   if (questionIndex !== -1) {
                     goToQuestion(questionIndex);
                   }
@@ -370,7 +407,7 @@ const SectionReview = () => {
               className="bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               <ArrowRight className="h-5 w-5 ml-2" />
-              العودة للقسم {currentSection}
+              {isSingleMode ? "العودة للاختبار" : `العودة للقسم ${currentSection}`}
             </Button>
             
             <Button
@@ -378,7 +415,7 @@ const SectionReview = () => {
               size="lg"
               className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
-              {isLastSection ? (
+              {isLastSection || isSingleMode ? (
                 <>
                   <Award className="h-5 w-5 ml-2" />
                   إنهاء الاختبار
@@ -418,8 +455,8 @@ const SectionReview = () => {
             <div className="p-6">
               <div className="text-center mb-6">
                 <p className="text-gray-300 text-base leading-relaxed">
-                  هل أنت متأكد من رغبتك في {isLastSection ? 'إنهاء الاختبار' : `الانتقال للقسم ${currentSection + 1}`}؟ 
-                  لن تكون هناك إمكانية للعودة إلى هذا القسم.
+                  هل أنت متأكد من رغبتك في {isLastSection || isSingleMode ? 'إنهاء الاختبار' : `الانتقال للقسم ${currentSection + 1}`}؟ 
+                  {!isSingleMode && !isLastSection && " لن تكون هناك إمكانية للعودة إلى هذا القسم."}
                 </p>
               </div>
 
