@@ -52,6 +52,9 @@ const ResultsScreen = () => {
   const [activeInsight, setActiveInsight] = useState(0);
 
   useEffect(() => {
+    // Scroll to top when the component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     setTimeout(() => setIsAnimating(false), 1000);
     
     // Auto-cycle through insights
@@ -528,7 +531,7 @@ const ResultsScreen = () => {
             <div 
               onClick={() => handleCategoryClick('correct')}
               className={`group relative bg-gradient-to-br from-green-900/30 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/25 ${
-                selectedCategory === 'correct' ? 'ring-2 ring-green-400 shadow-2xl shadow-green-500/50 scale-105' : ''
+                selectedCategory === 'correct' ? 'ring-2 ring-green-400 shadow-2xl shadow-green-400/50 scale-105' : ''
               }`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-emerald-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -559,7 +562,7 @@ const ResultsScreen = () => {
             <div 
               onClick={() => handleCategoryClick('incorrect')}
               className={`group relative bg-gradient-to-br from-red-900/30 to-rose-900/50 border border-red-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/25 ${
-                selectedCategory === 'incorrect' ? 'ring-2 ring-red-400 shadow-2xl shadow-red-500/50 scale-105' : ''
+                selectedCategory === 'incorrect' ? 'ring-2 ring-red-400 shadow-2xl shadow-red-400/50 scale-105' : ''
               }`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-rose-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -590,7 +593,7 @@ const ResultsScreen = () => {
             <div 
               onClick={() => handleCategoryClick('unanswered')}
               className={`group relative bg-gradient-to-br from-amber-900/30 to-orange-900/50 border border-amber-500/30 rounded-2xl p-8 cursor-pointer transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/25 ${
-                selectedCategory === 'unanswered' ? 'ring-2 ring-amber-400 shadow-2xl shadow-amber-500/50 scale-105' : ''
+                selectedCategory === 'unanswered' ? 'ring-2 ring-amber-400 shadow-2xl shadow-amber-400/50 scale-105' : ''
               }`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -830,4 +833,3 @@ const ResultsScreen = () => {
 };
 
 export default ResultsScreen;
-
