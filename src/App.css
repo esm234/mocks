@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+@import "tw-animate-css"; /* تأكد أن هذه المكتبة مثبتة وتعمل بشكل صحيح */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -217,15 +217,6 @@
   color: #dc2626;
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
 /* Progress bar animation */
 .progress-bar {
   transition: width 0.5s ease-in-out;
@@ -334,28 +325,8 @@
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .fade-in {
   animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Focus styles for accessibility */
@@ -457,4 +428,136 @@
 .gradient-danger {
   background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
 }
+
+/* --- NEW KEYFRAMES AND ANIMATIONS FOR ENHANCED DESIGN --- */
+
+@keyframes pulse { /* Existing pulse, but ensure it's defined */
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn { /* Existing fadeIn, but ensure it's defined */
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin { /* Existing spin, but ensure it's defined */
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(-40px, 30px) scale(0.95); }
+  66% { transform: translate(50px, -10px) scale(1.05); }
+}
+
+@keyframes blob-3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(20px, 40px) scale(1.08); }
+  66% { transform: translate(-30px, -30px) scale(0.92); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes pulse-fast {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes rocket-shake {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(-2px) translateY(-2px); }
+  50% { transform: translateX(2px) translateY(2px); }
+  75% { transform: translateX(-2px) translateY(-2px); }
+}
+
+@keyframes sparkle {
+  0% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+  100% { opacity: 0; transform: scale(0) rotate(360deg); }
+}
+
+/* Apply animations using @apply or directly in JSX */
+.animate-blob-1 {
+  animation: blob-1 10s infinite ease-in-out;
+}
+.animate-blob-2 {
+  animation: blob-2 12s infinite ease-in-out reverse;
+}
+.animate-blob-3 {
+  animation: blob-3 11s infinite ease-in-out;
+}
+.animate-pulse-slow {
+  animation: pulse-slow 2s infinite ease-in-out;
+}
+.animate-pulse-fast {
+  animation: pulse-fast 1s infinite ease-in-out;
+}
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite ease-in-out;
+}
+.animate-rocket-shake {
+  animation: rocket-shake 0.5s infinite;
+}
+.animate-sparkle {
+  animation: sparkle 1s ease-out forwards;
+}
+/* Tailwind's default ping animation is usually available, but if not, define it */
+/* @keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.animate-ping-slow {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+} */
+
+/* Ensure Cairo font is loaded */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap');
 
