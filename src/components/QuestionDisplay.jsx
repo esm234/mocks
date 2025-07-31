@@ -513,18 +513,29 @@ const QuestionDisplay = () => {
           </div>
         </div>
 
-        {/* عمود التعليمات - يظهر فقط على الشاشات الكبيرة */}
-        {!isMobile && (
-          <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col p-12">
-            <div className="flex-1">
-              <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
-                {currentInstructions.title}
-              </div>
-              <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line mb-8">
-                {currentInstructions.text}
-              </div>
-            </div>
-            
+            {/* عمود التعليمات - يظهر فقط على الشاشات الكبيرة */}
+    {!isMobile && (
+      <div className="w-1/2 bg-gray-50 border-r border-gray-200 flex flex-col p-12">
+        {/* <div className="flex-1">  // قم بإزالة هذا الـ div أو تعديله إذا كان يسبب مشكلة في التخطيط */}
+          <div className="text-2xl font-bold text-red-600 text-right w-full mb-8">
+            {currentInstructions.title}
+          </div>
+          <div className="text-gray-700 text-base leading-relaxed whitespace-pre-line mb-8">
+            {currentInstructions.text}
+          </div>
+          
+          {/* زر إضافة إلى مجلد - تم نقله ليصبح بعد التعليمات مباشرة */}
+          <button
+            onClick={() => setIsFolderDialogOpen(true)}
+            className="w-full px-4 py-3 bg-white text-gray-700 rounded-lg font-medium border-2 border-gray-300 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md mt-4" // أضف mt-4 لإضافة مسافة بسيطة من الأعلى
+          >
+            <FolderPlus className="h-5 w-5" />
+            إضافة السؤال لمجلد
+          </button>
+        {/* </div> // قم بإزالة هذا الـ div أو تعديله */}
+      </div>
+    )}
+    
             {/* زر إضافة إلى مجلد */}
             <div className="mt-auto">
               <button
