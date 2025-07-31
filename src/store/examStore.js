@@ -96,7 +96,7 @@ export const useExamStore = create(
       // Initialize exam with configuration
       initializeExam: (config = {}) => {
         try {
-          console.log('Initializing exam with config:', config);
+//          console.log('Initializing exam with config:', config);
           
           const examConfig = {
             shuffleQuestions: config.shuffleQuestions !== undefined ? config.shuffleQuestions : true,
@@ -149,7 +149,7 @@ export const useExamStore = create(
             processedQuestions = questions;
           }
           
-          console.log('Generated exam questions:', processedQuestions.length);
+    //      console.log('Generated exam questions:', processedQuestions.length);
           
           if (!processedQuestions || processedQuestions.length === 0) {
             throw new Error('Failed to generate exam questions');
@@ -170,8 +170,8 @@ export const useExamStore = create(
             }));
           }
 
-          console.log('Final processed questions:', processedQuestions.length);
-          console.log('Sample question:', processedQuestions[0]);
+     //     console.log('Final processed questions:', processedQuestions.length);
+         // console.log('Sample question:', processedQuestions[0]);
 
           // Set up timer
           const timerDuration = config.timerMode === 'none' ? 0 : (config.timerDuration || 13) * 60;
