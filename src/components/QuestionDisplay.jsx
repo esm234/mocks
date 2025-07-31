@@ -88,7 +88,7 @@ const QuestionDisplay = () => {
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault();
-          if (canProceed) {
+          if (canProceed) { // Assuming canProceed is always true for next
             handleNext();
           }
           break;
@@ -117,7 +117,7 @@ const QuestionDisplay = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]);
+  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]); // Added dependencies for handleNext/handlePrevious
 
   const getDisplayQuestionNumber = () => {
     if (examMode === 'sectioned') {
@@ -265,7 +265,7 @@ const QuestionDisplay = () => {
     return true;
   };
 
-  const canProceed = true;
+  const canProceed = true; // This is always true, as next/section review logic handles progression
 
   const hasDeferredQuestionsInCurrentSection = () => {
     const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
@@ -419,7 +419,7 @@ const QuestionDisplay = () => {
   const isMobile = windowWidth <= 768;
 
   return (
- <div className="min-h-screen flex flex-col bg-white" dir="rtl" key={currentQuestion.question_number}>
+    <div className="min-h-screen flex flex-col bg-white" dir="rtl" key={currentQuestion.question_number}>
       {/* الشريط العلوي */}
       <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
         {/* اسم الاختبار */}
