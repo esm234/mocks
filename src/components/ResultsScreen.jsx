@@ -647,7 +647,9 @@ const ResultsScreen = () => {
                   </h6>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
                     <p className="text-emerald-300 text-sm">
-                      <specificRecommendation.Icon className={`h-5 w-5 inline ml-2 ${specificRecommendation.color}`} />
+{specificRecommendation.icon && (
+  <specificRecommendation.icon className={`h-5 w-5 inline ml-2 ${specificRecommendation.color}`} />
+)}
                       <span className="font-bold">{specificRecommendation.title}:</span> {specificRecommendation.text}
                     </p>
                   </div>
