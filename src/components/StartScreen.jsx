@@ -25,10 +25,12 @@ import {
   ArrowUpRight,
   FolderOpen,
   Sparkle, // Added for more sparkle effects
-  Globe // Added for a global feel
+  Globe, // Added for a global feel
+  Search // Added for search functionality
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
+import SearchComponent from './SearchComponent';
 
 // Variants for Framer Motion animations
 const containerVariants = {
@@ -92,6 +94,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [settings, setSettings] = useState(loadSavedSettings());
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   const {
     examMode,
@@ -269,12 +272,27 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 ))}
               </div>
 
-              {/* Left section with My Folders button */}
+              {/* Left section with buttons */}
               <motion.div 
                 initial={{ x: 50, opacity: 0 }} 
                 animate={{ x: 0, opacity: 1 }} 
                 transition={{ duration: 0.5 }}
+                className="flex items-center gap-2"
               >
+                {/* Search Button */}
+                <motion.button
+                  onClick={() => setShowSearch(true)}
+                  whileHover="hover"
+                  whileTap="tap"
+                  variants={buttonVariants}
+                  className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base relative overflow-hidden group"
+                >
+                  <Search className="h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="hidden sm:inline">البحث</span>
+                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
+                </motion.button>
+                
+                {/* My Folders Button */}
                 <motion.button
                   onClick={onShowFolderManagement}
                   whileHover="hover"
@@ -933,6 +951,13 @@ const StartScreen = ({ onShowFolderManagement }) => {
           </div>
         </div>
       </div>
+
+      {/* Search Component */}
+      <AnimatePresence>
+        {showSearch && (
+          <SearchComponent onClose={() => setShowSearch(false)} />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
