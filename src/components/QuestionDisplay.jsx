@@ -32,7 +32,7 @@ import QuestionToFolderDialog from './QuestionToFolderDialog';
 const QuestionDisplay = () => {
   const [isTextEnlarged, setIsTextEnlarged] = useState(false);
   const [isInstructionModalOpen, setIsInstructionModalOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== '' ? window.innerWidth : 1024);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024);
   const [isFolderDialogOpen, setIsFolderDialogOpen] = useState(false);
 
   const {
@@ -229,7 +229,7 @@ const QuestionDisplay = () => {
 
   if (!examQuestions || examQuestions.length === 0) {
     return (
-      <div className="min-h-screen bg-[#f5f5f5] flex items-center justify-center" dir="rtl">
+      <div className="min-h-screen bg-[#eaf3fa] flex items-center justify-center" dir="rtl">
         <div className="text-center bg-white rounded-lg p-8 shadow-lg mx-4">
           <div className="bg-blue-100 rounded-full p-4 w-16 h-16 mx-auto mb-4 flex items-center justify-center">
             <Brain className="h-8 w-8 text-blue-600 animate-pulse" />
@@ -379,7 +379,7 @@ const QuestionDisplay = () => {
     return icons[type] || <Brain className="h-4 w-4" />;
   };
 
-    const INSTRUCTIONS = {
+  const INSTRUCTIONS = {
     'analogy': {
       title: 'التناظر اللفظي',
       text: 'في بداية كل سؤال مما يأتي، كلمتان ترتبطان بعلاقة معينة، تتبعهما أربعة أزواج من الكلمات، أحدها ترتبط فيه الكلمتان بعلاقة مشابهة للعلاقة بين الكلمتين في بداية السؤال. المطلوب هو: اختيار الإجابة الصحيحة'
@@ -413,173 +413,170 @@ const QuestionDisplay = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f5f5]" dir="rtl" key={currentQuestion.question_number}>
-      {/* Header */}
-      <div className="bg-[#2196F3] text-white">
-        <div className="flex items-center justify-between px-4 py-3">
-          <div className="text-lg font-medium">
+      {/* Header - Two parts */}
+      <div className="flex flex-col">
+        {/* Top header part */}
+        <div className="flex items-center justify-between bg-[#1976d2] px-4 py-3">
+          <div className="font-bold text-white text-lg">
             أنت الآن في القسم {currentSection + 1}
           </div>
           
           <div className="flex items-center gap-4">
-            {/* Timer */}
+            <span className="text-white text-base">
+              السؤال {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
+            </span>
+            
             {timerActive && (
-              <div className="flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-lg">
-                <Clock className="w-4 h-4" />
-                <span className="font-medium">{formatTime(timeRemaining)}</span>
+              <div className="text-white flex items-center gap-2 text-base">
+                <Clock className="w-5 h-5" />
+                <span>{formatTime(timeRemaining)}</span>
               </div>
             )}
-            
-            {/* Question Counter */}
-            <div className="bg-white/20 px-3 py-1.5 rounded-lg">
-              <span className="font-medium">
-                {getDisplayQuestionNumber()} / {getTotalQuestionsDisplay()}
-              </span>
-            </div>
           </div>
         </div>
-      </div>
 
-      {/* Action Buttons Bar */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
+        {/* Bottom header part */}
+        <div className="bg-[#e3f2fd] px-4 py-2 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {/* Flag Button */}
             <button
-              onClick={handleDeferToggle}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                 isDeferred 
-                  ? 'bg-yellow-100 text-yellow-700 border-2 border-yellow-300' 
-                  : 'bg-gray-100 text-gray-700 border-2 border-gray-200 hover:bg-gray-200'
+                  ? 'bg-yellow-500 text-white' 
+                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
               }`}
+              onClick={handleDeferToggle}
+              type="button"
             >
-              <Flag className={`w-4 h-4 ${isDeferred ? 'fill-current' : ''}`} />
-              <span>تمييز</span>
+              <Flag className="w-4 h-4 inline ml-1" />
+              تمييز السؤال
             </button>
-
-            {/* Folder Button */}
+            
             <button
               onClick={() => setIsFolderDialogOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 border-2 border-gray-200 hover:bg-gray-200 transition-all"
+              className="px-4 py-1.5 bg-white text-gray-700 rounded-full text-sm font-medium border border-gray-300 hover:bg-gray-50 transition-all"
             >
-              <FolderPlus className="w-4 h-4" />
-              <span>إضافة لمجلد</span>
+              <FolderPlus className="w-4 h-4 inline ml-1" />
+              إضافة لمجلد
             </button>
-
-            {/* Section Review Button */}
-            {shouldShowSectionReviewButton() && (
-              <button
-                onClick={handleSectionReview}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-purple-100 text-purple-700 border-2 border-purple-200 hover:bg-purple-200 transition-all"
-              >
-                <Eye className="w-4 h-4" />
-                <span>مراجعة القسم</span>
-              </button>
-            )}
           </div>
 
-          {/* Question Type Badge */}
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg">
-            {getQuestionTypeIcon(currentQuestion.type)}
-            <span className="font-medium text-sm">{getQuestionTypeLabel(currentQuestion.type)}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex">
-        <div className="w-full max-w-7xl mx-auto flex gap-6 p-6">
-          {/* Question and Choices Column */}
-          <div className="flex-1 bg-white rounded-lg shadow-sm p-8">
-            {/* Reading Passage */}
-            {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-              <div className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="text-gray-800 leading-relaxed whitespace-pre-line">
-                  {currentQuestion.passage}
-                </div>
-              </div>
-            )}
-
-            {/* Question */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 text-center">
-                {currentQuestion.type === 'error' ? 
-                  renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
-                  currentQuestion.question
-                }
-              </h2>
-            </div>
-
-            {/* Choices */}
-            <RadioGroup
-              value={selectedAnswer?.toString()}
-              onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-              className="space-y-4"
-            >
-              {currentQuestion.choices.map((choice, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                    selectedAnswer === index 
-                      ? 'border-blue-500 bg-blue-50' 
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
-                  onClick={() => handleAnswerSelect(index)}
-                >
-                  <RadioGroupItem
-                    value={index.toString()}
-                    id={`choice-${index}`}
-                    className="text-blue-600"
-                  />
-                  <Label
-                    htmlFor={`choice-${index}`}
-                    className="flex-1 cursor-pointer text-lg text-gray-800"
-                  >
-                    {choice}
-                  </Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-
-          {/* Instructions Column - Desktop Only */}
           {!isMobile && (
-            <div className="w-96 bg-white rounded-lg shadow-sm p-8">
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-red-600 mb-4">
-                  {currentInstructions.title}
-                </h3>
-                <p className="text-gray-700 leading-relaxed">
-                  {currentInstructions.text}
-                </p>
-              </div>
-            </div>
+            <select className="rounded px-3 py-1.5 text-gray-700 bg-white text-sm border border-gray-300">
+              <option>خط عادي</option>
+              <option>خط كبير</option>
+            </select>
           )}
         </div>
       </div>
 
-      {/* Navigation Footer */}
-      <div className="bg-[#2196F3] text-white">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <button
-            onClick={handlePrevious}
-            disabled={!canGoPrevious()}
-            className="flex items-center gap-2 px-6 py-2 bg-white/20 rounded-lg font-medium hover:bg-white/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <ChevronRight className="w-5 h-5" />
-            <span>السابق</span>
-          </button>
+      {/* Main content */}
+      <div className="flex-1 flex flex-row p-4 gap-4">
+        {/* Questions column */}
+        <div className={`${isMobile ? 'w-full' : 'w-1/2'} bg-white rounded-lg border border-gray-300 p-6`}>
+          <div className="flex flex-col h-full">
+            {/* Reading passage if exists */}
+            {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
+              <div className="text-right leading-relaxed text-base mb-6 text-gray-800 border-b border-gray-200 pb-4">
+                {currentQuestion.passage}
+              </div>
+            )}
 
-          <button
-            onClick={handleNext}
-            className="flex items-center gap-2 px-6 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-all"
-          >
-            <span>التالي</span>
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+            {/* Question */}
+            <div className="text-xl font-bold text-gray-900 text-right mb-6">
+              {currentQuestion.type === 'error' ? 
+                renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
+                currentQuestion.question
+              }
+            </div>
+            
+            {/* Choices */}
+            <div className="flex-1">
+              <RadioGroup
+                value={selectedAnswer?.toString()}
+                onValueChange={(value) => handleAnswerSelect(parseInt(value))}
+                className="space-y-3"
+              >
+                {currentQuestion.choices.map((choice, index) => (
+                  <div
+                    key={index}
+                    className={`flex flex-row-reverse items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
+                      selectedAnswer === index 
+                        ? 'bg-blue-50 border border-blue-300' 
+                        : 'hover:bg-gray-50 border border-transparent'
+                    }`}
+                    onClick={() => handleAnswerSelect(index)}
+                  >
+                    <RadioGroupItem
+                      value={index.toString()}
+                      id={`choice-${index}`}
+                      className="text-blue-600"
+                    />
+                    <Label
+                      htmlFor={`choice-${index}`}
+                      className="flex-1 cursor-pointer text-gray-800 text-base"
+                    >
+                      {choice}
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
+            </div>
+          </div>
         </div>
+
+        {/* Instructions column - desktop only */}
+        {!isMobile && (
+          <div className="w-1/2 bg-white rounded-lg border border-gray-300 p-6">
+            <div className="flex flex-col h-full">
+              <h2 className="text-2xl font-bold text-[#d32f2f] mb-4">
+                ملاحظات
+              </h2>
+              
+              <div className="border-t border-gray-200 pt-4">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {currentInstructions.title}
+                </h3>
+                <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
+                  {currentInstructions.text}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Question to Folder Dialog */}
+      {/* Footer navigation */}
+      <div className="bg-[#1976d2] text-white flex items-center justify-between px-6 py-3">
+        <button
+          className="flex items-center gap-2 text-base font-medium disabled:opacity-50 hover:bg-blue-700 px-4 py-2 rounded transition-all"
+          disabled={!canGoPrevious()}
+          onClick={handlePrevious}
+        >
+          <ChevronRight className="w-5 h-5" />
+          السابق
+        </button>
+
+        {shouldShowSectionReviewButton() && (
+          <button
+            onClick={handleSectionReview}
+            className="px-6 py-2 bg-purple-600 text-white rounded font-medium hover:bg-purple-700 transition-all"
+          >
+            <Eye className="w-4 h-4 inline ml-2" />
+            مراجعة القسم
+          </button>
+        )}
+
+        <button
+          className="flex items-center gap-2 text-base font-medium hover:bg-blue-700 px-4 py-2 rounded transition-all"
+          onClick={handleNext}
+          disabled={!canProceed}
+        >
+          التالي
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Dialog for adding question to folder */}
       <QuestionToFolderDialog
         isOpen={isFolderDialogOpen}
         onClose={() => setIsFolderDialogOpen(false)}
