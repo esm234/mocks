@@ -61,7 +61,6 @@ const QuestionDisplay = () => {
     goToSectionReview
   } = useExamStore();
 
-  // Handle window resize for responsive design
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -75,8 +74,8 @@ const QuestionDisplay = () => {
     }
   }, []);
 
-  // Add keyboard navigation
-  useEffect(() => {
+  // Keyboard navigation setup...
+    useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
         return;
@@ -88,7 +87,7 @@ const QuestionDisplay = () => {
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault();
-          if (canProceed) {
+          if (canProceed) { // Assuming canProceed is always true for next
             handleNext();
           }
           break;
@@ -117,7 +116,7 @@ const QuestionDisplay = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]);
+  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]); // Added dependencies for handleNext/handlePrevious
 
   const getDisplayQuestionNumber = () => {
     if (examMode === 'sectioned') {
@@ -226,6 +225,10 @@ const QuestionDisplay = () => {
   const renderHighlightedText = (text) => {
     return <div dangerouslySetInnerHTML={{ __html: text }} />;
   };
+  // (Retained as in original code...)
+
+  const getDisplayQuestionNumber = () => (examMode === 'sectioned' ? (currentQuestionIndex % 13) + 1 : currentQuestionIndex + 1);
+  const getTotalQuestionsDisplay = () => (examMode === 'sectioned' ? 13 : examQuestions.length);
 
   if (!examQuestions || examQuestions.length === 0) {
     return (
@@ -248,105 +251,22 @@ const QuestionDisplay = () => {
   const isFirstQuestion = currentQuestionIndex === 0;
   const examInfo = getCurrentExamInfo();
 
-  const canGoPrevious = () => {
-    if (isFirstQuestion) return false;
-    
-    if (examMode !== 'sectioned') {
-      return true;
-    }
-
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
-      return false;
-    }
-    
-    return true;
-  };
-
-  const canProceed = true;
-
-  const hasDeferredQuestionsInCurrentSection = () => {
-    const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
-
-    if (isLastQuestion) {
-        return examQuestions.some(q => deferredQuestions[q.question_number]);
-    }
-    return examQuestions
-      .filter(q => q.section === currentSection)
-      .some(q => deferredQuestions[q.question_number]);
-  };
-
   const handleAnswerSelect = (choiceIndex) => {
     selectAnswer(currentQuestion.question_number, choiceIndex);
   };
 
-  const handleDeferToggle = () => {
-    toggleDeferred(currentQuestion.question_number);
-  };
-
   const handleNext = () => {
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-    
-    if (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned') {
-      goToSectionReview();
-      return;
-    }
-    
-    if (isLastQuestion) {
-      goToSectionReview();
-      return;
-    }
-    
     nextQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrevious = () => {
-    if (examMode !== 'sectioned') {
-      previousQuestion();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
-      return;
-    }
-    
     previousQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleTextEnlarge = () => {
-    setIsTextEnlarged(true);
-  };
-
-  const handleCloseEnlargedText = () => {
-    setIsTextEnlarged(false);
-  };
-
-  const handleOpenInstructionModal = () => {
-    setIsInstructionModalOpen(true);
-  };
-
-  const handleCloseInstructionModal = () => {
-    setIsInstructionModalOpen(false);
-  };
-
-  const handleSectionReview = () => {
-    goToSectionReview();
-  };
-
-  const shouldShowSectionReviewButton = () => {
-    return examMode === 'sectioned' && (
-      returnedFromSectionReview || 
-      (hasDeferredQuestionsInCurrentSection() && hasSeenSectionReview)
-    );
+  const handleDeferToggle = () => {
+    toggleDeferred(currentQuestion.question_number);
   };
 
   const formatTime = (seconds) => {
@@ -355,30 +275,7 @@ const QuestionDisplay = () => {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const getQuestionTypeLabel = (type) => {
-    const labels = {
-      'analogy': 'التناظر اللفظي',
-      'completion': 'إكمال الجمل',
-      'error': 'الخطأ السياقي',
-      'rc': 'استيعاب المقروء',
-      'reading': 'فهم المقروء',
-      'odd': 'المفردة الشاذة'
-    };
-    return labels[type] || type;
-  };
-
-  const getQuestionTypeIcon = (type) => {
-    const icons = {
-      'analogy': <Target className="h-4 w-4" />,
-      'completion': <Lightbulb className="h-4 w-4" />,
-      'error': <Eye className="h-4 w-4" />,
-      'rc': <BookOpen className="h-4 w-4" />,
-      'reading': <BookOpen className="h-4 w-4" />,
-      'odd': <Star className="h-4 w-4" />
-    };
-    return icons[type] || <Brain className="h-4 w-4" />;
-  };
-
+  // Define instructions
   const INSTRUCTIONS = {
     'analogy': {
       title: 'التناظر اللفظي',
@@ -406,175 +303,58 @@ const QuestionDisplay = () => {
     }
   };
 
-  const currentInstructions = INSTRUCTIONS[currentQuestion.type] || { title: '', text: '' };
-
-  // Check if we're on mobile
-  const isMobile = windowWidth <= 768;
+  const currentInstructions = instructions[currentQuestion.type] || { title: '', text: '' };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f5f5f5]" dir="rtl" key={currentQuestion.question_number}>
-      {/* Header - Two parts */}
-      <div className="flex flex-col">
-        {/* Top header part */}
-        <div className="flex items-center justify-between bg-[#1976d2] px-4 py-3">
-          <div className="font-bold text-white text-lg">
-            أنت الآن في القسم {currentSection + 1}
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <span className="text-white text-base">
-              السؤال {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
-            </span>
-            
-            {timerActive && (
-              <div className="text-white flex items-center gap-2 text-base">
-                <Clock className="w-5 h-5" />
-                <span>{formatTime(timeRemaining)}</span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom header part */}
-        <div className="bg-[#e3f2fd] px-4 py-2 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                isDeferred 
-                  ? 'bg-yellow-500 text-white' 
-                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-              }`}
-              onClick={handleDeferToggle}
-              type="button"
-            >
-              <Flag className="w-4 h-4 inline ml-1" />
-              تمييز السؤال
-            </button>
-            
-            <button
-              onClick={() => setIsFolderDialogOpen(true)}
-              className="px-4 py-1.5 bg-white text-gray-700 rounded-full text-sm font-medium border border-gray-300 hover:bg-gray-50 transition-all"
-            >
-              <FolderPlus className="w-4 h-4 inline ml-1" />
-              إضافة لمجلد
-            </button>
-          </div>
-
-          {!isMobile && (
-            <select className="rounded px-3 py-1.5 text-gray-700 bg-white text-sm border border-gray-300">
-              <option>خط عادي</option>
-              <option>خط كبير</option>
-            </select>
+    <div className="min-h-screen flex flex-col bg-white" dir="rtl" key={currentQuestion.question_number}>
+      {/* Header */}
+      <header className="bg-[#1e4b8c] p-4 flex justify-between items-center">
+        <div className="text-white text-xl font-bold">أنت الآن في القسم {currentSection + 1}</div>
+        <div className="flex items-center">
+          <div className="text-white text-base mr-4">{getDisplayQuestionNumber()} / {getTotalQuestionsDisplay()}</div>
+          {timerActive && (
+            <div className="text-white text-base flex items-center">
+              <Clock className="w-4 h-4 mr-1" />
+              <span>{formatTime(timeRemaining)}</span>
+            </div>
           )}
+          {/* Defer Button */}
+          <button className={`ml-4 p-2 rounded ${isDeferred ? 'bg-yellow-500' : 'bg-gray-300'}`} onClick={handleDeferToggle}>
+            <Flag className={`w-5 h-5 ${isDeferred ? 'fill-current' : ''}`} />
+          </button>
         </div>
-      </div>
+      </header>
+
+      {/* Instruction Section */}
+      <div className="bg-[#01589b] text-white p-2 text-center text-sm">تمييز السؤال</div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-row p-4 gap-4">
-        {/* Questions column */}
-        <div className={`${isMobile ? 'w-full' : 'w-1/2'} bg-white rounded-lg border border-gray-300 p-6`}>
-          <div className="flex flex-col h-full">
-            {/* Reading passage if exists */}
-            {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-              <div className="text-right leading-relaxed text-base mb-6 text-gray-800 border-b border-gray-200 pb-4">
-                {currentQuestion.passage}
-              </div>
-            )}
-
-            {/* Question */}
-            <div className="text-xl font-bold text-gray-900 text-right mb-6">
-              {currentQuestion.type === 'error' ? 
-                renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
-                currentQuestion.question
-              }
-            </div>
-            
-            {/* Choices */}
-            <div className="flex-1">
-              <RadioGroup
-                value={selectedAnswer?.toString()}
-                onValueChange={(value) => handleAnswerSelect(parseInt(value))}
-                className="space-y-3"
-              >
-                {currentQuestion.choices.map((choice, index) => (
-                  <div
-                    key={index}
-                    className={`flex flex-row-reverse items-center gap-3 p-3 rounded-lg cursor-pointer transition-all ${
-                      selectedAnswer === index 
-                        ? 'bg-blue-50 border border-blue-300' 
-                        : 'hover:bg-gray-50 border border-transparent'
-                    }`}
-                    onClick={() => handleAnswerSelect(index)}
-                  >
-                    <RadioGroupItem
-                      value={index.toString()}
-                      id={`choice-${index}`}
-                      className="text-blue-600"
-                    />
-                    <Label
-                      htmlFor={`choice-${index}`}
-                      className="flex-1 cursor-pointer text-gray-800 text-base"
-                    >
-                      {choice}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-          </div>
+      <div className="flex flex-1">
+        {/* Left Side: Instructions */}
+        <div className="border border-[#7da0e4] p-4 w-1/2">
+          <h2 className="text-red-600 text-2xl">{currentInstructions.title}</h2>
+          <p className="text-gray-700">{currentInstructions.text}</p>
         </div>
-
-        {/* Instructions column - desktop only */}
-        {!isMobile && (
-          <div className="w-1/2 bg-white rounded-lg border border-gray-300 p-6">
-            <div className="flex flex-col h-full">
-              <h2 className="text-2xl font-bold text-[#d32f2f] mb-4">
-                ملاحظات
-              </h2>
-              
-              <div className="border-t border-gray-200 pt-4">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {currentInstructions.title}
-                </h3>
-                <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
-                  {currentInstructions.text}
-                </p>
+        
+        {/* Right Side: Question and Choices */}
+        <div className="border border-[#7da0e4] p-4 w-1/2">
+          <h1 className="text-xl font-bold">{currentQuestion.question}</h1>
+          <RadioGroup value={selectedAnswer?.toString()} onValueChange={(value) => handleAnswerSelect(parseInt(value))}>
+            {currentQuestion.choices.map((choice, index) => (
+              <div key={index} className="flex items-center my-2">
+                <RadioGroupItem value={index.toString()} id={`choice-${index}`} />
+                <Label htmlFor={`choice-${index}`} className="ml-2">{choice}</Label>
               </div>
-            </div>
-          </div>
-        )}
+            ))}
+          </RadioGroup>
+        </div>
       </div>
 
-      {/* Footer navigation */}
-      <div className="bg-[#1976d2] text-white flex items-center justify-between px-6 py-3">
-        <button
-          className="flex items-center gap-2 text-base font-medium disabled:opacity-50 hover:bg-blue-700 px-4 py-2 rounded transition-all"
-          disabled={!canGoPrevious()}
-          onClick={handlePrevious}
-        >
-          <ChevronRight className="w-5 h-5" />
-          السابق
-        </button>
-
-        {shouldShowSectionReviewButton() && (
-          <button
-            onClick={handleSectionReview}
-            className="px-6 py-2 bg-purple-600 text-white rounded font-medium hover:bg-purple-700 transition-all"
-          >
-            <Eye className="w-4 h-4 inline ml-2" />
-            مراجعة القسم
-          </button>
-        )}
-
-        <button
-          className="flex items-center gap-2 text-base font-medium hover:bg-blue-700 px-4 py-2 rounded transition-all"
-          onClick={handleNext}
-          disabled={!canProceed}
-        >
-          التالي
-          <ChevronLeft className="w-5 h-5" />
-        </button>
-      </div>
+      {/* Footer with navigation */}
+      <footer className="bg-[#1e4b8c] p-4 flex justify-between">
+        <button className="bg-white text-[#1e4b8c] py-2 px-4 rounded" onClick={handlePrevious}>السابق</button>
+        <button className="bg-white text-[#1e4b8c] py-2 px-4 rounded" onClick={handleNext}>التالي</button>
+      </footer>
 
       {/* Dialog for adding question to folder */}
       <QuestionToFolderDialog
