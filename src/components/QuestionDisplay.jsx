@@ -540,7 +540,7 @@ const QuestionDisplay = () => {
       </div>
 
    {/* الشريط السفلي */}
-<div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3 fixed bottom-0 left-0 z-50 shadow-lg">
+<div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3">
   {/* زر السابق */}
   <button
     className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold disabled:opacity-50"
@@ -583,6 +583,7 @@ const QuestionDisplay = () => {
     <ChevronLeft className="w-5 h-5" />
   </button>
 </div>
+
       {/* Dialog for adding question to folder */}
       <QuestionToFolderDialog
         isOpen={isFolderDialogOpen}
