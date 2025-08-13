@@ -239,7 +239,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
                 <div>
                   <h1 className="text-base sm:text-xl font-extrabold bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent drop-shadow-md">
                     <span className="hidden sm:inline">كي أور جول</span>
-                    <span className="sm:hidden">أور جول</span>
+                    <span className="sm:hidden"> جول</span>
                   </h1>
                   <p className="text-xs sm:text-sm text-gray-400">المرحلة {currentStep} من 3</p>
                 </div>
