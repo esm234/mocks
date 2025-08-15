@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -9,46 +9,43 @@ import {
   FileText,
   Plus,
   Archive,
-  Sparkles, // أيقونة للتأثيرات البراقة
-  LayoutGrid, // أيقونة جديدة لإدارة المجلدات
-  PlayCircle, // أيقونة لبدء الاختبار
-  FolderOpen // أيقونة لفتح المجلد
+  Sparkles,
+  LayoutGrid,
+  PlayCircle,
+  FolderOpen
 } from 'lucide-react';
 import { useFolderStore } from '../store/folderStore';
 import { useExamStore } from '../store/examStore';
 import FolderView from './FolderView';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getAllQuestions } from '../utils/dataLoader';
 
-// Framer Motion Variants for animations
+// Framer Motion Variants
 const containerVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      delayChildren: 0.2, 
-      staggerChildren: 0.1 
-    } 
-  },
+  visible: { opacity: 1, y: 0, transition: { delayChildren: 0.2, staggerChildren: 0.1 } },
   exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
 };
-
 const itemVariants = {
   hidden: { opacity: 0, scale: 0.95, y: 20 },
   visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 20 } },
 };
-
 const buttonVariants = {
   hover: { scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 10 } },
   tap: { scale: 0.95 }
 };
 
 const FolderManagement = ({ onBack }) => {
-  const { folders, addFolder, deleteFolder, getFolderById } = useFolderStore();
+  const { folders, addFolder, deleteFolder } = useFolderStore();
   const { initializeExam } = useExamStore();
   const [newFolderName, setNewFolderName] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
+  const [allQuestions, setAllQuestions] = useState([]);
+
+  useEffect(() => {
+    setAllQuestions(getAllQuestions());
+  }, []);
 
   const handleAddFolder = () => {
     if (newFolderName.trim()) {
@@ -59,7 +56,6 @@ const FolderManagement = ({ onBack }) => {
   };
 
   const handleDeleteFolder = (folderId) => {
-    // Using a more modern confirmation dialog could be a future improvement
     if (window.confirm('هل أنت متأكد من حذف هذا المجلد وكل ما بداخله؟')) {
       deleteFolder(folderId);
     }
@@ -74,10 +70,13 @@ const FolderManagement = ({ onBack }) => {
   };
 
   const handleStartTest = (folderId) => {
-    const folder = getFolderById(folderId);
-    const questions = folder?.questions || []; // Assuming questions are stored within the folder object
+    const folder = folders.find(f => f.id === folderId);
+    if (!folder) return;
 
-    if (!questions || questions.length === 0) {
+    const questionMap = new Map(allQuestions.map(q => [q.id, q]));
+    const folderQuestions = folder.questionIds.map(id => questionMap.get(id)).filter(Boolean);
+
+    if (folderQuestions.length === 0) {
       alert('لا توجد أسئلة في هذا المجلد لبدء الاختبار. أضف بعض الأسئلة أولاً.');
       return;
     }
@@ -87,15 +86,15 @@ const FolderManagement = ({ onBack }) => {
         examMode: 'folder',
         timerMode: 'none',
         timerDuration: 0,
-        shuffleQuestions: true, // Default to shuffle for better practice
+        shuffleQuestions: true,
         shuffleChoices: true,
         questionTypeFilter: 'folder',
         selectedQuestionType: null,
         rcQuestionOrder: 'sequential',
-        folderQuestions: questions
+        folderQuestions: folderQuestions
       });
       
-      onBack(); // Go back to the main screen to start the exam
+      onBack(); // العودة للشاشة الرئيسية لبدء الاختبار
     } catch (error) {
       console.error('Error starting folder test:', error);
       alert('حدث خطأ أثناء بدء الاختبار: ' + error.message);
@@ -107,20 +106,18 @@ const FolderManagement = ({ onBack }) => {
       <FolderView
         folderId={selectedFolderId}
         onBack={handleBackToFolders}
-        onStartTest={() => handleStartTest(selectedFolderId)}
+        onReturnToMainMenu={onBack} // تمرير دالة العودة للقائمة الرئيسية
       />
     );
   }
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-cairo overflow-hidden" dir="rtl">
-      {/* Animated Gradient Background */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
         <header className="sticky top-0 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 z-40">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex items-center justify-between gap-4">
@@ -193,7 +190,6 @@ const FolderManagement = ({ onBack }) => {
           </div>
         </header>
 
-        {/* Main Content */}
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <AnimatePresence mode='wait'>
             {folders.length === 0 ? (
@@ -254,10 +250,7 @@ const FolderManagement = ({ onBack }) => {
                         </h3>
                       </div>
                       <motion.button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteFolder(folder.id);
-                        }}
+                        onClick={(e) => { e.stopPropagation(); handleDeleteFolder(folder.id); }}
                         whileHover={{ scale: 1.2, rotate: -10 }}
                         whileTap={{ scale: 0.9 }}
                         className="text-slate-500 hover:text-red-500 transition-colors p-1 opacity-50 group-hover:opacity-100"
@@ -287,10 +280,7 @@ const FolderManagement = ({ onBack }) => {
                         عرض
                       </motion.button>
                       <motion.button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleStartTest(folder.id);
-                        }}
+                        onClick={(e) => { e.stopPropagation(); handleStartTest(folder.id); }}
                         whileHover="hover"
                         variants={buttonVariants}
                         className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-fuchsia-600/20 border border-fuchsia-600/30 text-fuchsia-300 rounded-lg font-medium hover:bg-fuchsia-600/30 hover:border-fuchsia-500/50 hover:text-fuchsia-200 transition-all duration-300"
