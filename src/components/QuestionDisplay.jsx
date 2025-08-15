@@ -58,10 +58,7 @@ const QuestionDisplay = () => {
     getCurrentExamInfo,
     goToQuestion,
     setReviewMode,
-    goToSectionReview,
-    isReviewingDeferred, // Add new state
-    deferredQuestionNumbers, // Add new state
-    exitDeferredReview // Add new action
+    goToSectionReview
   } = useExamStore();
 
   // Handle window resize for responsive design
@@ -85,14 +82,21 @@ const QuestionDisplay = () => {
         return;
       }
 
+      const currentQuestionNumber = currentQuestionIndex + 1;
+      const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
+
       switch (event.key) {
         case 'ArrowLeft':
           event.preventDefault();
-          handlePrevious();
+          if (canProceed) { // Assuming canProceed is always true for next
+            handleNext();
+          }
           break;
         case 'ArrowRight':
           event.preventDefault();
-          handleNext();
+          if (canGoPrevious()) {
+            handlePrevious();
+          }
           break;
         case '1':
         case '2':
@@ -113,14 +117,10 @@ const QuestionDisplay = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection, isReviewingDeferred, deferredQuestionNumbers]); // Added dependencies for handleNext/handlePrevious
+  }, [currentQuestionIndex, examQuestions, deferredQuestions, examMode, currentSection]); // Added dependencies for handleNext/handlePrevious
 
   const getDisplayQuestionNumber = () => {
-    if (isReviewingDeferred) {
-      const currentQuestionNumber = examQuestions[currentQuestionIndex].question_number;
-      const indexInDeferred = deferredQuestionNumbers.indexOf(currentQuestionNumber);
-      return indexInDeferred + 1;
-    } else if (examMode === 'sectioned') {
+    if (examMode === 'sectioned') {
       const questionInSection = (currentQuestionIndex % 13) + 1;
       return questionInSection;
     } else {
@@ -129,9 +129,7 @@ const QuestionDisplay = () => {
   };
 
   const getTotalQuestionsDisplay = () => {
-    if (isReviewingDeferred) {
-      return deferredQuestionNumbers.length;
-    } else if (examMode === 'sectioned') {
+    if (examMode === 'sectioned') {
       return 13;
     } else {
       return examQuestions.length;
@@ -290,12 +288,6 @@ const QuestionDisplay = () => {
 
   // الدالة المُحدثة لمعالجة الانتقال للسؤال التالي
   const handleNext = () => {
-    if (isReviewingDeferred) {
-      nextQuestion(); // This will handle navigation within deferred questions
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
     
@@ -319,12 +311,6 @@ const QuestionDisplay = () => {
   };
 
   const handlePrevious = () => {
-    if (isReviewingDeferred) {
-      previousQuestion(); // This will handle navigation within deferred questions
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
     if (examMode !== 'sectioned') {
       previousQuestion();
       window.scrollTo({ top: 0, behavior: 'smooth' });
