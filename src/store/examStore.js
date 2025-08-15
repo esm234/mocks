@@ -683,3 +683,190 @@ export const useExamStore = create(
       },
 
 
+
+DeferredReview) {
+          targetQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+        }
+
+        if (questionIndex >= 0 && questionIndex < targetQuestions.length) {
+          const questionToGo = targetQuestions[questionIndex];
+          const globalIndex = examQuestions.findIndex(q => q.question_number === questionToGo.question_number);
+          
+          set({
+            currentQuestionIndex: globalIndex,
+            currentSection: questionToGo.section,
+            reviewMode: false,
+            sectionReviewMode: false,
+            isReviewingDeferredOnly: isReviewingDeferredOnly || fromDeferredReview,
+            deferredQuestionIndex: (isReviewingDeferredOnly || fromDeferredReview) ? questionIndex : 0,
+            returnedFromSectionReview: sectionReviewMode ? true : get().returnedFromSectionReview
+          });
+        }
+      },
+
+      // New action: Move to next section from review
+      moveToNextSectionFromReview: () => {
+        const { currentSection, examQuestions } = get();
+        const nextSection = currentSection + 1;
+        const nextSectionFirstQuestion = examQuestions.find(q => q.section === nextSection);
+
+        if (nextSectionFirstQuestion) {
+          const questionIndex = examQuestions.findIndex(q => q.question_number === nextSectionFirstQuestion.question_number);
+          if (questionIndex !== -1) {
+            set({
+              currentQuestionIndex: questionIndex,
+              currentSection: nextSection,
+              sectionReviewMode: false,
+              returnedFromSectionReview: false,
+              hasSeenSectionReview: false, // <-- FIX: Reset this state for the new section
+              reviewMode: false,
+            });
+          }
+        } else {
+          // If no next section, it means it\'s the last section, complete the exam
+          get().completeExam();
+        }
+      },
+
+      // Exit review mode
+      exitReviewMode: () => {
+        set({ reviewMode: false, isReviewingDeferredOnly: false, deferredQuestionIndex: 0 });
+      },
+
+      // Complete exam
+      completeExam: () => {
+        const { examQuestions, userAnswers, correctAnswers, incorrectAnswers, unansweredQuestions } = get();
+        const stats = get().getQuestionStats();
+
+        const results = {
+          totalQuestions: examQuestions.length,
+          answeredQuestions: stats.answered,
+          unansweredQuestions: stats.unanswered,
+          deferredQuestions: stats.deferred,
+          correctAnswers: correctAnswers.length,
+          incorrectAnswers: incorrectAnswers.length,
+          percentage: stats.percentage,
+          timestamp: new Date().toISOString(),
+        };
+
+        set(state => ({
+          examCompleted: true,
+          examStarted: false,
+          timerActive: false,
+          examResults: results,
+          resultHistory: [...state.resultHistory, results],
+          reviewMode: false,
+          sectionReviewMode: false,
+          isReviewingDeferredOnly: false,
+          deferredQuestionIndex: 0,
+        }));
+        get().stopTimer();
+      },
+
+      // Reset exam state
+      resetExam: () => {
+        const { timerInterval } = get();
+        if (timerInterval) {
+          clearInterval(timerInterval);
+        }
+        set({
+          examStarted: false,
+          examCompleted: false,
+          currentQuestionIndex: 0,
+          currentSection: 1,
+          sectionReviewMode: false,
+          hasSeenSectionReview: false,
+          returnedFromSectionReview: false,
+          reviewedSection: null,
+          hideDeferButton: false,
+          examQuestions: [],
+          userAnswers: {},
+          deferredQuestions: {},
+          timerActive: false,
+          timeRemaining: 0,
+          timerInterval: null,
+          reviewMode: false,
+          reviewFilter: 'all',
+          examResults: null,
+          isReviewingDeferredOnly: false,
+          deferredQuestionIndex: 0,
+        });
+      },
+
+      // Set section review mode
+      setSectionReviewMode: (mode) => set({ sectionReviewMode: mode }),
+      setHasSeenSectionReview: (seen) => set({ hasSeenSectionReview: seen }),
+      setReviewedSection: (section) => set({ reviewedSection: section }),
+      setHideDeferButton: (hide) => set({ hideDeferButton: hide }),
+
+      // Toggle review filter
+      toggleReviewFilter: (filter) => set({ reviewFilter: filter }),
+
+      // New action: Start deferred questions review
+      startDeferredReview: () => {
+        const { examQuestions, deferredQuestions, goToQuestion } = get();
+        const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+
+        if (filteredDeferredQuestions.length > 0) {
+          set({
+            reviewMode: false, // Exit general review mode
+            sectionReviewMode: false, // Exit section review mode
+            isReviewingDeferredOnly: true,
+            deferredQuestionIndex: 0,
+          });
+          // Go to the first deferred question
+          goToQuestion(0, true);
+        } else {
+          console.warn("No deferred questions to review.");
+        }
+      },
+    }),
+    {
+      name: 'exam-storage', // unique name
+      getStorage: () => localStorage, // Use localStorage for persistence
+      // Optionally, specify which parts of the state to persist
+      partialize: (state) => ({
+        examMode: state.examMode,
+        timerMode: state.timerMode,
+        timerDuration: state.timerDuration,
+        shuffleQuestions: state.shuffleQuestions,
+        shuffleChoices: state.shuffleChoices,
+        rcQuestionOrder: state.rcQuestionOrder,
+        questionTypeFilter: state.questionTypeFilter,
+        selectedQuestionType: state.selectedQuestionType,
+        examQuestions: state.examQuestions,
+        userAnswers: state.userAnswers,
+        deferredQuestions: state.deferredQuestions,
+        resultHistory: state.resultHistory,
+      }),
+    }
+  )
+);
+
+
+
+
+    }),
+    {
+      name: 'exam-storage', // unique name
+      getStorage: () => localStorage, // Use localStorage for persistence
+      // Optionally, specify which parts of the state to persist
+      partialize: (state) => ({
+        examMode: state.examMode,
+        timerMode: state.timerMode,
+        timerDuration: state.timerDuration,
+        shuffleQuestions: state.shuffleQuestions,
+        shuffleChoices: state.shuffleChoices,
+        rcQuestionOrder: state.rcQuestionOrder,
+        questionTypeFilter: state.questionTypeFilter,
+        selectedQuestionType: state.selectedQuestionType,
+        examQuestions: state.examQuestions,
+        userAnswers: state.userAnswers,
+        deferredQuestions: state.deferredQuestions,
+        resultHistory: state.resultHistory,
+      }),
+    }
+  )
+);
+
+
