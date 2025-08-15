@@ -41,8 +41,6 @@ export const useExamStore = create(
       // Review mode
       reviewMode: false,
       reviewFilter: 'all', // 'all', 'answered', 'unanswered', 'deferred'
-      isReviewingDeferredOnly: false, // New state for deferred questions review
-      deferredQuestionIndex: 0, // New state to track current deferred question index
       
       // Results
       examResults: null,
@@ -206,9 +204,7 @@ export const useExamStore = create(
             timeRemaining: timerDuration,
             reviewMode: false,
             examResults: null,
-            timerInterval: null,
-            isReviewingDeferredOnly: false,
-            deferredQuestionIndex: 0,
+            timerInterval: null
           });
 
           // Start timer if enabled
@@ -236,9 +232,7 @@ export const useExamStore = create(
             timeRemaining: 0,
             timerInterval: null,
             reviewMode: false,
-            examResults: null,
-            isReviewingDeferredOnly: false,
-            deferredQuestionIndex: 0,
+            examResults: null
           });
           
           throw error; // Re-throw to be handled by the UI
@@ -363,21 +357,7 @@ export const useExamStore = create(
 
       // Navigation
       nextQuestion: () => {
-        const { currentQuestionIndex, examQuestions, examMode, isReviewingDeferredOnly, deferredQuestions, deferredQuestionIndex } = get();
-        
-        if (isReviewingDeferredOnly) {
-          const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-          const nextDeferredIndex = deferredQuestionIndex + 1;
-          if (nextDeferredIndex < filteredDeferredQuestions.length) {
-            get().goToQuestion(nextDeferredIndex, true);
-          } else {
-            // End of deferred questions review
-            set({ isReviewingDeferredOnly: false, deferredQuestionIndex: 0 });
-            get().completeExam(); // Or exit review mode, depending on desired behavior
-          }
-          return;
-        }
-
+        const { currentQuestionIndex, examQuestions, examMode } = get();
         const nextIndex = currentQuestionIndex + 1;
         
         // Check if we're at the end of the current section in sectioned mode
@@ -414,17 +394,7 @@ export const useExamStore = create(
       },
 
       previousQuestion: () => {
-        const { currentQuestionIndex, examQuestions, isReviewingDeferredOnly, deferredQuestions, deferredQuestionIndex } = get();
-
-        if (isReviewingDeferredOnly) {
-          const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-          const prevDeferredIndex = deferredQuestionIndex - 1;
-          if (prevDeferredIndex >= 0) {
-            get().goToQuestion(prevDeferredIndex, true);
-          }
-          return;
-        }
-
+        const { currentQuestionIndex, examQuestions } = get();
         const prevIndex = currentQuestionIndex - 1;
         
         if (prevIndex >= 0) {
@@ -439,25 +409,17 @@ export const useExamStore = create(
       },
 
       // Jump to specific question
-      goToQuestion: (questionIndex, fromDeferredReview = false) => {
-        const { examQuestions, sectionReviewMode, deferredQuestions, isReviewingDeferredOnly } = get();
+      goToQuestion: (questionIndex) => {
+        const { examQuestions, sectionReviewMode } = get();
         
-        let targetQuestions = examQuestions;
-        if (isReviewingDeferredOnly || fromDeferredReview) {
-          targetQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-        }
-
-        if (questionIndex >= 0 && questionIndex < targetQuestions.length) {
-          const questionToGo = targetQuestions[questionIndex];
-          const globalIndex = examQuestions.findIndex(q => q.question_number === questionToGo.question_number);
-          
+        if (questionIndex >= 0 && questionIndex < examQuestions.length) {
+          const question = examQuestions[questionIndex];
           set({
-            currentQuestionIndex: globalIndex,
-            currentSection: questionToGo.section,
+            currentQuestionIndex: questionIndex,
+            currentSection: question.section,
             reviewMode: false,
             sectionReviewMode: false,
-            isReviewingDeferredOnly: isReviewingDeferredOnly || fromDeferredReview,
-            deferredQuestionIndex: (isReviewingDeferredOnly || fromDeferredReview) ? questionIndex : 0,
+            // If coming from section review, mark as returned
             returnedFromSectionReview: sectionReviewMode ? true : get().returnedFromSectionReview
           });
         }
@@ -661,212 +623,3 @@ export const useExamStore = create(
     }
   )
 );
-
-
-      // New action: Start deferred questions review
-      startDeferredReview: () => {
-        const { examQuestions, deferredQuestions, goToQuestion } = get();
-        const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-
-        if (filteredDeferredQuestions.length > 0) {
-          set({
-            reviewMode: false, // Exit general review mode
-            sectionReviewMode: false, // Exit section review mode
-            isReviewingDeferredOnly: true,
-            deferredQuestionIndex: 0,
-          });
-          // Go to the first deferred question
-          goToQuestion(0, true);
-        } else {
-          console.warn("No deferred questions to review.");
-        }
-      },
-
-
-
-DeferredReview) {
-          targetQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-        }
-
-        if (questionIndex >= 0 && questionIndex < targetQuestions.length) {
-          const questionToGo = targetQuestions[questionIndex];
-          const globalIndex = examQuestions.findIndex(q => q.question_number === questionToGo.question_number);
-          
-          set({
-            currentQuestionIndex: globalIndex,
-            currentSection: questionToGo.section,
-            reviewMode: false,
-            sectionReviewMode: false,
-            isReviewingDeferredOnly: isReviewingDeferredOnly || fromDeferredReview,
-            deferredQuestionIndex: (isReviewingDeferredOnly || fromDeferredReview) ? questionIndex : 0,
-            returnedFromSectionReview: sectionReviewMode ? true : get().returnedFromSectionReview
-          });
-        }
-      },
-
-      // New action: Move to next section from review
-      moveToNextSectionFromReview: () => {
-        const { currentSection, examQuestions } = get();
-        const nextSection = currentSection + 1;
-        const nextSectionFirstQuestion = examQuestions.find(q => q.section === nextSection);
-
-        if (nextSectionFirstQuestion) {
-          const questionIndex = examQuestions.findIndex(q => q.question_number === nextSectionFirstQuestion.question_number);
-          if (questionIndex !== -1) {
-            set({
-              currentQuestionIndex: questionIndex,
-              currentSection: nextSection,
-              sectionReviewMode: false,
-              returnedFromSectionReview: false,
-              hasSeenSectionReview: false, // <-- FIX: Reset this state for the new section
-              reviewMode: false,
-            });
-          }
-        } else {
-          // If no next section, it means it\'s the last section, complete the exam
-          get().completeExam();
-        }
-      },
-
-      // Exit review mode
-      exitReviewMode: () => {
-        set({ reviewMode: false, isReviewingDeferredOnly: false, deferredQuestionIndex: 0 });
-      },
-
-      // Complete exam
-      completeExam: () => {
-        const { examQuestions, userAnswers, correctAnswers, incorrectAnswers, unansweredQuestions } = get();
-        const stats = get().getQuestionStats();
-
-        const results = {
-          totalQuestions: examQuestions.length,
-          answeredQuestions: stats.answered,
-          unansweredQuestions: stats.unanswered,
-          deferredQuestions: stats.deferred,
-          correctAnswers: correctAnswers.length,
-          incorrectAnswers: incorrectAnswers.length,
-          percentage: stats.percentage,
-          timestamp: new Date().toISOString(),
-        };
-
-        set(state => ({
-          examCompleted: true,
-          examStarted: false,
-          timerActive: false,
-          examResults: results,
-          resultHistory: [...state.resultHistory, results],
-          reviewMode: false,
-          sectionReviewMode: false,
-          isReviewingDeferredOnly: false,
-          deferredQuestionIndex: 0,
-        }));
-        get().stopTimer();
-      },
-
-      // Reset exam state
-      resetExam: () => {
-        const { timerInterval } = get();
-        if (timerInterval) {
-          clearInterval(timerInterval);
-        }
-        set({
-          examStarted: false,
-          examCompleted: false,
-          currentQuestionIndex: 0,
-          currentSection: 1,
-          sectionReviewMode: false,
-          hasSeenSectionReview: false,
-          returnedFromSectionReview: false,
-          reviewedSection: null,
-          hideDeferButton: false,
-          examQuestions: [],
-          userAnswers: {},
-          deferredQuestions: {},
-          timerActive: false,
-          timeRemaining: 0,
-          timerInterval: null,
-          reviewMode: false,
-          reviewFilter: 'all',
-          examResults: null,
-          isReviewingDeferredOnly: false,
-          deferredQuestionIndex: 0,
-        });
-      },
-
-      // Set section review mode
-      setSectionReviewMode: (mode) => set({ sectionReviewMode: mode }),
-      setHasSeenSectionReview: (seen) => set({ hasSeenSectionReview: seen }),
-      setReviewedSection: (section) => set({ reviewedSection: section }),
-      setHideDeferButton: (hide) => set({ hideDeferButton: hide }),
-
-      // Toggle review filter
-      toggleReviewFilter: (filter) => set({ reviewFilter: filter }),
-
-      // New action: Start deferred questions review
-      startDeferredReview: () => {
-        const { examQuestions, deferredQuestions, goToQuestion } = get();
-        const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
-
-        if (filteredDeferredQuestions.length > 0) {
-          set({
-            reviewMode: false, // Exit general review mode
-            sectionReviewMode: false, // Exit section review mode
-            isReviewingDeferredOnly: true,
-            deferredQuestionIndex: 0,
-          });
-          // Go to the first deferred question
-          goToQuestion(0, true);
-        } else {
-          console.warn("No deferred questions to review.");
-        }
-      },
-    }),
-    {
-      name: 'exam-storage', // unique name
-      getStorage: () => localStorage, // Use localStorage for persistence
-      // Optionally, specify which parts of the state to persist
-      partialize: (state) => ({
-        examMode: state.examMode,
-        timerMode: state.timerMode,
-        timerDuration: state.timerDuration,
-        shuffleQuestions: state.shuffleQuestions,
-        shuffleChoices: state.shuffleChoices,
-        rcQuestionOrder: state.rcQuestionOrder,
-        questionTypeFilter: state.questionTypeFilter,
-        selectedQuestionType: state.selectedQuestionType,
-        examQuestions: state.examQuestions,
-        userAnswers: state.userAnswers,
-        deferredQuestions: state.deferredQuestions,
-        resultHistory: state.resultHistory,
-      }),
-    }
-  )
-);
-
-
-
-
-    }),
-    {
-      name: 'exam-storage', // unique name
-      getStorage: () => localStorage, // Use localStorage for persistence
-      // Optionally, specify which parts of the state to persist
-      partialize: (state) => ({
-        examMode: state.examMode,
-        timerMode: state.timerMode,
-        timerDuration: state.timerDuration,
-        shuffleQuestions: state.shuffleQuestions,
-        shuffleChoices: state.shuffleChoices,
-        rcQuestionOrder: state.rcQuestionOrder,
-        questionTypeFilter: state.questionTypeFilter,
-        selectedQuestionType: state.selectedQuestionType,
-        examQuestions: state.examQuestions,
-        userAnswers: state.userAnswers,
-        deferredQuestions: state.deferredQuestions,
-        resultHistory: state.resultHistory,
-      }),
-    }
-  )
-);
-
-
