@@ -41,6 +41,8 @@ export const useExamStore = create(
       // Review mode
       reviewMode: false,
       reviewFilter: 'all', // 'all', 'answered', 'unanswered', 'deferred'
+      isReviewingDeferredOnly: false, // New state for deferred questions review
+      deferredQuestionIndex: 0, // New state to track current deferred question index
       
       // Results
       examResults: null,
@@ -204,7 +206,9 @@ export const useExamStore = create(
             timeRemaining: timerDuration,
             reviewMode: false,
             examResults: null,
-            timerInterval: null
+            timerInterval: null,
+            isReviewingDeferredOnly: false,
+            deferredQuestionIndex: 0,
           });
 
           // Start timer if enabled
@@ -232,7 +236,9 @@ export const useExamStore = create(
             timeRemaining: 0,
             timerInterval: null,
             reviewMode: false,
-            examResults: null
+            examResults: null,
+            isReviewingDeferredOnly: false,
+            deferredQuestionIndex: 0,
           });
           
           throw error; // Re-throw to be handled by the UI
@@ -357,7 +363,21 @@ export const useExamStore = create(
 
       // Navigation
       nextQuestion: () => {
-        const { currentQuestionIndex, examQuestions, examMode } = get();
+        const { currentQuestionIndex, examQuestions, examMode, isReviewingDeferredOnly, deferredQuestions, deferredQuestionIndex } = get();
+        
+        if (isReviewingDeferredOnly) {
+          const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+          const nextDeferredIndex = deferredQuestionIndex + 1;
+          if (nextDeferredIndex < filteredDeferredQuestions.length) {
+            get().goToQuestion(nextDeferredIndex, true);
+          } else {
+            // End of deferred questions review
+            set({ isReviewingDeferredOnly: false, deferredQuestionIndex: 0 });
+            get().completeExam(); // Or exit review mode, depending on desired behavior
+          }
+          return;
+        }
+
         const nextIndex = currentQuestionIndex + 1;
         
         // Check if we're at the end of the current section in sectioned mode
@@ -394,7 +414,17 @@ export const useExamStore = create(
       },
 
       previousQuestion: () => {
-        const { currentQuestionIndex, examQuestions } = get();
+        const { currentQuestionIndex, examQuestions, isReviewingDeferredOnly, deferredQuestions, deferredQuestionIndex } = get();
+
+        if (isReviewingDeferredOnly) {
+          const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+          const prevDeferredIndex = deferredQuestionIndex - 1;
+          if (prevDeferredIndex >= 0) {
+            get().goToQuestion(prevDeferredIndex, true);
+          }
+          return;
+        }
+
         const prevIndex = currentQuestionIndex - 1;
         
         if (prevIndex >= 0) {
@@ -409,17 +439,25 @@ export const useExamStore = create(
       },
 
       // Jump to specific question
-      goToQuestion: (questionIndex) => {
-        const { examQuestions, sectionReviewMode } = get();
+      goToQuestion: (questionIndex, fromDeferredReview = false) => {
+        const { examQuestions, sectionReviewMode, deferredQuestions, isReviewingDeferredOnly } = get();
         
-        if (questionIndex >= 0 && questionIndex < examQuestions.length) {
-          const question = examQuestions[questionIndex];
+        let targetQuestions = examQuestions;
+        if (isReviewingDeferredOnly || fromDeferredReview) {
+          targetQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+        }
+
+        if (questionIndex >= 0 && questionIndex < targetQuestions.length) {
+          const questionToGo = targetQuestions[questionIndex];
+          const globalIndex = examQuestions.findIndex(q => q.question_number === questionToGo.question_number);
+          
           set({
-            currentQuestionIndex: questionIndex,
-            currentSection: question.section,
+            currentQuestionIndex: globalIndex,
+            currentSection: questionToGo.section,
             reviewMode: false,
             sectionReviewMode: false,
-            // If coming from section review, mark as returned
+            isReviewingDeferredOnly: isReviewingDeferredOnly || fromDeferredReview,
+            deferredQuestionIndex: (isReviewingDeferredOnly || fromDeferredReview) ? questionIndex : 0,
             returnedFromSectionReview: sectionReviewMode ? true : get().returnedFromSectionReview
           });
         }
@@ -623,3 +661,25 @@ export const useExamStore = create(
     }
   )
 );
+
+
+      // New action: Start deferred questions review
+      startDeferredReview: () => {
+        const { examQuestions, deferredQuestions, goToQuestion } = get();
+        const filteredDeferredQuestions = examQuestions.filter(q => deferredQuestions[q.question_number]);
+
+        if (filteredDeferredQuestions.length > 0) {
+          set({
+            reviewMode: false, // Exit general review mode
+            sectionReviewMode: false, // Exit section review mode
+            isReviewingDeferredOnly: true,
+            deferredQuestionIndex: 0,
+          });
+          // Go to the first deferred question
+          goToQuestion(0, true);
+        } else {
+          console.warn("No deferred questions to review.");
+        }
+      },
+
+
