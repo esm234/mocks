@@ -242,7 +242,7 @@ const ResultsScreen = () => {
   const handleAddToFolder = (question, event) => {
     event.stopPropagation(); // Prevent expanding/collapsing the question
     setSelectedQuestionForFolder({
-      id: question.question_number,
+      id: question.id,
       text: question.question.substring(0, 100) + '...'
     });
     setFolderDialogOpen(true);
