@@ -41,6 +41,8 @@ export const useExamStore = create(
       // Review mode
       reviewMode: false,
       reviewFilter: 'all', // 'all', 'answered', 'unanswered', 'deferred'
+      isReviewingDeferred: false, // New: to track if user is reviewing deferred questions
+      deferredQuestionNumbers: [], // New: array of deferred question numbers for sequential review
       
       // Results
       examResults: null,
@@ -357,7 +359,28 @@ export const useExamStore = create(
 
       // Navigation
       nextQuestion: () => {
-        const { currentQuestionIndex, examQuestions, examMode } = get();
+        const { currentQuestionIndex, examQuestions, examMode, isReviewingDeferred, deferredQuestionNumbers, goToQuestion, completeExam, exitDeferredReview } = get();
+
+        if (isReviewingDeferred) {
+          const currentQuestionNumber = examQuestions[currentQuestionIndex].question_number;
+          const currentIndexInDeferred = deferredQuestionNumbers.indexOf(currentQuestionNumber);
+          const nextDeferredIndex = currentIndexInDeferred + 1;
+
+          if (nextDeferredIndex < deferredQuestionNumbers.length) {
+            const nextQuestionNumber = deferredQuestionNumbers[nextDeferredIndex];
+            const nextQuestionGlobalIndex = examQuestions.findIndex(q => q.question_number === nextQuestionNumber);
+            if (nextQuestionGlobalIndex !== -1) {
+              goToQuestion(nextQuestionGlobalIndex);
+            }
+          } else {
+            // No more deferred questions, exit review mode
+            exitDeferredReview();
+            // Optionally, go to section review or complete exam
+            get().goToSectionReview(); // Assuming you want to return to section review after deferred questions
+          }
+          return;
+        }
+        
         const nextIndex = currentQuestionIndex + 1;
         
         // Check if we're at the end of the current section in sectioned mode
@@ -394,7 +417,27 @@ export const useExamStore = create(
       },
 
       previousQuestion: () => {
-        const { currentQuestionIndex, examQuestions } = get();
+        const { currentQuestionIndex, examQuestions, examMode, isReviewingDeferred, deferredQuestionNumbers, goToQuestion, exitDeferredReview } = get();
+
+        if (isReviewingDeferred) {
+          const currentQuestionNumber = examQuestions[currentQuestionIndex].question_number;
+          const currentIndexInDeferred = deferredQuestionNumbers.indexOf(currentQuestionNumber);
+          const prevDeferredIndex = currentIndexInDeferred - 1;
+
+          if (prevDeferredIndex >= 0) {
+            const prevQuestionNumber = deferredQuestionNumbers[prevDeferredIndex];
+            const prevQuestionGlobalIndex = examQuestions.findIndex(q => q.question_number === prevQuestionNumber);
+            if (prevQuestionGlobalIndex !== -1) {
+              goToQuestion(prevQuestionGlobalIndex);
+            }
+          } else {
+            // If no previous deferred question, exit deferred review mode
+            exitDeferredReview();
+            get().goToSectionReview(); // Optionally, go back to section review
+          }
+          return;
+        }
+
         const prevIndex = currentQuestionIndex - 1;
         
         if (prevIndex >= 0) {
@@ -623,3 +666,39 @@ export const useExamStore = create(
     }
   )
 );
+
+
+      // New action: Start reviewing deferred questions
+      startDeferredReview: () => {
+        const { examQuestions, deferredQuestions, goToQuestion } = get();
+        const deferredQNumbers = examQuestions
+          .filter(q => deferredQuestions[q.question_number])
+          .map(q => q.question_number)
+          .sort((a, b) => a - b); // Sort to ensure sequential order
+
+        if (deferredQNumbers.length > 0) {
+          set({
+            isReviewingDeferred: true,
+            deferredQuestionNumbers: deferredQNumbers,
+            reviewMode: false, // Exit general review mode
+            sectionReviewMode: false, // Exit section review mode
+          });
+          // Go to the first deferred question
+          const firstDeferredQuestionIndex = examQuestions.findIndex(q => q.question_number === deferredQNumbers[0]);
+          if (firstDeferredQuestionIndex !== -1) {
+            goToQuestion(firstDeferredQuestionIndex);
+          }
+        } else {
+          console.warn("No deferred questions to review.");
+        }
+      },
+
+      // New action: Exit deferred review mode
+      exitDeferredReview: () => {
+        set({
+          isReviewingDeferred: false,
+          deferredQuestionNumbers: [],
+        });
+      },
+
+
