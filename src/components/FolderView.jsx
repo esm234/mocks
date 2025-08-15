@@ -87,13 +87,12 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
             <ArrowLeft className="w-5 h-5" />
             العودة إلى المجلدات
           </motion.button>
-        </div>
+        </motion.div> {/* ✅ تم تصحيح الوسم هنا */}
       </div>
     );
   }
 
   const handleRemoveQuestion = (questionId) => {
-    // A custom modal would be better than window.confirm
     if (window.confirm('هل أنت متأكد من إزالة هذا السؤال من المجلد؟')) {
       removeQuestionFromFolder(folderId, questionId);
     }
