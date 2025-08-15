@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import SearchComponent from './SearchComponent'; // افترض وجود هذا المكون
+import SearchComponent from './SearchComponent'; تأكد من وجود هذا المكون إذا كنت ستستخدمه
 
 // Framer Motion Variants
 const containerVariants = {
@@ -137,9 +137,12 @@ const StartScreen = ({ onShowFolderManagement }) => {
         <Footer currentStep={currentStep} onStepChange={handleStepChange} />
       </div>
 
+      {/* ✅ تم إصلاح هذا الجزء. إذا أردت تفعيل البحث، تأكد من وجود المكون SearchComponent وإلغاء التعليق */}
+      {/* 
       <AnimatePresence>
-        {showSearch && <SearchComponent onClose={() => setShowSearch(false)} />
+        {showSearch && <SearchComponent onClose={() => setShowSearch(false)} />}
       </AnimatePresence> 
+      */}
     </div>
   );
 };
