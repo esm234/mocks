@@ -4,16 +4,16 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  ChevronRight, 
-  ChevronLeft, 
-  Clock, 
-  Flag, 
-  BookOpen, 
-  Target, 
-  CheckCircle, 
-  Home, 
-  ZoomIn, 
+import {
+  ChevronRight,
+  ChevronLeft,
+  Clock,
+  Flag,
+  BookOpen,
+  Target,
+  CheckCircle,
+  Home,
+  ZoomIn,
   RotateCcw,
   Brain,
   Lightbulb,
@@ -142,13 +142,13 @@ const QuestionDisplay = () => {
     }
 
     let highlightedText = questionText;
-    
+
     const sortedChoices = [...choices].sort((a, b) => b.length - a.length);
-    
+
     const removeDiacritics = (text) => {
       return text.replace(/[\u064B-\u0652\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]/g, "");
     };
-    
+
     const normalizeHamza = (text) => {
       return text
         .replace(/[أإآ]/g, 'ا')
@@ -158,11 +158,11 @@ const QuestionDisplay = () => {
 
     const getCoreWord = (word) => {
       let cleanedWord = word.replace(/[،,\.؛;:!؟?]/g, '');
-      
+
       let core = normalizeHamza(removeDiacritics(cleanedWord));
-      
+
       core = core.replace(/^و/, '');
-      
+
       if (core.startsWith('بال')) {
         core = core.substring(3);
       }
@@ -184,35 +184,35 @@ const QuestionDisplay = () => {
       else if (core.startsWith('ال')) {
         core = core.substring(2);
       }
-      
+
       core = core.replace(/^(ف|ك|س)/, '');
-      
+
       if (core.endsWith('وا')) {
         core = core.slice(0, -2) + 'و';
       }
-      
+
       core = core.replace(/(ه|ها|هم|هن|ك|كم|كن|ي|نا|ون|ين|ات)$/, '');
-      
+
       return core;
     };
-    
+
     sortedChoices.forEach(choice => {
       if (choice && choice.trim()) {
         const trimmedChoice = choice.trim();
-        
+
         const wordsInChoice = trimmedChoice.split(/[\s\(\)\[\]،,\.؛;:]+/).filter(word => word.length > 0);
-        
+
         wordsInChoice.forEach(wordInChoice => {
           const coreWordInChoice = getCoreWord(wordInChoice);
-          
+
           const wordsInQuestion = questionText.split(/\s+/);
-          
+
           wordsInQuestion.forEach(wordInQuestion => {
             const coreWordInQuestion = getCoreWord(wordInQuestion);
-            
+
             if (coreWordInQuestion === coreWordInChoice && coreWordInChoice.length > 0) {
               if (!highlightedText.includes(`<span style="color: red; font-weight: bold;">${wordInQuestion}</span>`)) {
-                highlightedText = highlightedText.replace(wordInQuestion, `<span style="color: red; font-weight: bold;">${wordInQuestion}</span>`);
+                highlightedText = highlightedText.replace(new RegExp(`\\b${wordInQuestion}\\b`, 'g'), `<span style="color: red; font-weight: bold;">${wordInQuestion}</span>`);
               }
             }
           });
@@ -250,18 +250,18 @@ const QuestionDisplay = () => {
 
   const canGoPrevious = () => {
     if (isFirstQuestion) return false;
-    
+
     if (examMode !== 'sectioned') {
       return true;
     }
 
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
+
     if (isFirstQuestionInSection && currentQuestionIndex > 0) {
       return false;
     }
-    
+
     return true;
   };
 
@@ -290,21 +290,21 @@ const QuestionDisplay = () => {
   const handleNext = () => {
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-    
+
     // إذا كنا في آخر سؤال في القسم وليس آخر سؤال في الامتحان (في النمط المقسم)
     if (isLastQuestionInSection && !isLastQuestion && examMode === 'sectioned') {
       // الانتقال مباشرة لصفحة مراجعة القسم
       goToSectionReview();
       return;
     }
-    
+
     // إذا كنا في آخر سؤال في الامتحان بالكامل
     if (isLastQuestion) {
       // الانتقال مباشرة لصفحة مراجعة القسم الأخير
       goToSectionReview();
       return;
     }
-    
+
     // في الحالات العادية، متابعة للسؤال التالي
     nextQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -319,11 +319,11 @@ const QuestionDisplay = () => {
 
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-    
+
     if (isFirstQuestionInSection && currentQuestionIndex > 0) {
       return;
     }
-    
+
     previousQuestion();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -349,10 +349,28 @@ const QuestionDisplay = () => {
   };
 
   const shouldShowSectionReviewButton = () => {
-    return examMode === 'sectioned' && (
-      returnedFromSectionReview || 
-      (hasDeferredQuestionsInCurrentSection() && hasSeenSectionReview)
-    );
+    if (examMode !== 'sectioned') return false;
+    
+    const currentQuestionNumber = currentQuestionIndex + 1;
+    const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
+    const isLastQuestionOfExam = currentQuestionIndex === examQuestions.length - 1;
+
+    // Show on the last question of a section or the entire exam
+    if (isLastQuestionInSection || isLastQuestionOfExam) {
+        return true;
+    }
+    
+    // Show if returning from section review
+    if (returnedFromSectionReview) {
+        return true;
+    }
+
+    // Show if there are deferred questions and the user has already seen the review page once
+    if (hasDeferredQuestionsInCurrentSection() && hasSeenSectionReview) {
+        return true;
+    }
+
+    return false;
   };
 
   const formatTime = (seconds) => {
@@ -424,9 +442,9 @@ const QuestionDisplay = () => {
       <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
         {/* اسم الاختبار */}
         <div className="font-bold text-white text-sm sm:text-lg">
-          أنت الآن في القسم {currentSection + 0}
+          أنت الآن في القسم {currentSection + 1}
         </div>
-        
+
         {/* باقي العناصر */}
         <div className="flex items-center gap-2 sm:gap-3 flex-row-reverse">
           {!isMobile && (
@@ -435,12 +453,12 @@ const QuestionDisplay = () => {
               <option>خط كبير</option>
             </select>
           )}
-          
+
           {/* زر التمييز بأيقونة العلم */}
           <button
             className={`p-2 rounded transition-all duration-200 ${
-              isDeferred 
-                ? 'bg-yellow-500 text-white shadow-lg' 
+              isDeferred
+                ? 'bg-yellow-500 text-white shadow-lg'
                 : 'bg-white/30 text-white hover:bg-white/40'
             }`}
             onClick={handleDeferToggle}
@@ -449,11 +467,11 @@ const QuestionDisplay = () => {
           >
             <Flag className={`w-5 h-5 ${isDeferred ? 'fill-current' : ''}`} />
           </button>
-          
+
           <span className="text-white text-sm sm:text-base">
             {getDisplayQuestionNumber()} من {getTotalQuestionsDisplay()}
           </span>
-          
+
           {timerActive && (
             <span className="text-white flex items-center gap-1 text-sm sm:text-base">
               <span className="hidden sm:inline">الوقت المتبقي:</span>
@@ -465,9 +483,9 @@ const QuestionDisplay = () => {
       </div>
 
       {/* محتوى الصفحة */}
-      <div className="flex-1 flex flex-row">
+      <div className="flex-1 flex flex-col md:flex-row">
         {/* عمود السؤال والاختيارات */}
-        <div className={`${isMobile ? 'w-full' : 'w-1/2'} flex flex-col justify-start items-start p-4 md:p-12`}>
+        <div className={`flex flex-col justify-start items-start p-4 md:p-12 ${isMobile ? 'w-full' : 'w-1/2'}`}>
           {/* نص الاستيعاب */}
           {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
             <div className="text-right leading-loose text-base mb-6 w-full text-gray-900">
@@ -477,12 +495,12 @@ const QuestionDisplay = () => {
 
           {/* السؤال */}
           <div className="text-xl md:text-2xl font-bold text-gray-900 text-center w-full mb-6 md:mb-8">
-            {currentQuestion.type === 'error' ? 
+            {currentQuestion.type === 'error' ?
               renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
               currentQuestion.question
             }
           </div>
-          
+
           {/* الخيارات */}
           <div className="flex flex-col gap-4 md:gap-6 w-full">
             <RadioGroup
@@ -524,7 +542,7 @@ const QuestionDisplay = () => {
                 {currentInstructions.text}
               </div>
             </div>
-            
+
             {/* زر إضافة إلى مجلد */}
             <div className="mt-auto">
               <button
@@ -539,50 +557,53 @@ const QuestionDisplay = () => {
         )}
       </div>
 
-   {/* الشريط السفلي */}
-<div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3">
-  {/* زر السابق */}
-  <button
-    className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold disabled:opacity-50"
-    disabled={!canGoPrevious()}
-    onClick={handlePrevious}
-  >
-    <ChevronRight className="w-5 h-5" />
-    السابق
-  </button>
+      {/* الشريط السفلي */}
+      <div className="w-full bg-[#03A9F4] text-white flex items-center justify-between px-4 md:px-8 py-3 sticky bottom-0">
+        {/* زر السابق */}
+        <button
+          className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold disabled:opacity-50"
+          disabled={!canGoPrevious()}
+          onClick={handlePrevious}
+        >
+          <ChevronRight className="w-5 h-5" />
+          السابق
+        </button>
 
-  {/* زر إضافة لمجلد - للموبايل فقط */}
-  {isMobile && (
-    <button
-      onClick={() => setIsFolderDialogOpen(true)}
-      className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold"
-    >
-      <FolderPlus className="h-5 w-5" />
-      مجلد
-    </button>
-  )}
+        {/* أزرار وسطية */}
+        <div className="flex items-center gap-3">
+            {/* زر إضافة لمجلد - للموبايل فقط */}
+            {isMobile && (
+                <button
+                onClick={() => setIsFolderDialogOpen(true)}
+                className="flex items-center justify-center p-3 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold"
+                title="إضافة لمجلد"
+                >
+                <FolderPlus className="h-5 w-5" />
+                </button>
+            )}
 
-  {/* زر مراجعة القسم */}
-  {shouldShowSectionReviewButton() && (
-    <button
-      onClick={handleSectionReview}
-      className="flex items-center gap-2 px-4 py-2 bg-white text-purple-600 rounded-full shadow-md hover:bg-gray-100 font-bold"
-    >
-      <Eye className="h-5 w-5" />
-      مراجعة
-    </button>
-  )}
+            {/* زر مراجعة القسم */}
+            {shouldShowSectionReviewButton() && (
+                <button
+                onClick={handleSectionReview}
+                className="flex items-center gap-2 px-4 py-2 bg-white text-purple-600 rounded-full shadow-md hover:bg-gray-100 font-bold"
+                >
+                <Eye className="h-5 w-5" />
+                <span className={isMobile ? 'hidden' : 'inline'}>مراجعة</span>
+                </button>
+            )}
+        </div>
 
-  {/* زر التالي */}
-  <button
-    className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold"
-    onClick={handleNext}
-    disabled={!canProceed}
-  >
-    التالي
-    <ChevronLeft className="w-5 h-5" />
-  </button>
-</div>
+        {/* زر التالي */}
+        <button
+          className="flex items-center gap-2 px-4 py-2 bg-white text-[#03A9F4] rounded-full shadow-md hover:bg-gray-100 font-bold"
+          onClick={handleNext}
+          disabled={!canProceed}
+        >
+          التالي
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+      </div>
 
       {/* Dialog for adding question to folder */}
       <QuestionToFolderDialog
@@ -595,4 +616,4 @@ const QuestionDisplay = () => {
   );
 };
 
-export default QuestionDisplay; 
+export default QuestionDisplay;
