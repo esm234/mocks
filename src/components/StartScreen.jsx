@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import SearchComponent from './SearchComponent'; تأكد من وجود هذا المكون إذا كنت ستستخدمه
+import SearchComponent from './SearchComponent';
 
 // Framer Motion Variants
 const containerVariants = {
