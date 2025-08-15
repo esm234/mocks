@@ -137,9 +137,9 @@ const StartScreen = ({ onShowFolderManagement }) => {
         <Footer currentStep={currentStep} onStepChange={handleStepChange} />
       </div>
 
-      { <AnimatePresence>
-        {showSearch && <SearchComponent onClose={() => setShowSearch(false)} />}
-      </AnimatePresence> /}
+      <AnimatePresence>
+        {showSearch && <SearchComponent onClose={() => setShowSearch(false)} />
+      </AnimatePresence> 
     </div>
   );
 };
