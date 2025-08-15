@@ -16,23 +16,19 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { useFolderStore } from '../store/folderStore';
+import { useExamStore } from '../store/examStore'; // استيراد examStore
 import { getAllQuestions } from '../utils/dataLoader';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Framer Motion Variants
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1,
-    transition: { staggerChildren: 0.07 } 
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.07 } },
 };
-
 const itemVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 300, damping: 25 } },
 };
-
 const buttonVariants = {
   hover: { scale: 1.05, transition: { type: "spring", stiffness: 400, damping: 10 } },
   tap: { scale: 0.95 }
@@ -50,15 +46,15 @@ const getQuestionTypeDetails = (type) => {
   }
 };
 
-const FolderView = ({ folderId, onBack, onStartTest }) => {
+const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
   const { folders, removeQuestionFromFolder } = useFolderStore();
+  const { initializeExam } = useExamStore(); // استخدام initializeExam مباشرة
   const [allQuestions, setAllQuestions] = useState([]);
   
   const folder = useMemo(() => folders.find(f => f.id === folderId), [folders, folderId]);
 
   useEffect(() => {
-    const questions = getAllQuestions();
-    setAllQuestions(questions);
+    setAllQuestions(getAllQuestions());
   }, []);
 
   const folderQuestions = useMemo(() => {
@@ -87,7 +83,7 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
             <ArrowLeft className="w-5 h-5" />
             العودة إلى المجلدات
           </motion.button>
-        </motion.div> {/* ✅ تم تصحيح الوسم هنا */}
+        </motion.div>
       </div>
     );
   }
@@ -99,7 +95,27 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
   };
 
   const handleStartTest = () => {
-    onStartTest(folderQuestions);
+    if (folderQuestions.length === 0) {
+      alert('لا يمكن بدء الاختبار لأن المجلد فارغ.');
+      return;
+    }
+    try {
+      initializeExam({
+        examMode: 'folder',
+        timerMode: 'none',
+        timerDuration: 0,
+        shuffleQuestions: true,
+        shuffleChoices: true,
+        questionTypeFilter: 'folder',
+        selectedQuestionType: null,
+        rcQuestionOrder: 'sequential',
+        folderQuestions: folderQuestions
+      });
+      onReturnToMainMenu(); // العودة إلى القائمة الرئيسية لبدء الاختبار
+    } catch (error) {
+      console.error('Error starting test from folder view:', error);
+      alert('حدث خطأ أثناء بدء الاختبار: ' + error.message);
+    }
   };
 
   const getCorrectAnswerText = (question) => {
@@ -112,12 +128,10 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-white font-cairo" dir="rtl">
-      {/* Animated Gradient Background */}
       <div className="absolute inset-0 -z-10 h-full w-full bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
       <div className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 h-[400px] w-[400px] rounded-full bg-fuchsia-500/20 blur-[120px]"></div>
 
       <div className="relative z-10 max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <header className="flex flex-col sm:flex-row items-center justify-between mb-10 gap-6">
           <motion.div 
             initial={{ x: 50, opacity: 0 }}
@@ -155,7 +169,6 @@ const FolderView = ({ folderId, onBack, onStartTest }) => {
           )}
         </header>
 
-        {/* Questions List */}
         <AnimatePresence mode="wait">
           {folderQuestions.length === 0 ? (
             <motion.div
