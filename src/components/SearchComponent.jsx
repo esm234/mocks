@@ -21,7 +21,7 @@ const SearchComponent = ({ onClose }) => {
   
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const [resultsPerPage] = useState(10); // ط¹ط¯ط¯ ط§ظ„ظ†طھط§ط¦ط¬ ظپظٹ ظƒظ„ طµظپط­ط©
+  const [resultsPerPage] = useState(10); // عدد النتائج في كل صفحة
 
   // Combine all data sources
   const allData = [
@@ -34,12 +34,12 @@ const SearchComponent = ({ onClose }) => {
   ];
 
   const categories = [
-    { value: 'all', label: 'ط¬ظ…ظٹط¹ ط§ظ„ظپط¦ط§طھ', icon: BookOpen },
-    { value: 'ط§ظ„طھظ†ط§ط¸ط± ط§ظ„ظ„ظپط¸ظٹ', label: 'ط§ظ„طھظ†ط§ط¸ط± ط§ظ„ظ„ظپط¸ظٹ', icon: Brain },
-    { value: 'ط¥ظƒظ…ط§ظ„ ط§ظ„ط¬ظ…ظ„', label: 'ط¥ظƒظ…ط§ظ„ ط§ظ„ط¬ظ…ظ„', icon: Target },
-    { value: 'ط§ظ„ط®ط·ط£ ط§ظ„ط³ظٹط§ظ‚ظٹ', label: 'ط§ظ„ط®ط·ط£ ط§ظ„ط³ظٹط§ظ‚ظٹ', icon: Lightbulb },
-    { value: 'ط§ظ„ظ…ظپط±ط¯ط© ط§ظ„ط´ط§ط°ط©', label: 'ط§ظ„ظ…ظپط±ط¯ط© ط§ظ„ط´ط§ط°ط©', icon: Sparkles },
-    { value: 'ط§ط³طھظٹط¹ط§ط¨ ط§ظ„ظ…ظ‚ط±ظˆط،', label: 'ط§ط³طھظٹط¹ط§ط¨ ط§ظ„ظ…ظ‚ط±ظˆط،', icon: BookOpen }
+    { value: 'all', label: 'جميع الفئات', icon: BookOpen },
+    { value: 'التناظر اللفظي', label: 'التناظر اللفظي', icon: Brain },
+    { value: 'إكمال الجمل', label: 'إكمال الجمل', icon: Target },
+    { value: 'الخطأ السياقي', label: 'الخطأ السياقي', icon: Lightbulb },
+    { value: 'المفردة الشاذة', label: 'المفردة الشاذة', icon: Sparkles },
+    { value: 'استيعاب المقروء', label: 'استيعاب المقروء', icon: BookOpen }
   ];
 
   const performSearch = () => {
@@ -145,11 +145,11 @@ const SearchComponent = ({ onClose }) => {
 
   const getCategoryColor = (category) => {
     const colors = {
-      'ط§ظ„طھظ†ط§ط¸ط± ط§ظ„ظ„ظپط¸ظٹ': 'from-violet-500 to-purple-600',
-      'ط¥ظƒظ…ط§ظ„ ط§ظ„ط¬ظ…ظ„': 'from-emerald-500 to-teal-600',
-      'ط§ظ„ط®ط·ط£ ط§ظ„ط³ظٹط§ظ‚ظٹ': 'from-rose-500 to-pink-600',
-      'ط§ط³طھظٹط¹ط§ط¨ ط§ظ„ظ…ظ‚ط±ظˆط،': 'from-amber-500 to-orange-600',
-      'ط§ظ„ظ…ظپط±ط¯ط© ط§ظ„ط´ط§ط°ط©': 'from-cyan-500 to-blue-600'
+      'التناظر اللفظي': 'from-violet-500 to-purple-600',
+      'إكمال الجمل': 'from-emerald-500 to-teal-600',
+      'الخطأ السياقي': 'from-rose-500 to-pink-600',
+      'استيعاب المقروء': 'from-amber-500 to-orange-600',
+      'المفردة الشاذة': 'from-cyan-500 to-blue-600'
     };
     return colors[category] || 'from-gray-500 to-gray-600';
   };
@@ -178,8 +178,8 @@ const SearchComponent = ({ onClose }) => {
                 <Search className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-white">ط§ظ„ط¨ط­ط« ظپظٹ ط§ظ„ط£ط³ط¦ظ„ط©</h2>
-                <p className="text-gray-300">ط§ط¨ط­ط« ظپظٹ ظ‚ط§ط¹ط¯ط© ط¨ظٹط§ظ†ط§طھ ط§ظ„ط£ط³ط¦ظ„ط©</p>
+                <h2 className="text-2xl font-bold text-white">البحث في الأسئلة</h2>
+                <p className="text-gray-300">ابحث في قاعدة بيانات الأسئلة</p>
               </div>
             </div>
             <Button
@@ -200,7 +200,7 @@ const SearchComponent = ({ onClose }) => {
               <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <Input
                 type="text"
-                placeholder="ط§ط¨ط­ط« ظپظٹ ط§ظ„ط£ط³ط¦ظ„ط© ظˆط§ظ„ط¥ط¬ط§ط¨ط§طھ..."
+                placeholder="ابحث في الأسئلة والإجابات..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pr-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
@@ -211,7 +211,7 @@ const SearchComponent = ({ onClose }) => {
                 <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                   <div className="flex items-center gap-2">
                     <Filter className="h-4 w-4" />
-                    <SelectValue placeholder="ط§ط®طھط± ط§ظ„ظپط¦ط©" />
+                    <SelectValue placeholder="اختر الفئة" />
                   </div>
                 </SelectTrigger>
                 <SelectContent className="bg-gray-800 border-gray-600">
@@ -237,29 +237,29 @@ const SearchComponent = ({ onClose }) => {
           {isLoading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-              <span className="mr-3 text-gray-400">ط¬ط§ط±ظٹ ط§ظ„ط¨ط­ط«...</span>
+              <span className="mr-3 text-gray-400">جاري البحث...</span>
             </div>
           ) : searchQuery.trim() === '' ? (
             <div className="text-center py-12">
               <Search className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-400 mb-2">ط§ط¨ط¯ط£ ط§ظ„ط¨ط­ط«</h3>
-              <p className="text-gray-500">ط§ظƒطھط¨ ظƒظ„ظ…ط© ط£ظˆ ط¹ط¨ط§ط±ط© ظ„ظ„ط¨ط­ط« ظپظٹ ظ‚ط§ط¹ط¯ط© ط¨ظٹط§ظ†ط§طھ ط§ظ„ط£ط³ط¦ظ„ط©</p>
+              <h3 className="text-xl font-semibold text-gray-400 mb-2">ابدأ البحث</h3>
+              <p className="text-gray-500">اكتب كلمة أو عبارة للبحث في قاعدة بيانات الأسئلة</p>
             </div>
           ) : searchResults.length === 0 ? (
             <div className="text-center py-12">
               <Search className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-400 mb-2">ظ„ط§ طھظˆط¬ط¯ ظ†طھط§ط¦ط¬</h3>
-              <p className="text-gray-500">ط¬ط±ط¨ ظƒظ„ظ…ط§طھ ظ…ط®طھظ„ظپط© ط£ظˆ ط؛ظٹط± ط§ظ„ظپط¦ط© ط§ظ„ظ…ط­ط¯ط¯ط©</p>
+              <h3 className="text-xl font-semibold text-gray-400 mb-2">لا توجد نتائج</h3>
+              <p className="text-gray-500">جرب كلمات مختلفة أو غير الفئة المحددة</p>
             </div>
           ) : (
             <div className="space-y-4">
               {/* Results Header */}
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-white">
-                  ط§ظ„ظ†طھط§ط¦ط¬ ({searchResults.length})
+                  النتائج ({searchResults.length})
                 </h3>
                 <div className="text-sm text-gray-400">
-                  ط§ظ„ط¨ط­ط« ط¹ظ†: "{searchQuery}" - ط§ظ„طµظپط­ط© {currentPage} ظ…ظ† {totalPages}
+                  البحث عن: "{searchQuery}" - الصفحة {currentPage} من {totalPages}
                 </div>
               </div>
               
@@ -287,7 +287,7 @@ const SearchComponent = ({ onClose }) => {
                               {question.category}
                             </span>
                             <div className="text-xs text-gray-400">
-                              {question.exam} - ط³ط¤ط§ظ„ ط±ظ‚ظ… {question.question_number}
+                              {question.exam} - سؤال رقم {question.question_number}
                             </div>
                           </div>
                         </div>
@@ -320,7 +320,7 @@ const SearchComponent = ({ onClose }) => {
                                   {highlightText(choice, searchQuery)}
                                 </span>
                                 {choice === question.answer && (
-                                  <span className="mr-2 text-xs text-green-400">âœ“ ط§ظ„ط¥ط¬ط§ط¨ط© ط§ظ„طµط­ظٹط­ط©</span>
+                                  <span className="mr-2 text-xs text-green-400">✓ الإجابة الصحيحة</span>
                                 )}
                               </div>
                             ))}
@@ -332,7 +332,7 @@ const SearchComponent = ({ onClose }) => {
                       {question.answer && (!question.choices || question.choices.length === 0) && (
                         <div className="mb-4">
                           <div className="p-3 bg-green-900/30 border border-green-500 rounded-lg">
-                            <span className="text-sm text-green-300 font-medium">ط§ظ„ط¥ط¬ط§ط¨ط©: </span>
+                            <span className="text-sm text-green-300 font-medium">الإجابة: </span>
                             <span className="text-green-300">
                               {highlightText(question.answer, searchQuery)}
                             </span>
@@ -356,7 +356,7 @@ const SearchComponent = ({ onClose }) => {
                     className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ChevronRight className="h-4 w-4" />
-                    ط§ظ„ط³ط§ط¨ظ‚
+                    السابق
                   </Button>
 
                   {/* Page Numbers */}
@@ -391,7 +391,7 @@ const SearchComponent = ({ onClose }) => {
                     size="sm"
                     className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    ط§ظ„طھط§ظ„ظٹ
+                    التالي
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
                 </div>
@@ -400,7 +400,7 @@ const SearchComponent = ({ onClose }) => {
               {/* Results Summary */}
               {searchResults.length > 0 && (
                 <div className="text-center text-sm text-gray-400 mt-4">
-                  ط¹ط±ط¶ {startIndex + 1} - {Math.min(endIndex, searchResults.length)} ظ…ظ† {searchResults.length} ظ†طھظٹط¬ط©
+                  عرض {startIndex + 1} - {Math.min(endIndex, searchResults.length)} من {searchResults.length} نتيجة
                 </div>
               )}
             </div>
