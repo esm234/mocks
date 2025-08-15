@@ -39,7 +39,8 @@ const SectionReview = () => {
     timeRemaining,
     examMode,
     completeExam,
-    moveToNextSectionFromReview
+    moveToNextSectionFromReview,
+    startDeferredReview
   } = useExamStore();
 
   // Fix: In single mode, show all questions instead of filtering by section
@@ -320,7 +321,7 @@ const SectionReview = () => {
 
             {/* Deferred Questions */}
             <div 
-              onClick={() => handleCardClick('deferred')}
+              onClick={() => startDeferredReview()}
               className={`cursor-pointer bg-gradient-to-br from-amber-900/50 to-orange-900/50 border rounded-2xl p-8 text-center hover:scale-105 transition-all duration-300 ${
                 questionFilter === 'deferred' 
                   ? 'border-amber-400 shadow-lg shadow-amber-500/30 scale-105' 
