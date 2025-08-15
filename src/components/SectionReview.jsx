@@ -26,6 +26,7 @@ import {
 const SectionReview = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [animatingCard, setAnimatingCard] = useState(null);
+  const [questionFilter, setQuestionFilter] = useState('all'); // 'all', 'answered', 'deferred', 'unanswered'
   
   const {
     currentSection,
@@ -47,18 +48,34 @@ const SectionReview = () => {
   const isLastSection = isSingleMode || currentSection === totalSections;
   
   // Fix: Show all questions in single mode, or filter by section in sectioned mode
-  const sectionQuestions = isSingleMode 
+  const allSectionQuestions = isSingleMode 
     ? examQuestions // Show all questions in single mode
     : examQuestions.filter(q => q.section === currentSection);
   
+  // Filter questions based on the selected filter
+  const getFilteredQuestions = () => {
+    switch (questionFilter) {
+      case 'answered':
+        return allSectionQuestions.filter(q => userAnswers[q.question_number] !== undefined && !deferredQuestions[q.question_number]);
+      case 'deferred':
+        return allSectionQuestions.filter(q => deferredQuestions[q.question_number]);
+      case 'unanswered':
+        return allSectionQuestions.filter(q => userAnswers[q.question_number] === undefined && !deferredQuestions[q.question_number]);
+      default:
+        return allSectionQuestions;
+    }
+  };
+
+  const sectionQuestions = getFilteredQuestions();
+  
   const sectionStats = {
-    total: sectionQuestions.length,
+    total: allSectionQuestions.length,
     answered: 0,
     unanswered: 0,
     deferred: 0
   };
 
-  sectionQuestions.forEach(question => {
+  allSectionQuestions.forEach(question => {
     const isAnswered = userAnswers[question.question_number] !== undefined;
     const isDeferred = deferredQuestions[question.question_number];
 
@@ -70,6 +87,11 @@ const SectionReview = () => {
       sectionStats.unanswered++;
     }
   });
+
+  // Click handlers for statistics cards
+  const handleCardClick = (filterType) => {
+    setQuestionFilter(filterType === questionFilter ? 'all' : filterType);
+  };
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -152,6 +174,20 @@ const SectionReview = () => {
       return "الاختبار الكامل";
     }
     return `القسم ${currentSection} من ${totalSections}`;
+  };
+
+  const getQuestionsGridTitle = () => {
+    const baseTitle = isSingleMode ? "جميع الأسئلة" : "أسئلة القسم";
+    switch (questionFilter) {
+      case 'answered':
+        return `${baseTitle} - الأسئلة المُجابة (${sectionQuestions.length})`;
+      case 'deferred':
+        return `${baseTitle} - الأسئلة المؤجلة (${sectionQuestions.length})`;
+      case 'unanswered':
+        return `${baseTitle} - الأسئلة غير المُجابة (${sectionQuestions.length})`;
+      default:
+        return `${baseTitle} (${sectionQuestions.length})`;
+    }
   };
 
   return (
@@ -261,7 +297,14 @@ const SectionReview = () => {
         <div className="max-w-6xl mx-auto px-6 mb-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Answered Questions */}
-            <div className="bg-gradient-to-br from-green-900/50 to-emerald-900/50 border border-green-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+            <div 
+              onClick={() => handleCardClick('answered')}
+              className={`cursor-pointer bg-gradient-to-br from-green-900/50 to-emerald-900/50 border rounded-2xl p-8 text-center hover:scale-105 transition-all duration-300 ${
+                questionFilter === 'answered' 
+                  ? 'border-green-400 shadow-lg shadow-green-500/30 scale-105' 
+                  : 'border-green-500/30'
+              }`}
+            >
               <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-500/30 text-green-400 mx-auto mb-6">
                 <CheckCircle className="h-8 w-8" />
               </div>
@@ -276,7 +319,14 @@ const SectionReview = () => {
             </div>
 
             {/* Deferred Questions */}
-            <div className="bg-gradient-to-br from-amber-900/50 to-orange-900/50 border border-amber-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+            <div 
+              onClick={() => handleCardClick('deferred')}
+              className={`cursor-pointer bg-gradient-to-br from-amber-900/50 to-orange-900/50 border rounded-2xl p-8 text-center hover:scale-105 transition-all duration-300 ${
+                questionFilter === 'deferred' 
+                  ? 'border-amber-400 shadow-lg shadow-amber-500/30 scale-105' 
+                  : 'border-amber-500/30'
+              }`}
+            >
               <div className="flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/30 text-amber-400 mx-auto mb-6">
                 <Clock className="h-8 w-8" />
               </div>
@@ -291,7 +341,14 @@ const SectionReview = () => {
             </div>
 
             {/* Unanswered Questions */}
-            <div className="bg-gradient-to-br from-red-900/50 to-rose-900/50 border border-red-500/30 rounded-2xl p-8 text-center hover:scale-105 transition-transform duration-300">
+            <div 
+              onClick={() => handleCardClick('unanswered')}
+              className={`cursor-pointer bg-gradient-to-br from-red-900/50 to-rose-900/50 border rounded-2xl p-8 text-center hover:scale-105 transition-all duration-300 ${
+                questionFilter === 'unanswered' 
+                  ? 'border-red-400 shadow-lg shadow-red-500/30 scale-105' 
+                  : 'border-red-500/30'
+              }`}
+            >
               <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-500/30 text-red-400 mx-auto mb-6">
                 <Circle className="h-8 w-8" />
               </div>
@@ -311,9 +368,14 @@ const SectionReview = () => {
         <div className="max-w-6xl mx-auto px-6 mb-16">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-200 mb-4">
-              {isSingleMode ? "جميع الأسئلة" : "أسئلة القسم"}
+              {getQuestionsGridTitle()}
             </h3>
-            <p className="text-gray-400">انقر على أي سؤال للانتقال إليه مباشرة</p>
+            <p className="text-gray-400">
+              {questionFilter === 'all' 
+                ? "انقر على أي سؤال للانتقال إليه مباشرة" 
+                : "انقر على البطاقات أعلاه للتصفية أو على أي سؤال للانتقال إليه"
+              }
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

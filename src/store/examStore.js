@@ -337,8 +337,7 @@ export const useExamStore = create(
             [questionNumber]: choiceIndex
           },
           deferredQuestions: {
-            ...deferredQuestions,
-            [questionNumber]: false // Remove deferred flag when answered
+            ...deferredQuestions
           }
         });
       },

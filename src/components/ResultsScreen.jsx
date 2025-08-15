@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useExamStore } from '../store/examStore';
+import { useFolderStore } from '../store/folderStore';
 import { Button } from './ui/button';
+import QuestionToFolderDialog from './QuestionToFolderDialog';
 import { 
   CheckCircle, 
   XCircle, 
@@ -31,7 +33,8 @@ import {
   MinusSquare,
   Gem,
   Heart,
-  MessageCircle
+  MessageCircle,
+  FolderPlus
 } from 'lucide-react';
 
 const ResultsScreen = () => {
@@ -51,6 +54,8 @@ const ResultsScreen = () => {
   const [isAnimating, setIsAnimating] = useState(true);
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [folderDialogOpen, setFolderDialogOpen] = useState(false);
+  const [selectedQuestionForFolder, setSelectedQuestionForFolder] = useState(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -233,6 +238,15 @@ const ResultsScreen = () => {
   };
 
   const typePerformance = analyzePerformanceByType();
+
+  const handleAddToFolder = (question, event) => {
+    event.stopPropagation(); // Prevent expanding/collapsing the question
+    setSelectedQuestionForFolder({
+      id: question.question_number,
+      text: question.question.substring(0, 100) + '...'
+    });
+    setFolderDialogOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 text-white" dir="rtl">
@@ -450,6 +464,14 @@ const ResultsScreen = () => {
                         </div>
                         
                         <div className="flex items-center gap-3">
+                          <button
+                            onClick={(e) => handleAddToFolder(question, e)}
+                            className="p-2 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 rounded-lg transition-colors group"
+                            title="إضافة إلى مجلد"
+                          >
+                            <FolderPlus className="h-4 w-4 text-blue-400 group-hover:text-blue-300" />
+                          </button>
+                          
                           {selectedCategory === 'correct' && (
                             <CheckCircle className="h-5 w-5 text-green-400" />
                           )}
@@ -623,6 +645,14 @@ const ResultsScreen = () => {
           </Button>
         </div>
       </div>
+
+      {/* Question to Folder Dialog */}
+      <QuestionToFolderDialog
+        isOpen={folderDialogOpen}
+        onClose={() => setFolderDialogOpen(false)}
+        questionId={selectedQuestionForFolder?.id}
+        questionText={selectedQuestionForFolder?.text}
+      />
     </div>
   );
 };
