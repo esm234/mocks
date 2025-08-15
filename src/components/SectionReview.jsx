@@ -39,7 +39,8 @@ const SectionReview = () => {
     timeRemaining,
     examMode,
     completeExam,
-    moveToNextSectionFromReview
+    moveToNextSectionFromReview,
+    startDeferredReview // Add startDeferredReview
   } = useExamStore();
 
   // Fix: In single mode, show all questions instead of filtering by section
@@ -91,6 +92,9 @@ const SectionReview = () => {
   // Click handlers for statistics cards
   const handleCardClick = (filterType) => {
     setQuestionFilter(filterType === questionFilter ? 'all' : filterType);
+    if (filterType === 'deferred' && sectionStats.deferred > 0) {
+      startDeferredReview();
+    }
   };
 
   const formatTime = (seconds) => {
