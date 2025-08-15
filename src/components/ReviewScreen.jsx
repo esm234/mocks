@@ -29,8 +29,7 @@ const ReviewScreen = () => {
     goToQuestion,
     completeExam,
     getQuestionStats,
-    toggleReviewFilter,
-    startDeferredReview
+    toggleReviewFilter
   } = useExamStore();
 
   const [activeTab, setActiveTab] = useState('all');
@@ -102,7 +101,7 @@ const ReviewScreen = () => {
                 <div className="text-green-400 font-bold text-lg">{stats.answered}</div>
                 <div className="text-xs text-gray-400">مُجابة</div>
               </div>
-              <div className="bg-gradient-to-br from-yellow-900/50 to-gray-800/70 border border-gray-700 rounded-lg p-2 cursor-pointer" onClick={() => startDeferredReview()}>
+              <div className="bg-gradient-to-br from-yellow-900/50 to-gray-800/70 border border-gray-700 rounded-lg p-2">
                 <div className="text-yellow-400 font-bold text-lg">{stats.deferred}</div>
                 <div className="text-xs text-gray-400">مؤجلة</div>
               </div>
