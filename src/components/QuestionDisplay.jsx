@@ -442,7 +442,7 @@ const QuestionDisplay = () => {
       <div className="flex items-center justify-between bg-blue-400 px-4 py-2 border-b border-blue-700">
         {/* اسم الاختبار */}
         <div className="font-bold text-white text-sm sm:text-lg">
-          أنت الآن في القسم {currentSection + 1}
+          أنت الآن في القسم {currentSection + 0}
         </div>
 
         {/* باقي العناصر */}
