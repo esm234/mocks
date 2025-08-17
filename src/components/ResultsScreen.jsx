@@ -66,7 +66,7 @@ const ResultsScreen = () => {
       ? ((examResults.correctAnswers / examResults.totalQuestions) * 100)
       : 0;
     if (percentage >= 80) {
-      setTimeout(() => setShowCelebration(true), 1500);
+      // Removed celebration animation activation
     }
   }, []);
 
@@ -98,49 +98,34 @@ const ResultsScreen = () => {
       let questionsToShow = [];
       
       if (examQuestions && examQuestions.length > 0) {
-        let questionNumbers = [];
-        
-        switch (category) {
-          case 'correct':
-            questionNumbers = correctAnswers || [];
-            break;
-          case 'incorrect':
-            questionNumbers = incorrectAnswers || [];
-            break;
-          case 'unanswered':
-            questionNumbers = unansweredQuestions || [];
-            break;
-          default:
-            questionNumbers = [];
-        }
-        
-        if (questionNumbers.length === 0) {
-          examQuestions.forEach(q => {
-            const userAnswer = userAnswers[q.question_number];
-            const isAnswered = userAnswer !== undefined && userAnswer !== null;
-            const isCorrect = isAnswered && userAnswer === q.answer;
-            
-            switch (category) {
-              case 'correct':
-                if (isCorrect) questionNumbers.push(q.question_number);
-                break;
-              case 'incorrect':
-                if (isAnswered && !isCorrect) questionNumbers.push(q.question_number);
-                break;
-              case 'unanswered':
-                if (!isAnswered) questionNumbers.push(q.question_number);
-                break;
-            }
-          });
-        }
-        
-        questionsToShow = examQuestions.filter(q => 
-          questionNumbers.includes(q.question_number)
-        ).map(q => ({
-          ...q,
-          userAnswer: userAnswers[q.question_number],
-          correctAnswer: q.answer
-        }));
+        // استخدام المنطق المحسن لتصنيف الأسئلة
+        examQuestions.forEach(q => {
+          const userAnswer = userAnswers[q.question_number];
+          const isAnswered = userAnswer !== undefined && userAnswer !== null;
+          const isCorrect = isAnswered && userAnswer === q.answer;
+          
+          let shouldInclude = false;
+          
+          switch (category) {
+            case 'correct':
+              shouldInclude = isAnswered && isCorrect;
+              break;
+            case 'incorrect':
+              shouldInclude = isAnswered && !isCorrect;
+              break;
+            case 'unanswered':
+              shouldInclude = !isAnswered;
+              break;
+          }
+          
+          if (shouldInclude) {
+            questionsToShow.push({
+              ...q,
+              userAnswer: userAnswers[q.question_number],
+              correctAnswer: q.answer
+            });
+          }
+        });
       }
       
       setDisplayedQuestions(questionsToShow);
@@ -250,14 +235,7 @@ const ResultsScreen = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-gray-900 text-white" dir="rtl">
-      {/* Celebration Animation */}
-      {showCelebration && percentage >= 80 && (
-        <div className="fixed inset-0 pointer-events-none z-50">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-6xl animate-bounce">🎉</div>
-          </div>
-        </div>
-      )}
+
 
       {/* Header */}
       <div className="sticky top-0 z-40 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
