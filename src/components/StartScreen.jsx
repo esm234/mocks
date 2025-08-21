@@ -157,6 +157,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
   ];
 
   const timerDurations = [
+    { value: 15, label: '15 دقيقة', recommended: false },
     { value: 30, label: '30 دقيقة', recommended: true },
     { value: 45, label: '45 دقيقة', recommended: false },
     { value: 60, label: 'ساعة كاملة', recommended: false },
