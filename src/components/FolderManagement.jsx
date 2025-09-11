@@ -36,7 +36,7 @@ const buttonVariants = {
 };
 
 const FolderManagement = ({ onBack }) => {
-  const { folders, addFolder, deleteFolder } = useFolderStore();
+  const { folders, addFolder, deleteFolder, forceSave } = useFolderStore();
   const { initializeExam } = useExamStore();
   const [newFolderName, setNewFolderName] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,9 +53,36 @@ const FolderManagement = ({ onBack }) => {
     console.log('FolderManagement mounted, folders count:', folders.length);
   }, [folders.length]);
 
+  // Save data before page unload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      console.log('Page unloading, force saving folders...');
+      forceSave();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        console.log('Page hidden, force saving folders...');
+        forceSave();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [forceSave]);
+
   const handleAddFolder = () => {
     if (newFolderName.trim()) {
       addFolder(newFolderName.trim());
+      // Force save after adding folder
+      setTimeout(() => {
+        forceSave();
+      }, 100);
       setNewFolderName('');
       setIsDialogOpen(false);
     }
@@ -64,6 +91,10 @@ const FolderManagement = ({ onBack }) => {
   const handleDeleteFolder = (folderId) => {
     if (window.confirm('هل أنت متأكد من حذف هذا المجلد وكل ما بداخله؟')) {
       deleteFolder(folderId);
+      // Force save after deleting folder
+      setTimeout(() => {
+        forceSave();
+      }, 100);
     }
   };
 
