@@ -20,52 +20,66 @@
   <body>
     <div id="root"></div>
     <script>
-      // Force clear all caches and unregister service workers
-      console.log('Clearing all caches and service workers...');
+      // Force clear everything on page load
+      console.log('=== CLEARING ALL CACHES AND STORAGE ===');
       
-      // Clear all caches
+      // Clear all caches immediately
       if ('caches' in window) {
         caches.keys().then(names => {
-          console.log('Found caches:', names);
-          return Promise.all(names.map(name => caches.delete(name)));
+          console.log('Found caches to delete:', names);
+          return Promise.all(names.map(name => {
+            console.log('Deleting cache:', name);
+            return caches.delete(name);
+          }));
         }).then(() => {
-          console.log('All caches cleared');
+          console.log('✅ All caches cleared');
+        }).catch(err => {
+          console.error('Error clearing caches:', err);
         });
       }
       
-      // Unregister all service workers
+      // Unregister all service workers immediately
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(registrations => {
-          console.log('Found service workers:', registrations.length);
+          console.log('Found service workers to unregister:', registrations.length);
           return Promise.all(registrations.map(registration => {
-            console.log('Unregistering:', registration.scope);
+            console.log('Unregistering service worker:', registration.scope);
             return registration.unregister();
           }));
         }).then(() => {
-          console.log('All service workers unregistered');
+          console.log('✅ All service workers unregistered');
+        }).catch(err => {
+          console.error('Error unregistering service workers:', err);
         });
       }
       
-      // Clear localStorage if corrupted
+      // Clear localStorage completely
       try {
-        const examStorage = localStorage.getItem('exam-storage');
-        if (examStorage) {
-          JSON.parse(examStorage);
-        }
-      } catch (error) {
-        console.log('Storage corrupted, clearing...');
+        console.log('Clearing localStorage...');
         localStorage.clear();
+        console.log('✅ localStorage cleared');
+      } catch (error) {
+        console.error('Error clearing localStorage:', error);
       }
       
-      // Force reload if needed
-      if (performance.navigation.type === 1) {
-        console.log('Page refreshed, clearing cache...');
-        if ('caches' in window) {
-          caches.keys().then(names => {
-            names.forEach(name => caches.delete(name));
-          });
-        }
+      // Clear sessionStorage
+      try {
+        console.log('Clearing sessionStorage...');
+        sessionStorage.clear();
+        console.log('✅ sessionStorage cleared');
+      } catch (error) {
+        console.error('Error clearing sessionStorage:', error);
       }
+      
+      // Force hard reload if this is a refresh
+      if (performance.navigation.type === 1) {
+        console.log('Page refreshed - forcing hard reload...');
+        setTimeout(() => {
+          window.location.reload(true);
+        }, 1000);
+      }
+      
+      console.log('=== CLEARING COMPLETE ===');
     </script>
     <script type="module" src="/src/main.jsx"></script>
     <!-- Default Statcounter code for Exam http://Exam.ourgoal.site -->
