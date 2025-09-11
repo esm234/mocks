@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-73'; // Increment version for updates
+const CACHE_NAME = 'pwa-cache-74'; // Increment version for updates
 const urlsToCache = [
   '/',
   '/index.html',
@@ -67,10 +67,22 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
+    })
+    .then(() => {
+      // Notify all clients about the update
+      return self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'CACHE_UPDATED',
+            cacheName: CACHE_NAME
+          });
+        });
+      });
     })
     .then(() => self.clients.claim()) // Take control of all clients immediately
   );
