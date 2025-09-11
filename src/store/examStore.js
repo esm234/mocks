@@ -1,11 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { generateExam } from '../utils/dataLoader'; // Changed import
-
-// App version for cache busting
-const APP_VERSION = '1.0.0';
-const STORAGE_VERSION_KEY = 'app-version';
-const EXAM_STORAGE_KEY = 'exam-storage';
+import { STORAGE_KEYS, initializeStorage } from '../utils/storageUtils';
 
 export const useExamStore = create(
   persist(
@@ -654,10 +650,9 @@ export const useExamStore = create(
       clearAllStorage: () => {
         console.log('Clearing all storage...');
         // Clear all app-related storage
-        localStorage.removeItem(EXAM_STORAGE_KEY);
-        localStorage.removeItem('examSettings');
-        localStorage.removeItem('i18nextLng');
-        localStorage.removeItem(STORAGE_VERSION_KEY);
+        Object.values(STORAGE_KEYS).forEach(key => {
+          localStorage.removeItem(key);
+        });
         
         // Reset store state
         get().resetExam();
@@ -667,19 +662,10 @@ export const useExamStore = create(
       },
     }),
     {
-      name: EXAM_STORAGE_KEY, // unique name
+      name: STORAGE_KEYS.EXAM_STORAGE, // unique name
       getStorage: () => {
-        // Check for version mismatch and clear storage if needed
-        const storedVersion = localStorage.getItem(STORAGE_VERSION_KEY);
-        if (storedVersion !== APP_VERSION) {
-          console.log('App version changed, clearing storage...');
-          // Clear all app-related storage
-          localStorage.removeItem(EXAM_STORAGE_KEY);
-          localStorage.removeItem('examSettings');
-          localStorage.removeItem('i18nextLng');
-          // Set new version
-          localStorage.setItem(STORAGE_VERSION_KEY, APP_VERSION);
-        }
+        // Initialize storage with version check and corruption detection
+        initializeStorage();
         return localStorage;
       },
       partialize: (state) =>
