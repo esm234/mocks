@@ -69,30 +69,36 @@ function App() {
     };
   }, []);
 
-  // Clear error when component mounts
+  // Clear error when component mounts - only once
   useEffect(() => {
     setError(null);
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
 
-  // Listen for service worker messages
+  // Check for storage issues on mount - only once
   useEffect(() => {
-    const handleServiceWorkerMessage = (event) => {
-      if (event.data?.type === 'CACHE_UPDATED') {
-        console.log('Service Worker cache updated, checking for storage issues...');
-        // Check if there are any storage issues and clear if needed
-        if (isStorageCorrupted()) {
-          console.log('Storage corruption detected, clearing...');
-          clearAppStorage();
-          window.location.reload();
-        }
-      }
-    };
-
-    navigator.serviceWorker?.addEventListener('message', handleServiceWorkerMessage);
+    let hasCheckedStorage = false;
     
-    return () => {
-      navigator.serviceWorker?.removeEventListener('message', handleServiceWorkerMessage);
-    };
+    if (hasCheckedStorage) return;
+    
+    try {
+      // Test localStorage
+      const testKey = 'test-storage';
+      localStorage.setItem(testKey, 'test');
+      localStorage.removeItem(testKey);
+      
+      // Test exam storage
+      const examStorage = localStorage.getItem('exam-storage');
+      if (examStorage) {
+        JSON.parse(examStorage);
+      }
+      
+      hasCheckedStorage = true;
+    } catch (error) {
+      console.error('Storage error detected:', error);
+      setError('مشكلة في تخزين البيانات. يرجى مسح البيانات يدوياً.');
+      // Remove automatic reload to prevent infinite refresh
+      hasCheckedStorage = true;
+    }
   }, []);
 
   // If folder management is active, show it
