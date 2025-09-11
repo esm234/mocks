@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-70'; // Increment version for updates
+const CACHE_NAME = 'pwa-cache-71'; // Increment version for updates
 const urlsToCache = [
   '/',
   '/index.html',
@@ -25,6 +25,15 @@ self.addEventListener('fetch', event => {
       event.request.url.startsWith('safari-extension://') ||
       !event.request.url.startsWith('http')) {
     return;
+  }
+
+  // Skip caching for data files to ensure fresh data
+  if (event.request.url.includes('/src/data/') || 
+      event.request.url.includes('.json')) {
+    return fetch(event.request).catch(error => {
+      console.log('Data fetch failed:', error);
+      return new Response('Data fetch error', { status: 500, statusText: 'Data Error' });
+    });
   }
 
   event.respondWith(
