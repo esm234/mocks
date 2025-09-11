@@ -398,22 +398,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
                   <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
                 </motion.button>
 
-                {/* Clear Storage Button - Only show if there are issues */}
-                <motion.button
-                  onClick={() => {
-                    if (confirm('هل أنت متأكد من مسح جميع البيانات المحفوظة؟ سيتم إعادة تحميل الصفحة.')) {
-                      clearAllStorage();
-                    }
-                  }}
-                  whileHover="hover"
-                  whileTap="tap"
-                  variants={buttonVariants}
-                  className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-lg font-medium hover:scale-105 transition-all duration-300 shadow-lg text-sm sm:text-base relative overflow-hidden group"
-                >
-                  <Settings2 className="h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
-                  <span className="hidden sm:inline">مسح البيانات</span>
-                  <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-lg"></span>
-                </motion.button>
               </motion.div>
             </div>
             
