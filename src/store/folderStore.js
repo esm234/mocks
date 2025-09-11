@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { STORAGE_KEYS } from '../utils/storageUtils';
 
 export const useFolderStore = create(
   persist(
@@ -87,6 +88,14 @@ export const useFolderStore = create(
     {
       name: 'folder-storage',
       version: 1,
+      getStorage: () => {
+        // Use localStorage directly to prevent conflicts
+        return localStorage;
+      },
+      // Only persist the folders array, not any temporary state
+      partialize: (state) => ({
+        folders: state.folders
+      }),
     }
   )
 );
