@@ -302,6 +302,218 @@
   }
 }
 
+/* Tablet specific styles - حل مشكلة خروج الخيارات في التابلت */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* تخطيط التابلت - عمود واحد بدلاً من عمودين */
+  .tablet-layout {
+    flex-direction: column !important;
+  }
+  
+  /* ضبط عرض الخيارات في التابلت */
+  .tablet-choices {
+    max-width: 100%;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+  }
+  
+  /* ضبط حجم الخط في التابلت */
+  .tablet-text {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-spacing {
+    padding: 1rem !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* ضبط ارتفاع العناصر في التابلت */
+  .tablet-height {
+    height: auto !important;
+    min-height: 60vh !important;
+  }
+  
+  /* ضبط العمود الأيمن في التابلت */
+  .tablet-sidebar {
+    width: 100% !important;
+    order: -1 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* تحسينات إضافية للخيارات في التابلت */
+  .tablet-choices span {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* ضبط المسافات بين الخيارات في التابلت */
+  .tablet-choices > div {
+    margin-bottom: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+  
+  /* ضبط حجم النص في التابلت */
+  .tablet-choices .text-sm {
+    font-size: 0.9rem !important;
+  }
+  
+  .tablet-choices .text-lg {
+    font-size: 1rem !important;
+  }
+  
+  /* تحسينات للتابلت في الوضع الأفقي */
+  @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+    .tablet-height {
+      min-height: 50vh !important;
+    }
+    
+    .tablet-choices {
+      max-height: 40vh !important;
+      overflow-y: auto !important;
+    }
+  }
+  
+  /* تحسينات للتابلت في الوضع العمودي */
+  @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+    .tablet-height {
+      min-height: 70vh !important;
+    }
+    
+    .tablet-choices {
+      max-height: 50vh !important;
+      overflow-y: auto !important;
+    }
+  }
+  
+  /* تحسينات إضافية للتابلت في الوضع الأفقي */
+  .tablet-landscape {
+    max-height: 35vh !important;
+    overflow-y: auto !important;
+  }
+  
+  /* ضبط إضافي للخيارات الطويلة في التابلت */
+  .tablet-choices .flex-1 {
+    max-width: calc(100% - 2rem) !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: auto !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-choices .gap-2 {
+    gap: 0.5rem !important;
+  }
+  
+  .tablet-choices .gap-3 {
+    gap: 0.75rem !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices > div {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* ضبط النص في التابلت */
+  .tablet-choices span {
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: auto !important;
+  }
+  
+  /* ضبط إضافي للخيارات الطويلة جداً في التابلت */
+  .tablet-choices .flex-1 {
+    min-width: 0 !important;
+    flex: 1 1 0% !important;
+  }
+  
+  /* ضبط المسافات الداخلية للخيارات في التابلت */
+  .tablet-choices > div {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices .flex {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* ضبط النص في التابلت */
+  .tablet-choices .text-right {
+    text-align: right !important;
+    direction: rtl !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices .cursor-pointer {
+    cursor: pointer !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-choices .space-y-3 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+  
+  .tablet-choices .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices .hover\:bg-gray-50:hover {
+    background-color: #f9fafb !important;
+  }
+  
+  .tablet-choices .active\:bg-gray-100:active {
+    background-color: #f3f4f6 !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-choices .pb-4 {
+    padding-bottom: 1rem !important;
+  }
+  
+  .tablet-choices .pb-6 {
+    padding-bottom: 1.5rem !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices .transition-colors {
+    transition: background-color 0.15s ease-in-out !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-choices .min-h-\[44px\] {
+    min-height: 44px !important;
+  }
+  
+  .tablet-choices .min-h-0 {
+    min-height: 0 !important;
+  }
+  
+  /* ضبط إضافي للخيارات في التابلت */
+  .tablet-choices .rounded {
+    border-radius: 0.375rem !important;
+  }
+  
+  /* ضبط المسافات في التابلت */
+  .tablet-choices .p-3 {
+    padding: 0.75rem !important;
+  }
+  
+  .tablet-choices .p-2 {
+    padding: 0.5rem !important;
+  }
+}
+
 @media (max-width: 640px) {
   .exam-sidebar {
     display: none;
