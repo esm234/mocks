@@ -87,6 +87,14 @@ function App() {
       if (examStorage) {
         JSON.parse(examStorage);
       }
+      
+      // Test folder storage
+      const folderStorage = localStorage.getItem('folder-storage');
+      if (folderStorage) {
+        JSON.parse(folderStorage);
+      }
+      
+      console.log('Storage check passed');
     } catch (error) {
       console.error('Storage error detected:', error);
       setError('مشكلة في تخزين البيانات. يرجى مسح البيانات يدوياً.');
