@@ -550,7 +550,7 @@ const QuestionDisplay = () => {
       {/* المحتوى الرئيسي */}
       <div className={`flex-1 flex flex-col lg:flex-row pb-4 sm:pb-8 relative z-10 ${isTablet ? 'tablet-layout' : ''}`}>
          {/* العمود الأيسر - محتوى السؤال */}
-         <div className="flex-1 flex flex-col lg:mr-4" style={{height: isMobile ? 'auto' : isTablet ? 'calc(100vh - 80px)' : 'calc(100vh - 200px)'}}>
+         <div className="flex-1 flex flex-col lg:mr-4">
            {/* شريط المعلومات */}
            <div className="px-2 sm:px-4 py-2 flex flex-col sm:flex-row items-start sm:items-center justify-between border-2 border-gray-300" style={{backgroundColor: '#DDE7F7'}}>
              <div className="text-gray-700 text-xs sm:text-sm font-bold mb-1 sm:mb-0">
@@ -569,8 +569,8 @@ const QuestionDisplay = () => {
              </div>
            </div>
 
-            {/* محتوى السؤال - تخطيط ثابت */}
-            <div className="flex-1 flex flex-col pt-4 sm:pt-8" style={{height: isMobile ? 'auto' : isTablet ? 'calc(100vh - 80px)' : 'calc(100vh - 280px)'}}>
+            {/* محتوى السؤال - تخطيط مرن */}
+            <div className="flex-1 flex flex-col pt-4 sm:pt-8">
               {/* النص المقروء (إذا كان موجود) - ارتفاع ثابت */}
               {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
                 <div className="bg-gray-50 border-2 border-gray-300 mb-4" style={{height: isTablet ? '150px' : '200px', minHeight: isTablet ? '150px' : '200px'}}>
@@ -581,8 +581,8 @@ const QuestionDisplay = () => {
                 </div>
               )}
 
-              {/* السؤال والخيارات - ارتفاع ثابت */}
-              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`} style={{height: isMobile ? 'auto' : isTablet ? (currentQuestion.type === 'rc' || currentQuestion.type === 'reading') ? 'calc(100% - 170px)' : 'calc(100% - 20px)' : 'calc(100% - 220px)'}}>
+              {/* السؤال والخيارات - ارتفاع مرن */}
+              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`}>
                 <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing' : ''}`}>
                   {/* السؤال وأزرار تغيير الخط في نفس المستوى */}
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
