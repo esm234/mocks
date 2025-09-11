@@ -6,6 +6,7 @@ import SectionReview from './components/SectionReview';
 import ReviewScreen from './components/ReviewScreen';
 import ResultsScreen from './components/ResultsScreen';
 import FolderManagement from './components/FolderManagement';
+import { isStorageCorrupted, clearAppStorage } from './utils/storageUtils';
 import './App.css';
 import { Analytics } from "@vercel/analytics/react"
 
@@ -25,12 +26,38 @@ function App() {
   useEffect(() => {
     const handleError = (event) => {
       console.error('Global error caught:', event.error);
-      setError('حدث خطأ في التطبيق. يرجى إعادة تحميل الصفحة.');
+      
+      // Check if it's a storage-related error
+      if (event.error?.message?.includes('storage') || 
+          event.error?.message?.includes('localStorage') ||
+          event.error?.message?.includes('persist')) {
+        setError('حدث خطأ في تخزين البيانات. سيتم مسح البيانات المحفوظة وإعادة تحميل الصفحة.');
+        // Clear storage and reload after a short delay
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.reload();
+        }, 2000);
+      } else {
+        setError('حدث خطأ في التطبيق. يرجى إعادة تحميل الصفحة.');
+      }
     };
 
     const handleUnhandledRejection = (event) => {
       console.error('Unhandled promise rejection:', event.reason);
-      setError('حدث خطأ في التطبيق. يرجى إعادة تحميل الصفحة.');
+      
+      // Check if it's a storage-related error
+      if (event.reason?.message?.includes('storage') || 
+          event.reason?.message?.includes('localStorage') ||
+          event.reason?.message?.includes('persist')) {
+        setError('حدث خطأ في تخزين البيانات. سيتم مسح البيانات المحفوظة وإعادة تحميل الصفحة.');
+        // Clear storage and reload after a short delay
+        setTimeout(() => {
+          localStorage.clear();
+          window.location.reload();
+        }, 2000);
+      } else {
+        setError('حدث خطأ في التطبيق. يرجى إعادة تحميل الصفحة.');
+      }
     };
 
     window.addEventListener('error', handleError);
@@ -45,6 +72,27 @@ function App() {
   // Clear error when component mounts
   useEffect(() => {
     setError(null);
+  }, []);
+
+  // Listen for service worker messages
+  useEffect(() => {
+    const handleServiceWorkerMessage = (event) => {
+      if (event.data?.type === 'CACHE_UPDATED') {
+        console.log('Service Worker cache updated, checking for storage issues...');
+        // Check if there are any storage issues and clear if needed
+        if (isStorageCorrupted()) {
+          console.log('Storage corruption detected, clearing...');
+          clearAppStorage();
+          window.location.reload();
+        }
+      }
+    };
+
+    navigator.serviceWorker?.addEventListener('message', handleServiceWorkerMessage);
+    
+    return () => {
+      navigator.serviceWorker?.removeEventListener('message', handleServiceWorkerMessage);
+    };
   }, []);
 
   // If folder management is active, show it
@@ -72,19 +120,37 @@ function App() {
         }}>
           <h2 style={{ color: '#dc2626', marginBottom: '20px' }}>خطأ في التطبيق</h2>
           <p style={{ marginBottom: '20px' }}>{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#3b82f6',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            إعادة تحميل الصفحة
-          </button>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button 
+              onClick={() => window.location.reload()} 
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              إعادة تحميل الصفحة
+            </button>
+            <button 
+              onClick={() => {
+                clearAppStorage();
+                window.location.reload();
+              }}
+              style={{
+                padding: '10px 20px',
+                backgroundColor: '#dc2626',
+                color: 'white',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer'
+              }}
+            >
+              مسح البيانات وإعادة تحميل
+            </button>
+          </div>
         </div>
         <Analytics />
       </div>
