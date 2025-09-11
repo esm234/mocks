@@ -23,19 +23,13 @@ createRoot(document.getElementById('root')).render(
 
 
 
-// Service Worker Registration
-if (
-  'serviceWorker' in navigator &&
-  (window.location.protocol === 'https:' || window.location.hostname === 'localhost')
-) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-      })
-      .catch(error => {
-        console.error('Service Worker registration failed:', error);
-      });
+// Unregister any existing Service Workers to prevent caching issues
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(registration => {
+      console.log('Unregistering Service Worker:', registration.scope);
+      registration.unregister();
+    });
   });
 }
 
