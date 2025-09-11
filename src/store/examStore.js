@@ -151,8 +151,18 @@ export const useExamStore = create(
             
           } else {
             // Generate exam questions using the generateExam function from dataLoader
-            const { questions } = generateExam(examConfig);
-            processedQuestions = questions;
+            try {
+              const examResult = generateExam(examConfig);
+              if (examResult && examResult.questions && Array.isArray(examResult.questions)) {
+                processedQuestions = examResult.questions;
+              } else {
+                console.error('Invalid exam result:', examResult);
+                throw new Error('Failed to generate exam questions - invalid result');
+              }
+            } catch (error) {
+              console.error('Error generating exam:', error);
+              throw new Error('Failed to generate exam questions: ' + error.message);
+            }
           }
           
     //      console.log('Generated exam questions:', processedQuestions.length);
