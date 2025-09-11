@@ -465,6 +465,12 @@ const QuestionDisplay = () => {
 
   // Check if we're on mobile
   const isMobile = windowWidth <= 768;
+  
+  // Check if we're on tablet
+  const isTablet = windowWidth > 768 && windowWidth <= 1024;
+  
+  // Check if we're on tablet in landscape mode
+  const isTabletLandscape = isTablet && window.innerHeight < window.innerWidth;
 
   // حماية إضافية - منع كامل للهواتف (وليس التابلت)
   const isMobileDevice = typeof window !== 'undefined' && (
@@ -542,7 +548,7 @@ const QuestionDisplay = () => {
       </div>
 
       {/* المحتوى الرئيسي */}
-      <div className="flex-1 flex flex-col lg:flex-row pb-4 sm:pb-8 relative z-10">
+      <div className={`flex-1 flex flex-col lg:flex-row pb-4 sm:pb-8 relative z-10 ${isTablet ? 'tablet-layout' : ''}`}>
          {/* العمود الأيسر - محتوى السؤال */}
          <div className="flex-1 flex flex-col lg:mr-4" style={{height: isMobile ? 'auto' : 'calc(100vh - 200px)'}}>
            {/* شريط المعلومات */}
@@ -576,8 +582,8 @@ const QuestionDisplay = () => {
               )}
 
               {/* السؤال والخيارات - ارتفاع ثابت */}
-              <div className="border-2 border-gray-300 flex-1 flex flex-col" style={{height: isMobile ? 'auto' : 'calc(100% - 220px)'}}>
-                <div className="p-4 sm:p-8 flex-1 flex flex-col">
+              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`} style={{height: isMobile ? 'auto' : 'calc(100% - 220px)'}}>
+                <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing' : ''}`}>
                   {/* السؤال وأزرار تغيير الخط في نفس المستوى */}
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
                     <div className="text-lg sm:text-2xl font-bold text-gray-900 text-right">
@@ -610,7 +616,7 @@ const QuestionDisplay = () => {
                   <div className="flex items-start gap-2 sm:gap-3 mb-4 sm:mb-6">
                     {/* مساحة فارغة بنفس عرض الدوائر */}
                     <div className={`${isTextEnlarged ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4 sm:w-5 sm:h-5'} flex-shrink-0`}></div>
-                    <div className={`text-gray-900 text-right flex-1 ${isTextEnlarged ? 'text-lg sm:text-2xl' : 'text-base sm:text-xl'}`}>
+                    <div className={`text-gray-900 text-right flex-1 ${isTextEnlarged ? 'text-lg sm:text-2xl' : 'text-base sm:text-xl'} ${isTablet ? 'tablet-text' : ''}`}>
                       {currentQuestion.type === 'error' ?
                         renderHighlightedText(highlightChoiceWords(currentQuestion.question, currentQuestion.choices, currentQuestion.type)) :
                         currentQuestion.question
@@ -620,11 +626,11 @@ const QuestionDisplay = () => {
 
                   {/* الخيارات - منطقة قابلة للتمرير */}
                   <div className="flex-1 overflow-y-auto">
-                    <div className="space-y-3 sm:space-y-4 pb-4 sm:pb-6">
+                    <div className={`space-y-3 sm:space-y-4 pb-4 sm:pb-6 ${isTablet ? 'tablet-choices tablet-spacing' : ''} ${isTabletLandscape ? 'tablet-landscape' : ''}`}>
                       {currentQuestion.choices.map((choice, index) => (
                         <div
                           key={index}
-                          className={`flex items-start gap-2 sm:gap-3 cursor-pointer text-gray-900 text-right p-3 sm:p-2 rounded hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px] sm:min-h-0 ${isTextEnlarged ? 'text-base sm:text-xl' : 'text-sm sm:text-lg'}`}
+                          className={`flex items-start gap-2 sm:gap-3 cursor-pointer text-gray-900 text-right p-3 sm:p-2 rounded hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px] sm:min-h-0 ${isTextEnlarged ? 'text-base sm:text-xl' : 'text-sm sm:text-lg'} ${isTablet ? 'tablet-text' : ''}`}
                           onClick={() => handleAnswerSelect(index)}
                         >
                           <input
@@ -636,7 +642,7 @@ const QuestionDisplay = () => {
                             className={`mt-1 ${isTextEnlarged ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4 sm:w-5 sm:h-5'}`}
                             style={{accentColor: '#068479'}}
                           />
-                          <span className="flex-1 leading-relaxed">{choice}</span>
+                          <span className={`flex-1 leading-relaxed ${isTablet ? 'tablet-choices' : ''}`}>{choice}</span>
                         </div>
                       ))}
                     </div>
@@ -696,7 +702,7 @@ const QuestionDisplay = () => {
         <div className="w-8 hidden lg:block"></div>
 
         {/* العمود الأيمن - لوحة التحكم */}
-        <div className="w-full lg:w-80 border-2 border-gray-300 p-3 sm:p-6 flex flex-col order-first lg:order-last" style={{backgroundColor: '#DDE7F7', marginTop: isMobile ? '0' : '48px'}}>
+        <div className={`w-full lg:w-80 border-2 border-gray-300 p-3 sm:p-6 flex flex-col order-first lg:order-last ${isTablet ? 'tablet-sidebar' : ''}`} style={{backgroundColor: '#DDE7F7', marginTop: isMobile ? '0' : '48px'}}>
           {/* الوقت المتبقي */}
           <div className="text-center mb-4 sm:mb-6">
             <div className="text-gray-600 text-xs sm:text-sm mb-1 sm:mb-2">الوقت المتبقي</div>
