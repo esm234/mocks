@@ -48,6 +48,11 @@ const FolderManagement = ({ onBack }) => {
     setAllQuestions(getAllQuestions(selectedCourse));
   }, [selectedCourse]);
 
+  // Initialize folders on component mount
+  useEffect(() => {
+    console.log('FolderManagement mounted, folders count:', folders.length);
+  }, [folders.length]);
+
   const handleAddFolder = () => {
     if (newFolderName.trim()) {
       addFolder(newFolderName.trim());
