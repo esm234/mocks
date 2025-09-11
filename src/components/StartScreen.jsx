@@ -31,6 +31,7 @@ import {
 import { useExamStore } from '../store/examStore';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
 import SearchComponent from './SearchComponent';
+import { getAllQuestions } from '../utils/dataLoader';
 
 // Variants for Framer Motion animations
 const containerVariants = {
@@ -87,7 +88,8 @@ const StartScreen = ({ onShowFolderManagement }) => {
       selectedTimerDuration: 30, // Changed default to 30 for better UX
       questionTypeFilter: 'all',
       selectedQuestionType: 'analogy',
-      rcQuestionOrder: 'sequential'
+      rcQuestionOrder: 'sequential',
+      courseType: 'old'
     };
   };
 
@@ -95,6 +97,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
   const [settings, setSettings] = useState(loadSavedSettings());
   const [isAnimating, setIsAnimating] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [questionCounts, setQuestionCounts] = useState({
+    old: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 },
+    new: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 }
+  });
 
   const {
     examMode,
@@ -102,59 +108,103 @@ const StartScreen = ({ onShowFolderManagement }) => {
     selectedTimerDuration,
     questionTypeFilter,
     selectedQuestionType,
-    rcQuestionOrder
+    rcQuestionOrder,
+    courseType
   } = settings;
 
   useEffect(() => {
     localStorage.setItem('examSettings', JSON.stringify(settings));
   }, [settings]);
 
+  // Calculate question counts for both courses
+  useEffect(() => {
+    const calculateQuestionCounts = () => {
+      const oldQuestions = getAllQuestions('old');
+      const newQuestions = getAllQuestions('new');
+      
+      const countByType = (questions) => {
+        return questions.reduce((acc, question) => {
+          acc[question.type] = (acc[question.type] || 0) + 1;
+          return acc;
+        }, {});
+      };
+      
+      const oldCounts = countByType(oldQuestions);
+      const newCounts = countByType(newQuestions);
+      
+      setQuestionCounts({
+        old: {
+          analogy: oldCounts.analogy || 0,
+          completion: oldCounts.completion || 0,
+          error: oldCounts.error || 0,
+          rc: oldCounts.rc || 0,
+          odd: oldCounts.odd || 0
+        },
+        new: {
+          analogy: newCounts.analogy || 0,
+          completion: newCounts.completion || 0,
+          error: newCounts.error || 0,
+          rc: newCounts.rc || 0,
+          odd: newCounts.odd || 0
+        }
+      });
+    };
+    
+    calculateQuestionCounts();
+  }, []);
+
+
   const updateSetting = (key, value) => {
     setSettings(prev => ({ ...prev, [key]: value }));
   };
 
-  const questionTypeOptions = [
-    { 
-      id: 'analogy', 
-      title: 'التناظر اللفظي', 
-      subtitle: 'العلاقات والمقارنات', 
-      icon: Brain,
-      color: 'from-violet-500 to-purple-600',
-      stats: '1200+ سؤال'
-    },
-    { 
-      id: 'completion', 
-      title: 'إكمال الجمل', 
-      subtitle: 'ملء الفراغات بدقة', 
-      icon: BookText,
-      color: 'from-emerald-500 to-teal-600',
-      stats: '900+ سؤال'
-    },
-    { 
-      id: 'error', 
-      title: 'الخطأ السياقي', 
-      subtitle: 'تحديد الأخطاء', 
-      icon: Target,
-      color: 'from-rose-500 to-pink-600',
-      stats: '800+ سؤال'
-    },
-    { 
-      id: 'rc', 
-      title: 'استيعاب المقروء', 
-      subtitle: 'فهم النصوص', 
-      icon: Lightbulb,
-      color: 'from-amber-500 to-orange-600',
-      stats: '2800+ سؤال'
-    },
-    { 
-      id: 'odd', 
-      title: 'المفردة الشاذة', 
-      subtitle: 'تحديد المختلف', 
-      icon: Sparkles,
-      color: 'from-cyan-500 to-blue-600',
-      stats: '400+ سؤال'
-    }
-  ];
+  const getQuestionTypeOptions = () => {
+    const currentCounts = questionCounts[courseType];
+    return [
+      { 
+        id: 'analogy', 
+        title: 'التناظر اللفظي', 
+        subtitle: 'العلاقات والمقارنات', 
+        icon: Brain,
+        color: 'from-violet-500 to-purple-600',
+        stats: `${currentCounts.analogy} سؤال`
+      },
+      { 
+        id: 'completion', 
+        title: 'إكمال الجمل', 
+        subtitle: 'ملء الفراغات بدقة', 
+        icon: BookText,
+        color: 'from-emerald-500 to-teal-600',
+        stats: `${currentCounts.completion} سؤال`
+      },
+      { 
+        id: 'error', 
+        title: 'الخطأ السياقي', 
+        subtitle: 'تحديد الأخطاء', 
+        icon: Target,
+        color: 'from-rose-500 to-pink-600',
+        stats: `${currentCounts.error} سؤال`
+      },
+      { 
+        id: 'rc', 
+        title: 'استيعاب المقروء', 
+        subtitle: 'فهم النصوص', 
+        icon: Lightbulb,
+        color: 'from-amber-500 to-orange-600',
+        stats: `${currentCounts.rc} سؤال`
+      },
+      { 
+        id: 'odd', 
+        title: 'المفردة الشاذة', 
+        subtitle: 'تحديد المختلف', 
+        icon: Sparkles,
+        color: 'from-cyan-500 to-blue-600',
+        stats: `${currentCounts.odd} سؤال`
+      }
+    ];
+  };
+
+  const questionTypeOptions = getQuestionTypeOptions();
 
   const timerDurations = [
     { value: 15, label: '15 دقيقة', recommended: false },
@@ -197,7 +247,8 @@ const StartScreen = ({ onShowFolderManagement }) => {
       shuffleAnswers: false,
       questionTypeFilter,
       selectedQuestionType: questionTypeFilter === 'specific' ? selectedQuestionType : null,
-      rcQuestionOrder
+      rcQuestionOrder,
+      courseType
     };
     initializeExam(config);
   };
@@ -386,7 +437,9 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     <p className="text-gray-300 mb-4">اختبار متكامل يغطي جميع أنواع الأسئلة</p>
                     <div className="flex items-center justify-between text-sm">
                       <span className="px-3 py-1 bg-emerald-600/20 text-emerald-300 rounded-full">الأكثر شمولية</span>
-                      <span className="text-gray-400">5000+ سؤال</span>
+                      <span className="text-gray-400">
+                        {Object.values(questionCounts[courseType]).reduce((sum, count) => sum + count, 0)} سؤال
+                      </span>
                     </div>
                   </motion.div>
 
@@ -480,6 +533,83 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     })}
                   </motion.div>
                 )}
+
+                {/* Course Selection */}
+                <motion.div variants={itemVariants} className="mt-12 p-8 bg-gradient-to-r from-indigo-900/20 to-purple-900/20 rounded-2xl border border-indigo-700/30 shadow-xl">
+                  <h3 className="text-xl font-bold flex items-center gap-3 mb-6 text-indigo-300">
+                    <Globe className="h-6 w-6 text-indigo-400" />
+                    اختيار الدورة التدريبية
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <motion.div
+                      onClick={() => updateSetting('courseType', 'old')}
+                      variants={cardVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      animate={courseType === 'old' ? "selected" : "initial"}
+                      className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                        courseType === 'old'
+                          ? 'border-indigo-500 bg-indigo-900/40 shadow-lg shadow-indigo-500/20'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-semibold">الدورة القديمة</h4>
+                        {courseType === 'old' && (
+                          <motion.div 
+                            initial={{ scale: 0 }} 
+                            animate={{ scale: 1 }} 
+                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                            className="p-1 bg-indigo-600 rounded-full shadow-lg"
+                          >
+                            <Check className="h-4 w-4 text-white" />
+                          </motion.div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-sm mb-3">
+                        الأسئلة التقليدية المتاحة حالياً
+                      </p>
+                      <div className="text-xs text-indigo-300">
+                        {Object.values(questionCounts.old).reduce((sum, count) => sum + count, 0)} سؤال
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      onClick={() => updateSetting('courseType', 'new')}
+                      variants={cardVariants}
+                      initial="initial"
+                      whileHover="hover"
+                      animate={courseType === 'new' ? "selected" : "initial"}
+                      className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
+                        courseType === 'new'
+                          ? 'border-indigo-500 bg-indigo-900/40 shadow-lg shadow-indigo-500/20'
+                          : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-semibold"> دورة أغسطس 2025 </h4>
+                        {courseType === 'new' && (
+                          <motion.div 
+                            initial={{ scale: 0 }} 
+                            animate={{ scale: 1 }} 
+                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                            className="p-1 bg-indigo-600 rounded-full shadow-lg"
+                          >
+                            <Check className="h-4 w-4 text-white" />
+                          </motion.div>
+                        )}
+                      </div>
+                      <p className="text-gray-300 text-sm mb-3">
+                        دورة أغسطس 2025 - أسئلة جديدة محدثة
+                      </p>
+                      <div className="text-xs text-indigo-300">
+                        {Object.values(questionCounts.new).reduce((sum, count) => sum + count, 0)} سؤال
+                      </div>
+                    </motion.div>
+                  </div>
+
+                </motion.div>
               </motion.div>
             )}
 
@@ -827,7 +957,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         </p>
                       )}
                       <p className="text-gray-400 text-xs">
-                        {questionTypeFilter === 'all' ? '5000+ سؤال' : getCurrentQuestionType()?.stats}
+                        {questionTypeFilter === 'all' 
+                          ? `${Object.values(questionCounts[courseType]).reduce((sum, count) => sum + count, 0)} سؤال`
+                          : getCurrentQuestionType()?.stats
+                        }
                       </p>
                     </div>
                   </motion.div>

@@ -5,6 +5,13 @@ import rcBank4Data from '../data/rcbank4.json';
 import rcBank5Data from '../data/rcbank5.json';
 import oddData from '../data/odd.json';
 
+// New course data imports
+import newAnalogyData from '../data/newdata/analogy.json';
+import newCompletionData from '../data/newdata/completion.json';
+import newErrorData from '../data/newdata/error.json';
+import newOddData from '../data/newdata/odd.json';
+import newRcBankData from '../data/newdata/rcbank.json';
+
 // Simple hash function for creating unique IDs
 const createSimpleHash = (str) => {
   let hash = 0;
@@ -133,13 +140,96 @@ const initialQuestionPools = (() => {
   return pools;
 })();
 
+// Load and process new course question data
+const newCourseQuestionPools = (() => {
+  const pools = {
+    analogy: [],
+    completion: [],
+    error: [],
+    rc: [],
+    odd: []
+  };
+  
+  try {
+    if (newAnalogyData && Array.isArray(newAnalogyData)) {
+      newAnalogyData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.analogy.push(normalizeQuestion(q, 'analogy', index, 'newdata/analogy'));
+        }
+      });
+    }
+    
+    if (newCompletionData && Array.isArray(newCompletionData)) {
+      newCompletionData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.completion.push(normalizeQuestion(q, 'completion', index, 'newdata/completion'));
+        }
+      });
+    }
+    
+    if (newErrorData && Array.isArray(newErrorData)) {
+      newErrorData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.error.push(normalizeQuestion(q, 'error', index, 'newdata/error'));
+        }
+      });
+    }
+    
+    if (newRcBankData && Array.isArray(newRcBankData)) {
+      newRcBankData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.rc.push(normalizeQuestion(q, 'rc', index, 'newdata/rcbank'));
+        }
+      });
+    }
+    
+    if (newOddData && Array.isArray(newOddData)) {
+      newOddData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.odd.push(normalizeQuestion(q, 'odd', index, 'newdata/odd'));
+        }
+      });
+    }
+    
+    console.log('New course question pools loaded:', {
+      analogy: pools.analogy.length,
+      completion: pools.completion.length,
+      error: pools.error.length,
+      rc: pools.rc.length,
+      odd: pools.odd.length
+    });
+    
+  } catch (error) {
+    console.error('Error loading new course question data:', error);
+  }
+  
+  return pools;
+})();
+
 // Function to get all questions for use in folder management
-export const getAllQuestions = () => {
+export const getAllQuestions = (courseType = 'old') => {
   const allQuestions = [];
-  Object.values(initialQuestionPools).forEach(pool => {
+  const pools = courseType === 'new' ? newCourseQuestionPools : initialQuestionPools;
+  Object.values(pools).forEach(pool => {
     allQuestions.push(...pool);
   });
   return allQuestions;
+};
+
+// Function to get available exams from new course data
+export const getAvailableExams = () => {
+  const exams = new Set();
+  
+  // Get exams from all new course data
+  Object.values(newCourseQuestionPools).forEach(pool => {
+    pool.forEach(question => {
+      if (question.exam) {
+        exams.add(question.exam);
+      }
+    });
+  });
+  
+  return Array.from(exams).sort();
 };
 
 // Group RC questions by passage for sequential ordering and limit per passage
@@ -194,7 +284,9 @@ export const generateExam = (config = {}) => {
     rcQuestionOrder = 'sequential',
     questionTypeFilter = 'all',
     selectedQuestionType = null,
-    folderQuestions = null
+    folderQuestions = null,
+    courseType = 'old', // 'old' or 'new'
+    selectedExam = null // For new course, filter by specific exam
   } = config;
 
   let examQuestions = [];
@@ -364,14 +456,24 @@ export const generateExam = (config = {}) => {
     { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 }
   ];
 
-  // Create pools for each question type
+  // Create pools for each question type based on course type
+  const sourcePools = courseType === 'new' ? newCourseQuestionPools : initialQuestionPools;
   const questionPools = {
-    analogy: [...initialQuestionPools.analogy],
-    completion: [...initialQuestionPools.completion],
-    error: [...initialQuestionPools.error],
-    rc: [...initialQuestionPools.rc],
-    odd: [...initialQuestionPools.odd]
+    analogy: [...sourcePools.analogy],
+    completion: [...sourcePools.completion],
+    error: [...sourcePools.error],
+    rc: [...sourcePools.rc],
+    odd: [...sourcePools.odd]
   };
+
+  // Filter by specific exam if selected (for new course)
+  if (courseType === 'new' && selectedExam) {
+    Object.keys(questionPools).forEach(type => {
+      questionPools[type] = questionPools[type].filter(question => 
+        question.exam === selectedExam
+      );
+    });
+  }
 
   // Shuffle pools if requested
   if (shuffleQuestions) {
@@ -483,5 +585,6 @@ export default {
   generateExam,
   groupRCQuestionsByPassage,
   shuffleArray,
-  getAllQuestions
+  getAllQuestions,
+  getAvailableExams
 };

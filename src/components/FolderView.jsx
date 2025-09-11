@@ -50,12 +50,13 @@ const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
   const { folders, removeQuestionFromFolder } = useFolderStore();
   const { initializeExam } = useExamStore(); // استخدام initializeExam مباشرة
   const [allQuestions, setAllQuestions] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState('old');
   
   const folder = useMemo(() => folders.find(f => f.id === folderId), [folders, folderId]);
 
   useEffect(() => {
-    setAllQuestions(getAllQuestions());
-  }, []);
+    setAllQuestions(getAllQuestions(selectedCourse));
+  }, [selectedCourse]);
 
   const folderQuestions = useMemo(() => {
     if (!folder) return [];
@@ -109,6 +110,7 @@ const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
         questionTypeFilter: 'folder',
         selectedQuestionType: null,
         rcQuestionOrder: 'sequential',
+        courseType: selectedCourse,
         folderQuestions: folderQuestions
       });
       onReturnToMainMenu(); // العودة إلى القائمة الرئيسية لبدء الاختبار
@@ -156,17 +158,46 @@ const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
             </div>
           </motion.div>
 
-          {folderQuestions.length > 0 && (
-            <motion.button
-              onClick={handleStartTest}
-              whileHover="hover"
-              variants={buttonVariants}
-              className="flex items-center gap-2 w-full sm:w-auto justify-center px-6 py-3 bg-fuchsia-600 text-white rounded-xl font-semibold hover:bg-fuchsia-500 transition-colors duration-300 shadow-lg shadow-fuchsia-600/20"
-            >
-              <Play className="w-5 h-5" />
-              بدء الاختبار الآن
-            </motion.button>
-          )}
+          <div className="flex items-center gap-4">
+            {/* Course Selection */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-300">الدورة:</span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSelectedCourse('old')}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedCourse === 'old'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  القديمة
+                </button>
+                <button
+                  onClick={() => setSelectedCourse('new')}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedCourse === 'new'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  أغسطس 2025
+                </button>
+              </div>
+            </div>
+
+            {folderQuestions.length > 0 && (
+              <motion.button
+                onClick={handleStartTest}
+                whileHover="hover"
+                variants={buttonVariants}
+                className="flex items-center gap-2 w-full sm:w-auto justify-center px-6 py-3 bg-fuchsia-600 text-white rounded-xl font-semibold hover:bg-fuchsia-500 transition-colors duration-300 shadow-lg shadow-fuchsia-600/20"
+              >
+                <Play className="w-5 h-5" />
+                بدء الاختبار الآن
+              </motion.button>
+            )}
+          </div>
         </header>
 
         <AnimatePresence mode="wait">

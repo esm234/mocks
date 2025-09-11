@@ -17,6 +17,10 @@ export const useExamStore = create(
       questionTypeFilter: 'all', // 'all', 'specific', or 'folder'
       selectedQuestionType: null, // 'analogy', 'completion', 'error', 'rc', 'odd'
       
+      // Course selection
+      courseType: 'old', // 'old' or 'new'
+      selectedExam: null, // For new course, specific exam selection
+      
       // Exam state
       examStarted: false,
       examCompleted: false,
@@ -106,7 +110,9 @@ export const useExamStore = create(
             questionTypeFilter: config.questionTypeFilter || 'all',
             selectedQuestionType: config.selectedQuestionType || null,
             singleSectionType: config.selectedQuestionType || null,
-            folderQuestions: config.folderQuestions || null // New: for folder-based exams
+            folderQuestions: config.folderQuestions || null, // New: for folder-based exams
+            courseType: config.courseType || 'old',
+            selectedExam: config.selectedExam || null
           };
 
           let processedQuestions = [];
@@ -191,6 +197,8 @@ export const useExamStore = create(
             rcQuestionOrder: examConfig.rcQuestionOrder,
             questionTypeFilter: examConfig.questionTypeFilter,
             selectedQuestionType: examConfig.selectedQuestionType,
+            courseType: examConfig.courseType,
+            selectedExam: examConfig.selectedExam,
             examQuestions: processedQuestions,
             examStarted: true,
             examCompleted: false,
@@ -355,25 +363,10 @@ export const useExamStore = create(
         });
       },
 
-      // Navigation
+      // Navigation - Simple next question without section review
       nextQuestion: () => {
-        const { currentQuestionIndex, examQuestions, examMode } = get();
+        const { currentQuestionIndex, examQuestions } = get();
         const nextIndex = currentQuestionIndex + 1;
-        
-        // Check if we're at the end of the current section in sectioned mode
-        if (examMode === 'sectioned') {
-          // Calculate which question number this is (1-based)
-          const currentQuestionNumber = currentQuestionIndex + 1;
-          
-          // If this is the end of a section (questions 13, 26, 39, 52) and there are more questions
-          if (currentQuestionNumber % 13 === 0 && nextIndex < examQuestions.length) {
-            // Show section review before moving to next section
-            set({
-              sectionReviewMode: true
-            });
-            return;
-          }
-        }
         
         if (nextIndex < examQuestions.length) {
           const nextQuestion = examQuestions[nextIndex];
@@ -562,6 +555,35 @@ export const useExamStore = create(
         }
       },
 
+      // End current section and move to next section
+      endCurrentSection: () => {
+        const { currentSection, examQuestions } = get();
+        const maxSection = Math.max(...examQuestions.map(q => q.section));
+        
+        if (currentSection < maxSection) {
+          // Find first question of next section
+          const nextSection = currentSection + 1;
+          const nextSectionFirstQuestion = examQuestions.find(q => q.section === nextSection);
+          
+          if (nextSectionFirstQuestion) {
+            const questionIndex = examQuestions.findIndex(q => q.question_number === nextSectionFirstQuestion.question_number);
+            if (questionIndex !== -1) {
+              set({
+                currentQuestionIndex: questionIndex,
+                currentSection: nextSection,
+                sectionReviewMode: false,
+                returnedFromSectionReview: false,
+                hasSeenSectionReview: false,
+                reviewMode: false,
+              });
+            }
+          }
+        } else {
+          // If this is the last section, complete the exam
+          get().completeExam();
+        }
+      },
+
       // Navigate to previous section in review mode
       previousSection: () => {
         const { currentSection } = get();
@@ -607,6 +629,8 @@ export const useExamStore = create(
       setRcQuestionOrder: (order) => set({ rcQuestionOrder: order }),
       setQuestionTypeFilter: (filter) => set({ questionTypeFilter: filter }),
       setSelectedQuestionType: (type) => set({ selectedQuestionType: type }),
+      setCourseType: (courseType) => set({ courseType }),
+      setSelectedExam: (exam) => set({ selectedExam: exam }),
 
       // Clear history
       clearResultHistory: () => set({ resultHistory: [] }),

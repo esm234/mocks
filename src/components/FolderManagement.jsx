@@ -42,10 +42,11 @@ const FolderManagement = ({ onBack }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const [allQuestions, setAllQuestions] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState('old');
 
   useEffect(() => {
-    setAllQuestions(getAllQuestions());
-  }, []);
+    setAllQuestions(getAllQuestions(selectedCourse));
+  }, [selectedCourse]);
 
   const handleAddFolder = () => {
     if (newFolderName.trim()) {
@@ -136,6 +137,33 @@ const FolderManagement = ({ onBack }) => {
                   <span className="font-bold text-fuchsia-300">{folders.length}</span> مجلدات
                 </p>
               </motion.div>
+              
+              {/* Course Selection */}
+              <div className="flex items-center gap-4">
+                <span className="text-sm font-medium text-gray-300">الدورة:</span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setSelectedCourse('old')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      selectedCourse === 'old'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    }`}
+                  >
+                    الدورة القديمة
+                  </button>
+                  <button
+                    onClick={() => setSelectedCourse('new')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      selectedCourse === 'new'
+                        ? 'bg-blue-600 text-white shadow-md'
+                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    }`}
+                  >
+                    دورة أغسطس 2025
+                  </button>
+                </div>
+              </div>
               
               <motion.div 
                 initial={{ x: -50, opacity: 0 }} 

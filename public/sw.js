@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v55'; // Increment version for updates
+const CACHE_NAME = 'pwa-cache-70'; // Increment version for updates
 const urlsToCache = [
   '/',
   '/index.html',
@@ -19,6 +19,14 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Skip caching for chrome-extension and other non-http requests
+  if (event.request.url.startsWith('chrome-extension://') || 
+      event.request.url.startsWith('moz-extension://') ||
+      event.request.url.startsWith('safari-extension://') ||
+      !event.request.url.startsWith('http')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -35,6 +43,9 @@ self.addEventListener('fetch', event => {
             cache.put(event.request, responseToCache);
           });
           return networkResponse;
+        }).catch(error => {
+          console.log('Fetch failed:', error);
+          return new Response('Network error', { status: 408, statusText: 'Request Timeout' });
         });
       })
   );

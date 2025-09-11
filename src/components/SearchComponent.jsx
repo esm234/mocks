@@ -13,9 +13,17 @@ import oddData from '../data/odd.json';
 import rcbank4Data from '../data/rcbank4.json';
 import rcbank5Data from '../data/rcbank5.json';
 
+// Import new course data
+import newAnalogyData from '../data/newdata/analogy.json';
+import newCompletionData from '../data/newdata/completion.json';
+import newErrorData from '../data/newdata/error.json';
+import newOddData from '../data/newdata/odd.json';
+import newRcBankData from '../data/newdata/rcbank.json';
+
 const SearchComponent = ({ onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCourse, setSelectedCourse] = useState('old');
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -23,15 +31,27 @@ const SearchComponent = ({ onClose }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage] = useState(10); // عدد النتائج في كل صفحة
 
-  // Combine all data sources
-  const allData = [
-    ...analogyData,
-    ...completionData,
-    ...errorData,
-    ...oddData,
-    ...rcbank4Data,
-    ...rcbank5Data
-  ];
+  // Combine all data sources based on selected course
+  const getDataByCourse = (courseType) => {
+    if (courseType === 'new') {
+      return [
+        ...newAnalogyData,
+        ...newCompletionData,
+        ...newErrorData,
+        ...newOddData,
+        ...newRcBankData
+      ];
+    } else {
+      return [
+        ...analogyData,
+        ...completionData,
+        ...errorData,
+        ...oddData,
+        ...rcbank4Data,
+        ...rcbank5Data
+      ];
+    }
+  };
 
   const categories = [
     { value: 'all', label: 'جميع الفئات', icon: BookOpen },
@@ -53,7 +73,8 @@ const SearchComponent = ({ onClose }) => {
     
     // Simulate search delay for better UX
     setTimeout(() => {
-      const filteredData = allData.filter(item => {
+      const currentData = getDataByCourse(selectedCourse);
+      const filteredData = currentData.filter(item => {
         const matchesQuery = item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            (item.choices && item.choices.some(choice => 
                              choice.toLowerCase().includes(searchQuery.toLowerCase())
@@ -73,7 +94,7 @@ const SearchComponent = ({ onClose }) => {
 
   useEffect(() => {
     performSearch();
-  }, [searchQuery, selectedCategory]);
+  }, [searchQuery, selectedCategory, selectedCourse]);
 
   // Calculate pagination
   const totalPages = Math.ceil(searchResults.length / resultsPerPage);
@@ -195,39 +216,69 @@ const SearchComponent = ({ onClose }) => {
 
         {/* Search Controls */}
         <div className="p-6 border-b border-gray-700 bg-gray-800/50">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-              <Input
-                type="text"
-                placeholder="ابحث في الأسئلة والإجابات..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
-              />
+          <div className="flex flex-col gap-4">
+            {/* Course Selection */}
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-gray-300">الدورة:</span>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setSelectedCourse('old')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedCourse === 'old'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  الدورة القديمة
+                </button>
+                <button
+                  onClick={() => setSelectedCourse('new')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    selectedCourse === 'new'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+                >
+                  دورة أغسطس 2025
+                </button>
+              </div>
             </div>
-            <div className="md:w-64">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                  <div className="flex items-center gap-2">
-                    <Filter className="h-4 w-4" />
-                    <SelectValue placeholder="اختر الفئة" />
-                  </div>
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-600">
-                  {categories.map((category) => {
-                    const IconComponent = category.icon;
-                    return (
-                      <SelectItem key={category.value} value={category.value} className="text-white hover:bg-gray-700">
-                        <div className="flex items-center gap-2">
-                          <IconComponent className="h-4 w-4" />
-                          {category.label}
-                        </div>
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
+            
+            {/* Search Input and Category Filter */}
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Input
+                  type="text"
+                  placeholder="ابحث في الأسئلة والإجابات..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pr-10 bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-500"
+                />
+              </div>
+              <div className="md:w-64">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                    <div className="flex items-center gap-2">
+                      <Filter className="h-4 w-4" />
+                      <SelectValue placeholder="اختر الفئة" />
+                    </div>
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-800 border-gray-600">
+                    {categories.map((category) => {
+                      const IconComponent = category.icon;
+                      return (
+                        <SelectItem key={category.value} value={category.value} className="text-white hover:bg-gray-700">
+                          <div className="flex items-center gap-2">
+                            <IconComponent className="h-4 w-4" />
+                            {category.label}
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
         </div>
@@ -259,7 +310,7 @@ const SearchComponent = ({ onClose }) => {
                   النتائج ({searchResults.length})
                 </h3>
                 <div className="text-sm text-gray-400">
-                  البحث عن: "{searchQuery}" - الصفحة {currentPage} من {totalPages}
+                  {selectedCourse === 'new' ? 'دورة أغسطس 2025' : 'الدورة القديمة'} - البحث عن: "{searchQuery}" - الصفحة {currentPage} من {totalPages}
                 </div>
               </div>
               
