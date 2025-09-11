@@ -4,7 +4,8 @@ export const STORAGE_KEYS = {
   EXAM_STORAGE: 'exam-storage',
   EXAM_SETTINGS: 'examSettings',
   LANGUAGE: 'i18nextLng',
-  APP_VERSION: 'app-version'
+  APP_VERSION: 'app-version',
+  FOLDER_STORAGE: 'folder-storage'
 };
 
 export const APP_VERSION = '1.0.0';
@@ -22,6 +23,12 @@ export const isStorageCorrupted = () => {
     const examSettings = localStorage.getItem(STORAGE_KEYS.EXAM_SETTINGS);
     if (examSettings) {
       JSON.parse(examSettings);
+    }
+    
+    // Check folder storage
+    const folderStorage = localStorage.getItem(STORAGE_KEYS.FOLDER_STORAGE);
+    if (folderStorage) {
+      JSON.parse(folderStorage);
     }
     
     return false;
