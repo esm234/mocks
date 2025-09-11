@@ -77,52 +77,70 @@ const initialQuestionPools = (() => {
   };
   
   try {
+    // Safely check and process analogy data
     if (analogyData && Array.isArray(analogyData)) {
       analogyData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.analogy.push(normalizeQuestion(q, 'analogy', index, 'analogy'));
         }
       });
+    } else {
+      console.warn('Analogy data not available or invalid format');
     }
     
+    // Safely check and process completion data
     if (completionData && Array.isArray(completionData)) {
       completionData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.completion.push(normalizeQuestion(q, 'completion', index, 'completion'));
         }
       });
+    } else {
+      console.warn('Completion data not available or invalid format');
     }
     
+    // Safely check and process error data
     if (errorData && Array.isArray(errorData)) {
       errorData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.error.push(normalizeQuestion(q, 'error', index, 'error'));
         }
       });
+    } else {
+      console.warn('Error data not available or invalid format');
     }
     
+    // Safely check and process RC bank 4 data
     if (rcBank4Data && Array.isArray(rcBank4Data)) {
       rcBank4Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.rc.push(normalizeQuestion(q, 'rc', index, 'rcbank4'));
         }
       });
+    } else {
+      console.warn('RC Bank 4 data not available or invalid format');
     }
     
+    // Safely check and process RC bank 5 data
     if (rcBank5Data && Array.isArray(rcBank5Data)) {
       rcBank5Data.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.rc.push(normalizeQuestion(q, 'rc', index, 'rcbank5'));
         }
       });
+    } else {
+      console.warn('RC Bank 5 data not available or invalid format');
     }
     
+    // Safely check and process odd data
     if (oddData && Array.isArray(oddData)) {
       oddData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.odd.push(normalizeQuestion(q, 'odd', index, 'odd'));
         }
       });
+    } else {
+      console.warn('Odd data not available or invalid format');
     }
     
     console.log('Question pools loaded:', {
@@ -135,6 +153,14 @@ const initialQuestionPools = (() => {
     
   } catch (error) {
     console.error('Error loading question data:', error);
+    // Return empty pools to prevent crashes
+    return {
+      analogy: [],
+      completion: [],
+      error: [],
+      rc: [],
+      odd: []
+    };
   }
   
   return pools;
@@ -151,44 +177,59 @@ const newCourseQuestionPools = (() => {
   };
   
   try {
+    // Safely check and process new analogy data
     if (newAnalogyData && Array.isArray(newAnalogyData)) {
       newAnalogyData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.analogy.push(normalizeQuestion(q, 'analogy', index, 'newdata/analogy'));
         }
       });
+    } else {
+      console.warn('New analogy data not available or invalid format');
     }
     
+    // Safely check and process new completion data
     if (newCompletionData && Array.isArray(newCompletionData)) {
       newCompletionData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.completion.push(normalizeQuestion(q, 'completion', index, 'newdata/completion'));
         }
       });
+    } else {
+      console.warn('New completion data not available or invalid format');
     }
     
+    // Safely check and process new error data
     if (newErrorData && Array.isArray(newErrorData)) {
       newErrorData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.error.push(normalizeQuestion(q, 'error', index, 'newdata/error'));
         }
       });
+    } else {
+      console.warn('New error data not available or invalid format');
     }
     
+    // Safely check and process new RC bank data
     if (newRcBankData && Array.isArray(newRcBankData)) {
       newRcBankData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.rc.push(normalizeQuestion(q, 'rc', index, 'newdata/rcbank'));
         }
       });
+    } else {
+      console.warn('New RC bank data not available or invalid format');
     }
     
+    // Safely check and process new odd data
     if (newOddData && Array.isArray(newOddData)) {
       newOddData.forEach((q, index) => {
         if (q && (q.question || q.choices)) {
           pools.odd.push(normalizeQuestion(q, 'odd', index, 'newdata/odd'));
         }
       });
+    } else {
+      console.warn('New odd data not available or invalid format');
     }
     
     console.log('New course question pools loaded:', {
@@ -201,6 +242,14 @@ const newCourseQuestionPools = (() => {
     
   } catch (error) {
     console.error('Error loading new course question data:', error);
+    // Return empty pools to prevent crashes
+    return {
+      analogy: [],
+      completion: [],
+      error: [],
+      rc: [],
+      odd: []
+    };
   }
   
   return pools;
@@ -458,12 +507,25 @@ export const generateExam = (config = {}) => {
 
   // Create pools for each question type based on course type
   const sourcePools = courseType === 'new' ? newCourseQuestionPools : initialQuestionPools;
+  
+  // Safely check if sourcePools exists and has the required properties
+  if (!sourcePools || typeof sourcePools !== 'object') {
+    console.error('Source pools not available:', sourcePools);
+    return {
+      questions: [],
+      totalQuestions: 0,
+      totalSections: 0,
+      questionsPerSection: 0,
+      structure: {}
+    };
+  }
+  
   const questionPools = {
-    analogy: [...sourcePools.analogy],
-    completion: [...sourcePools.completion],
-    error: [...sourcePools.error],
-    rc: [...sourcePools.rc],
-    odd: [...sourcePools.odd]
+    analogy: Array.isArray(sourcePools.analogy) ? [...sourcePools.analogy] : [],
+    completion: Array.isArray(sourcePools.completion) ? [...sourcePools.completion] : [],
+    error: Array.isArray(sourcePools.error) ? [...sourcePools.error] : [],
+    rc: Array.isArray(sourcePools.rc) ? [...sourcePools.rc] : [],
+    odd: Array.isArray(sourcePools.odd) ? [...sourcePools.odd] : []
   };
 
   // Filter by specific exam if selected (for new course)
