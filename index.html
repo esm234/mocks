@@ -20,21 +20,51 @@
   <body>
     <div id="root"></div>
     <script>
-      // Clear all caches and unregister service workers
+      // Force clear all caches and unregister service workers
+      console.log('Clearing all caches and service workers...');
+      
+      // Clear all caches
       if ('caches' in window) {
         caches.keys().then(names => {
-          names.forEach(name => {
-            caches.delete(name);
-          });
+          console.log('Found caches:', names);
+          return Promise.all(names.map(name => caches.delete(name)));
+        }).then(() => {
+          console.log('All caches cleared');
         });
       }
       
+      // Unregister all service workers
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistrations().then(registrations => {
-          registrations.forEach(registration => {
-            registration.unregister();
-          });
+          console.log('Found service workers:', registrations.length);
+          return Promise.all(registrations.map(registration => {
+            console.log('Unregistering:', registration.scope);
+            return registration.unregister();
+          }));
+        }).then(() => {
+          console.log('All service workers unregistered');
         });
+      }
+      
+      // Clear localStorage if corrupted
+      try {
+        const examStorage = localStorage.getItem('exam-storage');
+        if (examStorage) {
+          JSON.parse(examStorage);
+        }
+      } catch (error) {
+        console.log('Storage corrupted, clearing...');
+        localStorage.clear();
+      }
+      
+      // Force reload if needed
+      if (performance.navigation.type === 1) {
+        console.log('Page refreshed, clearing cache...');
+        if ('caches' in window) {
+          caches.keys().then(names => {
+            names.forEach(name => caches.delete(name));
+          });
+        }
       }
     </script>
     <script type="module" src="/src/main.jsx"></script>
