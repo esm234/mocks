@@ -573,7 +573,7 @@ const QuestionDisplay = () => {
             <div className="flex-1 flex flex-col pt-4 sm:pt-8" style={{height: isMobile ? 'auto' : isTablet ? 'calc(100vh - 80px)' : 'calc(100vh - 280px)'}}>
               {/* النص المقروء (إذا كان موجود) - ارتفاع ثابت */}
               {(currentQuestion.type === 'rc' || currentQuestion.type === 'reading') && currentQuestion.passage && (
-                <div className="bg-gray-50 border-2 border-gray-300 mb-4" style={{height: '200px', minHeight: '200px'}}>
+                <div className="bg-gray-50 border-2 border-gray-300 mb-4" style={{height: isTablet ? '150px' : '200px', minHeight: isTablet ? '150px' : '200px'}}>
                   <div className="text-lg sm:text-2xl font-bold text-gray-900 p-4 text-right">النص المقروء</div>
                   <div className={`text-gray-700 text-right leading-relaxed overflow-y-auto p-4 ${isTextEnlarged ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`} style={{height: 'calc(100% - 60px)'}}>
                     {currentQuestion.passage}
@@ -582,7 +582,7 @@ const QuestionDisplay = () => {
               )}
 
               {/* السؤال والخيارات - ارتفاع ثابت */}
-              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`} style={{height: isMobile ? 'auto' : isTablet ? 'calc(100% - 20px)' : 'calc(100% - 220px)'}}>
+              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`} style={{height: isMobile ? 'auto' : isTablet ? (currentQuestion.type === 'rc' || currentQuestion.type === 'reading') ? 'calc(100% - 170px)' : 'calc(100% - 20px)' : 'calc(100% - 220px)'}}>
                 <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing' : ''}`}>
                   {/* السؤال وأزرار تغيير الخط في نفس المستوى */}
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
