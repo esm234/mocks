@@ -7,6 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Exam PWA">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link rel="manifest" href="/manifest.json">
     <title>محاكي أور جول</title>
@@ -16,6 +19,24 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Clear all caches and unregister service workers
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => {
+            caches.delete(name);
+          });
+        });
+      }
+      
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            registration.unregister();
+          });
+        });
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
     <!-- Default Statcounter code for Exam http://Exam.ourgoal.site -->
 <script type="text/javascript">
