@@ -83,6 +83,23 @@ export const useFolderStore = create(
       
       clearAllFolders: () => {
         set({ folders: [] });
+      },
+      
+      // Initialize folders from storage with validation
+      initializeFolders: () => {
+        try {
+          const stored = localStorage.getItem('folder-storage');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed.state && Array.isArray(parsed.state.folders)) {
+              console.log('Folders loaded from storage:', parsed.state.folders.length);
+              return parsed.state.folders;
+            }
+          }
+        } catch (error) {
+          console.error('Error loading folders from storage:', error);
+        }
+        return [];
       }
     }),
     {
@@ -96,6 +113,12 @@ export const useFolderStore = create(
       partialize: (state) => ({
         folders: state.folders
       }),
+      // Add onRehydrateStorage to handle loading
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          console.log('Folders rehydrated from storage:', state.folders?.length || 0);
+        }
+      },
     }
   )
 );
