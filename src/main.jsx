@@ -41,13 +41,5 @@ createRoot(document.getElementById('root')).render(
 
 
 
-// Unregister any existing Service Workers to prevent caching issues
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(registrations => {
-    registrations.forEach(registration => {
-      console.log('Unregistering Service Worker:', registration.scope);
-      registration.unregister();
-    });
-  });
-}
+// Service Worker is now handled in index.html
 
