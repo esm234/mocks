@@ -601,11 +601,8 @@ const QuestionDisplay = () => {
               {/* السؤال والخيارات - ارتفاع مرن */}
               <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height overflow-x-hidden' : ''}`}>
                 <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing overflow-x-hidden' : ''}`}>
-                  {/* السؤال وأزرار تغيير الخط في نفس المستوى */}
-                  <div className="flex items-center justify-between mb-4 sm:mb-6">
-                    <div className="text-lg sm:text-2xl font-bold text-gray-900 text-right">
-                      السؤال {getDisplayQuestionNumber()}:
-                    </div>
+                  {/* أزرار تغيير الخط */}
+                  <div className="flex items-center justify-end mb-4 sm:mb-6">
                     
                     {/* أزرار تغيير الخط */}
                     <div className="flex items-center gap-1 sm:gap-2">
