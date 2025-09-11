@@ -19,6 +19,11 @@ export const useFolderStore = create(
           folders: [...state.folders, newFolder]
         }));
         
+        // Force save immediately
+        setTimeout(() => {
+          get().forceSave();
+        }, 50);
+        
         console.log('Added new folder:', newFolder);
         return newFolder; // Return the created folder
       },
@@ -27,6 +32,12 @@ export const useFolderStore = create(
         set((state) => ({
           folders: state.folders.filter(folder => folder.id !== folderId)
         }));
+        
+        // Force save immediately
+        setTimeout(() => {
+          get().forceSave();
+        }, 50);
+        
         console.log('Deleted folder:', folderId);
       },
       
@@ -100,6 +111,25 @@ export const useFolderStore = create(
           console.error('Error loading folders from storage:', error);
         }
         return [];
+      },
+      
+      // Force save to localStorage
+      forceSave: () => {
+        try {
+          const state = get();
+          const dataToSave = {
+            state: {
+              folders: state.folders
+            },
+            version: 1
+          };
+          localStorage.setItem('folder-storage', JSON.stringify(dataToSave));
+          console.log('Folders force saved to localStorage');
+          return true;
+        } catch (error) {
+          console.error('Error force saving folders:', error);
+          return false;
+        }
       }
     }),
     {
