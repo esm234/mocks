@@ -669,25 +669,6 @@ const QuestionDisplay = () => {
           {/* أزرار التنقل في أسفل عمود الأسئلة */}
           <div className="p-2 sm:p-4 border-2 border-gray-300 border-t-0">
             <div className="flex justify-start gap-1">
-              {/* زر السابق - يظهر فقط قبل إكمال القسم */}
-              {!isCurrentSectionCompleted() && (
-                <button
-                  className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
-                    canGoPrevious() 
-                      ? 'hover:opacity-90' 
-                      : 'opacity-50 cursor-not-allowed'
-                  }`}
-                  style={{
-                    backgroundColor: canGoPrevious() ? '#6B7280' : '#9CA3AF', 
-                    color: 'white'
-                  }}
-                  disabled={!canGoPrevious()}
-                  onClick={handlePrevious}
-                >
-                  السابق
-                </button>
-              )}
-              
               {/* زر حفظ والتالي */}
               <button
                 className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
@@ -740,6 +721,25 @@ const QuestionDisplay = () => {
                     : 'حفظ والتالي'
                 }
               </button>
+              
+              {/* زر السابق - يظهر فقط قبل إكمال القسم */}
+              {!isCurrentSectionCompleted() && (
+                <button
+                  className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
+                    canGoPrevious() 
+                      ? 'hover:opacity-90' 
+                      : 'opacity-50 cursor-not-allowed'
+                  }`}
+                  style={{
+                    backgroundColor: canGoPrevious() ? '#6B7280' : '#9CA3AF', 
+                    color: 'white'
+                  }}
+                  disabled={!canGoPrevious()}
+                  onClick={handlePrevious}
+                >
+                  السابق
+                </button>
+              )}
             </div>
           </div>
         </div>
