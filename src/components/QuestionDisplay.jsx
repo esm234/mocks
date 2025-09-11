@@ -310,6 +310,29 @@ const QuestionDisplay = () => {
     return true;
   };
 
+  // التحقق من الوصول للسؤال 13 في القسم الحالي
+  const hasReachedQuestion13 = () => {
+    if (examMode !== 'sectioned') return false;
+    
+    const currentQuestionNumber = currentQuestionIndex + 1;
+    const questionInSection = (currentQuestionNumber - 1) % 13 + 1;
+    
+    return questionInSection >= 13;
+  };
+
+  // التحقق من إجابة السؤال 13 في القسم الحالي
+  const hasAnsweredQuestion13 = () => {
+    if (examMode !== 'sectioned') return false;
+    
+    const sectionStartIndex = (currentSection - 1) * 13;
+    const question13Index = sectionStartIndex + 12; // السؤال 13 في القسم (فهرس 12)
+    
+    if (question13Index >= examQuestions.length) return false;
+    
+    const question13Number = examQuestions[question13Index]?.question_number;
+    return question13Number && userAnswers[question13Number] !== undefined;
+  };
+
   const hasDeferredQuestionsInCurrentSection = () => {
     const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
 
@@ -687,8 +710,8 @@ const QuestionDisplay = () => {
                      selectAnswer(currentQuestion.question_number, tempSelectedAnswer);
                    }
                    
-                   // في وضع المراجعة أو بعد إكمال القسم، احفظ فقط ولا تنتقل للسؤال التالي
-                   if (reviewMode || isCurrentSectionCompleted()) {
+                   // في وضع المراجعة أو بعد إجابة السؤال 13، احفظ فقط ولا تنتقل للسؤال التالي
+                   if (reviewMode || hasAnsweredQuestion13()) {
                      console.log('تم حفظ الإجابة - لا يمكن الانتقال');
                      return;
                    }
@@ -714,7 +737,7 @@ const QuestionDisplay = () => {
                    window.scrollTo({ top: 0, behavior: 'smooth' });
                  }}
               >
-                {reviewMode || isCurrentSectionCompleted()
+                {reviewMode || hasAnsweredQuestion13()
                   ? 'حفظ' 
                   : currentQuestionIndex === examQuestions.length - 1 
                     ? 'إنهاء الاختبار' 
@@ -722,8 +745,8 @@ const QuestionDisplay = () => {
                 }
               </button>
               
-              {/* زر السابق - يظهر فقط قبل إكمال القسم */}
-              {!isCurrentSectionCompleted() && (
+              {/* زر السابق - يظهر فقط قبل إجابة السؤال 13 */}
+              {!hasAnsweredQuestion13() && (
                 <button
                   className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
                     canGoPrevious() 
@@ -812,7 +835,6 @@ const QuestionDisplay = () => {
                 const isAnswered = userAnswers[examQuestions[actualQuestionIndex]?.question_number] !== undefined;
                 const isDeferred = deferredQuestions[examQuestions[actualQuestionIndex]?.question_number];
                 const isCurrent = actualQuestionIndex === currentQuestionIndex;
-                const sectionCompleted = isCurrentSectionCompleted();
                 
                 let buttonClass = 'w-6 h-6 sm:w-8 sm:h-8 rounded text-white font-bold text-xs active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ';
                 if (isCurrent) {
@@ -821,28 +843,17 @@ const QuestionDisplay = () => {
                   buttonClass += 'bg-green-400';
                 } else if (isDeferred) {
                   buttonClass += 'bg-blue-500';
-                } else if (sectionCompleted) {
-                  // بعد إكمال القسم، السماح بالتنقل
-                  buttonClass += 'bg-orange-500';
                 } else {
-                  // قبل إكمال القسم، منع التنقل
-                  buttonClass += 'bg-gray-400 cursor-not-allowed';
+                  // السماح بالتنقل دائماً
+                  buttonClass += 'bg-orange-500';
                 }
                 
                 return (
                   <button
                     key={i}
                     className={buttonClass}
-                    onClick={() => {
-                      if (sectionCompleted || isCurrent) {
-                        goToQuestion(actualQuestionIndex);
-                      }
-                    }}
-                    disabled={!sectionCompleted && !isCurrent}
-                    title={sectionCompleted || isCurrent 
-                      ? `السؤال ${i + 1} من القسم ${currentSection}${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`
-                      : 'يجب إكمال جميع الأسئلة في القسم أولاً'
-                    }
+                    onClick={() => goToQuestion(actualQuestionIndex)}
+                    title={`السؤال ${i + 1} من القسم ${currentSection}${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`}
                   >
                     {i + 1}
                   </button>
