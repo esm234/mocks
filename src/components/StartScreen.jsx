@@ -194,7 +194,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       { 
         id: 'completion', 
         title: 'إكمال الجمل', 
-        subtitle: 'ملء الفراغات بدقة', 
+        subtitle: 'ملء الفراغات ', 
         icon: BookText,
         color: 'from-emerald-500 to-teal-600',
         stats: `${currentCounts.completion} سؤال`
@@ -209,7 +209,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
       },
       { 
         id: 'rc', 
-        title: 'استيعاب المقروء', 
+        title: 'استيعاب ', 
         subtitle: 'فهم النصوص', 
         icon: Lightbulb,
         color: 'from-amber-500 to-orange-600',
