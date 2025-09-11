@@ -76,10 +76,6 @@ function App() {
 
   // Check for storage issues on mount - only once
   useEffect(() => {
-    let hasCheckedStorage = false;
-    
-    if (hasCheckedStorage) return;
-    
     try {
       // Test localStorage
       const testKey = 'test-storage';
@@ -91,15 +87,11 @@ function App() {
       if (examStorage) {
         JSON.parse(examStorage);
       }
-      
-      hasCheckedStorage = true;
     } catch (error) {
       console.error('Storage error detected:', error);
       setError('مشكلة في تخزين البيانات. يرجى مسح البيانات يدوياً.');
-      // Remove automatic reload to prevent infinite refresh
-      hasCheckedStorage = true;
     }
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
 
   // If folder management is active, show it
   if (showFolderManagement && !examStarted) {
