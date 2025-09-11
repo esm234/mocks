@@ -284,7 +284,8 @@ const QuestionDisplay = () => {
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
 
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
+    // إخفاء زر السابق عند السؤال الأول في القسم (السؤال 13)
+    if (isFirstQuestionInSection) {
       return false;
     }
 
@@ -292,6 +293,22 @@ const QuestionDisplay = () => {
   };
 
   const canProceed = true; // This is always true, as next/section review logic handles progression
+
+  // التحقق من إكمال القسم الحالي (13 سؤال)
+  const isCurrentSectionCompleted = () => {
+    if (examMode !== 'sectioned') return true;
+    
+    const sectionStartIndex = (currentSection - 1) * 13;
+    const sectionEndIndex = Math.min(sectionStartIndex + 13, examQuestions.length);
+    
+    // التحقق من أن جميع الأسئلة في القسم تمت الإجابة عليها
+    for (let i = sectionStartIndex; i < sectionEndIndex; i++) {
+      if (examQuestions[i] && userAnswers[examQuestions[i].question_number] === undefined) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const hasDeferredQuestionsInCurrentSection = () => {
     const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
@@ -548,7 +565,7 @@ const QuestionDisplay = () => {
       </div>
 
       {/* المحتوى الرئيسي */}
-      <div className={`flex-1 flex flex-col lg:flex-row pb-4 sm:pb-8 relative z-10 ${isTablet ? 'tablet-layout' : ''}`}>
+      <div className={`flex-1 flex flex-col lg:flex-row pb-4 sm:pb-8 relative z-10 ${isTablet ? 'tablet-layout overflow-x-hidden max-w-full' : ''}`}>
          {/* العمود الأيسر - محتوى السؤال */}
          <div className="flex-1 flex flex-col lg:mr-4">
            {/* شريط المعلومات */}
@@ -582,8 +599,8 @@ const QuestionDisplay = () => {
               )}
 
               {/* السؤال والخيارات - ارتفاع مرن */}
-              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height' : ''}`}>
-                <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing' : ''}`}>
+              <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height overflow-x-hidden' : ''}`}>
+                <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing overflow-x-hidden' : ''}`}>
                   {/* السؤال وأزرار تغيير الخط في نفس المستوى */}
                   <div className="flex items-center justify-between mb-4 sm:mb-6">
                     <div className="text-lg sm:text-2xl font-bold text-gray-900 text-right">
@@ -625,13 +642,14 @@ const QuestionDisplay = () => {
                   </div>
 
                   {/* الخيارات - منطقة قابلة للتمرير */}
-                  <div className="flex-1 overflow-y-auto">
-                    <div className={`space-y-3 sm:space-y-4 pb-4 sm:pb-6 ${isTablet ? 'tablet-choices tablet-spacing' : ''} ${isTabletLandscape ? 'tablet-landscape' : ''}`}>
+                  <div className="flex-1 overflow-y-auto overflow-x-hidden">
+                    <div className={`space-y-3 sm:space-y-4 pb-4 sm:pb-6 ${isTablet ? 'tablet-choices tablet-spacing max-w-full' : ''} ${isTabletLandscape ? 'tablet-landscape' : ''}`}>
                       {currentQuestion.choices.map((choice, index) => (
                         <div
                           key={index}
-                          className={`flex items-start gap-2 sm:gap-3 cursor-pointer text-gray-900 text-right p-3 sm:p-2 rounded hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px] sm:min-h-0 ${isTextEnlarged ? 'text-base sm:text-xl' : 'text-sm sm:text-lg'} ${isTablet ? 'tablet-text' : ''}`}
+                          className={`flex items-start gap-2 sm:gap-3 cursor-pointer text-gray-900 text-right p-3 sm:p-2 rounded hover:bg-gray-50 active:bg-gray-100 transition-colors min-h-[44px] sm:min-h-0 ${isTextEnlarged ? 'text-base sm:text-xl' : 'text-sm sm:text-lg'} ${isTablet ? 'tablet-text break-words' : ''}`}
                           onClick={() => handleAnswerSelect(index)}
+                          style={{ maxWidth: isTablet ? 'calc(100vw - 3rem)' : 'auto' }}
                         >
                           <input
                             type="radio"
@@ -642,7 +660,7 @@ const QuestionDisplay = () => {
                             className={`mt-1 ${isTextEnlarged ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4 sm:w-5 sm:h-5'}`}
                             style={{accentColor: '#068479'}}
                           />
-                          <span className={`flex-1 leading-relaxed ${isTablet ? 'tablet-choices' : ''}`}>{choice}</span>
+                          <span className={`flex-1 leading-relaxed break-words ${isTablet ? 'tablet-choices' : ''}`} style={{ wordBreak: 'break-word' }}>{choice}</span>
                         </div>
                       ))}
                     </div>
@@ -651,9 +669,29 @@ const QuestionDisplay = () => {
               </div>
             </div>
 
-          {/* زر حفظ والتالي في أسفل عمود الأسئلة */}
+          {/* أزرار التنقل في أسفل عمود الأسئلة */}
           <div className="p-2 sm:p-4 border-2 border-gray-300 border-t-0">
-            <div className="flex justify-start">
+            <div className="flex justify-start gap-1">
+              {/* زر السابق - يظهر فقط قبل إكمال القسم */}
+              {!isCurrentSectionCompleted() && (
+                <button
+                  className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
+                    canGoPrevious() 
+                      ? 'hover:opacity-90' 
+                      : 'opacity-50 cursor-not-allowed'
+                  }`}
+                  style={{
+                    backgroundColor: canGoPrevious() ? '#6B7280' : '#9CA3AF', 
+                    color: 'white'
+                  }}
+                  disabled={!canGoPrevious()}
+                  onClick={handlePrevious}
+                >
+                  السابق
+                </button>
+              )}
+              
+              {/* زر حفظ والتالي */}
               <button
                 className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
                   selectedAnswer !== null 
@@ -669,6 +707,12 @@ const QuestionDisplay = () => {
                    // حفظ الإجابة المؤقتة إذا كانت موجودة
                    if (tempSelectedAnswer !== null) {
                      selectAnswer(currentQuestion.question_number, tempSelectedAnswer);
+                   }
+                   
+                   // في وضع المراجعة أو بعد إكمال القسم، احفظ فقط ولا تنتقل للسؤال التالي
+                   if (reviewMode || isCurrentSectionCompleted()) {
+                     console.log('تم حفظ الإجابة - لا يمكن الانتقال');
+                     return;
                    }
                    
                    const currentQuestionNumber = currentQuestionIndex + 1;
@@ -692,7 +736,12 @@ const QuestionDisplay = () => {
                    window.scrollTo({ top: 0, behavior: 'smooth' });
                  }}
               >
-                {currentQuestionIndex === examQuestions.length - 1 ? 'إنهاء الاختبار' : 'حفظ والتالي'}
+                {reviewMode || isCurrentSectionCompleted()
+                  ? 'حفظ' 
+                  : currentQuestionIndex === examQuestions.length - 1 
+                    ? 'إنهاء الاختبار' 
+                    : 'حفظ والتالي'
+                }
               </button>
             </div>
           </div>
@@ -766,6 +815,7 @@ const QuestionDisplay = () => {
                 const isAnswered = userAnswers[examQuestions[actualQuestionIndex]?.question_number] !== undefined;
                 const isDeferred = deferredQuestions[examQuestions[actualQuestionIndex]?.question_number];
                 const isCurrent = actualQuestionIndex === currentQuestionIndex;
+                const sectionCompleted = isCurrentSectionCompleted();
                 
                 let buttonClass = 'w-6 h-6 sm:w-8 sm:h-8 rounded text-white font-bold text-xs active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ';
                 if (isCurrent) {
@@ -774,16 +824,28 @@ const QuestionDisplay = () => {
                   buttonClass += 'bg-green-400';
                 } else if (isDeferred) {
                   buttonClass += 'bg-blue-500';
-                } else {
+                } else if (sectionCompleted) {
+                  // بعد إكمال القسم، السماح بالتنقل
                   buttonClass += 'bg-orange-500';
+                } else {
+                  // قبل إكمال القسم، منع التنقل
+                  buttonClass += 'bg-gray-400 cursor-not-allowed';
                 }
                 
                 return (
                   <button
                     key={i}
                     className={buttonClass}
-                    onClick={() => goToQuestion(actualQuestionIndex)}
-                    title={`السؤال ${i + 1} من القسم ${currentSection}${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`}
+                    onClick={() => {
+                      if (sectionCompleted || isCurrent) {
+                        goToQuestion(actualQuestionIndex);
+                      }
+                    }}
+                    disabled={!sectionCompleted && !isCurrent}
+                    title={sectionCompleted || isCurrent 
+                      ? `السؤال ${i + 1} من القسم ${currentSection}${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`
+                      : 'يجب إكمال جميع الأسئلة في القسم أولاً'
+                    }
                   >
                     {i + 1}
                   </button>
@@ -829,7 +891,10 @@ const QuestionDisplay = () => {
       </div>
 
       {/* الشريط السفلي */}
-      <div className="px-4 sm:px-8 py-2 sm:py-4 flex items-center justify-center relative z-10" style={{backgroundColor: '#068479'}}>
+      <div className="px-4 sm:px-8 py-2 sm:py-4 flex items-center justify-between relative z-10" style={{backgroundColor: '#068479'}}>
+        <div className="text-white text-xs sm:text-sm">
+          <span className="font-medium">نمر مشعل</span>
+        </div>
         <div className="text-white font-bold text-sm sm:text-base">OUR GOAL</div>
       </div>
 
