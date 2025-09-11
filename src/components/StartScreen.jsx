@@ -101,6 +101,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
     old: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 },
     new: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 }
   });
+  const [loadingError, setLoadingError] = useState(null);
 
   const {
     examMode,
@@ -119,35 +120,55 @@ const StartScreen = ({ onShowFolderManagement }) => {
   // Calculate question counts for both courses
   useEffect(() => {
     const calculateQuestionCounts = () => {
-      const oldQuestions = getAllQuestions('old');
-      const newQuestions = getAllQuestions('new');
-      
-      const countByType = (questions) => {
-        return questions.reduce((acc, question) => {
-          acc[question.type] = (acc[question.type] || 0) + 1;
-          return acc;
-        }, {});
-      };
-      
-      const oldCounts = countByType(oldQuestions);
-      const newCounts = countByType(newQuestions);
-      
-      setQuestionCounts({
-        old: {
-          analogy: oldCounts.analogy || 0,
-          completion: oldCounts.completion || 0,
-          error: oldCounts.error || 0,
-          rc: oldCounts.rc || 0,
-          odd: oldCounts.odd || 0
-        },
-        new: {
-          analogy: newCounts.analogy || 0,
-          completion: newCounts.completion || 0,
-          error: newCounts.error || 0,
-          rc: newCounts.rc || 0,
-          odd: newCounts.odd || 0
+      try {
+        setLoadingError(null);
+        
+        const oldQuestions = getAllQuestions('old');
+        const newQuestions = getAllQuestions('new');
+        
+        // Validate questions data
+        if (!Array.isArray(oldQuestions) || !Array.isArray(newQuestions)) {
+          throw new Error('Invalid questions data format');
         }
-      });
+        
+        const countByType = (questions) => {
+          return questions.reduce((acc, question) => {
+            if (question && question.type) {
+              acc[question.type] = (acc[question.type] || 0) + 1;
+            }
+            return acc;
+          }, {});
+        };
+        
+        const oldCounts = countByType(oldQuestions);
+        const newCounts = countByType(newQuestions);
+        
+        setQuestionCounts({
+          old: {
+            analogy: oldCounts.analogy || 0,
+            completion: oldCounts.completion || 0,
+            error: oldCounts.error || 0,
+            rc: oldCounts.rc || 0,
+            odd: oldCounts.odd || 0
+          },
+          new: {
+            analogy: newCounts.analogy || 0,
+            completion: newCounts.completion || 0,
+            error: newCounts.error || 0,
+            rc: newCounts.rc || 0,
+            odd: newCounts.odd || 0
+          }
+        });
+      } catch (error) {
+        console.error('Error calculating question counts:', error);
+        setLoadingError('خطأ في تحميل البيانات. يرجى إعادة تحميل الصفحة.');
+        
+        // Set default counts to prevent crashes
+        setQuestionCounts({
+          old: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 },
+          new: { analogy: 0, completion: 0, error: 0, rc: 0, odd: 0 }
+        });
+      }
     };
     
     calculateQuestionCounts();
@@ -260,6 +281,25 @@ const StartScreen = ({ onShowFolderManagement }) => {
   const getSelectedTimerInfo = () => {
     return timerDurations.find(timer => timer.value === selectedTimerDuration);
   };
+
+  // Show error message if there's a loading error
+  if (loadingError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-950 to-zinc-950 text-white overflow-hidden relative font-cairo flex items-center justify-center" dir="rtl">
+        <div className="text-center p-8">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold mb-4">خطأ في تحميل البيانات</h2>
+          <p className="text-gray-300 mb-6">{loadingError}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+          >
+            إعادة تحميل الصفحة
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-gray-950 to-zinc-950 text-white overflow-hidden relative font-cairo" dir="rtl">
