@@ -42,6 +42,7 @@ const getQuestionTypeDetails = (type) => {
     case 'error': return { Icon: Target, label: 'الخطأ السياقي', color: 'bg-rose-500/20 text-rose-300 border-rose-500/30' };
     case 'rc': return { Icon: Lightbulb, label: 'استيعاب المقروء', color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' };
     case 'odd': return { Icon: Sparkles, label: 'المفردة الشاذة', color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30' };
+    case 'quantitative': return { Icon: FileText, label: 'الكمي', color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' };
     default: return { Icon: FileText, label: type, color: 'bg-slate-600/20 text-slate-300 border-slate-500/30' };
   }
 };
@@ -271,6 +272,21 @@ const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
                         </div>
                       )}
 
+                      {question.type === 'quantitative' && question.image && (
+                        <div className="mb-5 flex justify-center">
+                          <img 
+                            src={question.image} 
+                            alt={`سؤال ${question.question_number}`}
+                            className="max-w-full h-auto rounded-lg shadow-lg border-2 border-white/20"
+                            style={{ maxHeight: '400px' }}
+                            onError={(e) => {
+                              console.error(`فشل في تحميل الصورة: ${question.image}`, e);
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+
                       {question.choices && question.choices.length > 0 ? (
                         <div className="space-y-3">
                           {question.choices.map((choice, choiceIndex) => {
@@ -284,9 +300,9 @@ const FolderView = ({ folderId, onBack, onReturnToMainMenu }) => {
                                     : 'bg-slate-800/40 border-slate-700 text-slate-300'
                                 }`}
                               >
-                                <span className={`font-bold text-base ${isCorrect ? 'text-green-400' : 'text-slate-500'}`}>
-                                  {String.fromCharCode(1575 + choiceIndex)})
-                                </span>
+                                 <span className={`font-bold text-base ${isCorrect ? 'text-green-400' : 'text-slate-500'}`}>
+                                   {['أ', 'ب', 'ج', 'د'][choiceIndex]})
+                                 </span>
                                 <span className="flex-1">{choice}</span>
                                 {isCorrect && <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />}
                               </div>

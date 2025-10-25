@@ -24,7 +24,8 @@ import {
   Timer,
   Award,
   Bookmark,
-  FolderPlus
+  FolderPlus,
+  Calculator
 } from 'lucide-react';
 import { useExamStore } from '../store/examStore';
 import QuestionToFolderDialog from './QuestionToFolderDialog';
@@ -36,6 +37,7 @@ const QuestionDisplay = () => {
   const [isFolderDialogOpen, setIsFolderDialogOpen] = useState(false);
   const [tempSelectedAnswer, setTempSelectedAnswer] = useState(null);
   const [showMobileWarning, setShowMobileWarning] = useState(false);
+  const [hasAnsweredLastQuestionInSection, setHasAnsweredLastQuestionInSection] = useState(false);
 
   const {
     examQuestions,
@@ -47,11 +49,13 @@ const QuestionDisplay = () => {
     reviewMode,
     timerActive,
     timeRemaining,
+    sectionTimeRemaining,
     sectionReviewMode,
     hasSeenSectionReview,
     returnedFromSectionReview,
     reviewedSection,
     hideDeferButton,
+    questionTypeFilter,
     selectAnswer,
     toggleDeferred,
     nextQuestion,
@@ -109,7 +113,7 @@ const QuestionDisplay = () => {
       }
 
       const currentQuestionNumber = currentQuestionIndex + 1;
-      const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
+      const isLastQuestionInSection = currentQuestionNumber % questionsPerSection === 0;
 
       switch (event.key) {
         case 'ArrowLeft':
@@ -147,7 +151,7 @@ const QuestionDisplay = () => {
 
   const getDisplayQuestionNumber = () => {
     if (examMode === 'sectioned') {
-      const questionInSection = (currentQuestionIndex % 13) + 1;
+      const questionInSection = (currentQuestionIndex % questionsPerSection) + 1;
       return questionInSection;
     } else {
       return currentQuestionIndex + 1;
@@ -156,7 +160,7 @@ const QuestionDisplay = () => {
 
   const getTotalQuestionsDisplay = () => {
     if (examMode === 'sectioned') {
-      return 13;
+      return questionsPerSection; // Dynamic based on training type
     } else {
       return examQuestions.length;
     }
@@ -273,6 +277,22 @@ const QuestionDisplay = () => {
   const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
   const isFirstQuestion = currentQuestionIndex === 0;
   const examInfo = getCurrentExamInfo();
+  
+  // حساب القسم الحالي بناءً على فهرس السؤال الحالي (ثابت)
+  const questionsPerSection = questionTypeFilter === 'specific' ? 13 : 24; // 13 for focused training, 24 for comprehensive
+  const actualCurrentSection = Math.floor(currentQuestionIndex / questionsPerSection) + 1;
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('Current question:', currentQuestion);
+    console.log('Question type:', currentQuestion?.type);
+    console.log('Question image:', currentQuestion?.image);
+  }, [currentQuestion]);
+
+  // إعادة تعيين الحالة عند تغيير القسم فقط
+  useEffect(() => {
+    setHasAnsweredLastQuestionInSection(false);
+  }, [actualCurrentSection]);
 
   const canGoPrevious = () => {
     if (isFirstQuestion) return false;
@@ -281,25 +301,22 @@ const QuestionDisplay = () => {
       return true;
     }
 
+    // في الوضع المقسم، السماح بالتنقل فقط داخل نفس القسم
     const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-
-    // إخفاء زر السابق عند السؤال الأول في القسم (السؤال 13)
-    if (isFirstQuestionInSection) {
-      return false;
-    }
-
-    return true;
+    const questionInSection = (currentQuestionNumber - 1) % questionsPerSection + 1;
+    
+    // السماح بالتنقل للخلف فقط إذا لم نكن في السؤال الأول من القسم
+    return questionInSection > 1;
   };
 
   const canProceed = true; // This is always true, as next/section review logic handles progression
 
-  // التحقق من إكمال القسم الحالي (13 سؤال)
+  // التحقق من إكمال القسم الحالي (عدد متغير من الأسئلة)
   const isCurrentSectionCompleted = () => {
     if (examMode !== 'sectioned') return true;
     
-    const sectionStartIndex = (currentSection - 1) * 13;
-    const sectionEndIndex = Math.min(sectionStartIndex + 13, examQuestions.length);
+    const sectionStartIndex = (currentSection - 1) * questionsPerSection;
+    const sectionEndIndex = Math.min(sectionStartIndex + questionsPerSection, examQuestions.length);
     
     // التحقق من أن جميع الأسئلة في القسم تمت الإجابة عليها
     for (let i = sectionStartIndex; i < sectionEndIndex; i++) {
@@ -310,27 +327,27 @@ const QuestionDisplay = () => {
     return true;
   };
 
-  // التحقق من الوصول للسؤال 13 في القسم الحالي
-  const hasReachedQuestion13 = () => {
+  // التحقق من الوصول لآخر سؤال في القسم الحالي
+  const hasReachedQuestion24 = () => {
     if (examMode !== 'sectioned') return false;
     
     const currentQuestionNumber = currentQuestionIndex + 1;
-    const questionInSection = (currentQuestionNumber - 1) % 13 + 1;
+    const questionInSection = (currentQuestionNumber - 1) % questionsPerSection + 1;
     
-    return questionInSection >= 13;
+    return questionInSection >= questionsPerSection;
   };
 
-  // التحقق من إجابة السؤال 13 في القسم الحالي
-  const hasAnsweredQuestion13 = () => {
+  // التحقق من إجابة آخر سؤال في القسم الحالي
+  const hasAnsweredQuestion24 = () => {
     if (examMode !== 'sectioned') return false;
     
-    const sectionStartIndex = (currentSection - 1) * 13;
-    const question13Index = sectionStartIndex + 12; // السؤال 13 في القسم (فهرس 12)
+    const sectionStartIndex = (actualCurrentSection - 1) * questionsPerSection;
+    const question24Index = sectionStartIndex + questionsPerSection - 1; // آخر سؤال في القسم
     
-    if (question13Index >= examQuestions.length) return false;
+    if (question24Index >= examQuestions.length) return false;
     
-    const question13Number = examQuestions[question13Index]?.question_number;
-    return question13Number && userAnswers[question13Number] !== undefined;
+    const question24Number = examQuestions[question24Index]?.question_number;
+    return question24Number && userAnswers[question24Number] !== undefined;
   };
 
   const hasDeferredQuestionsInCurrentSection = () => {
@@ -360,7 +377,8 @@ const QuestionDisplay = () => {
     }
     
     const currentQuestionNumber = currentQuestionIndex + 1;
-    const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
+    const questionInSection = (currentQuestionNumber - 1) % questionsPerSection + 1;
+    const isLastQuestionInSection = questionInSection === questionsPerSection;
     const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
 
     // إذا كنا في آخر سؤال في القسم، لا ننتقل للقسم التالي
@@ -381,16 +399,7 @@ const QuestionDisplay = () => {
   };
 
   const handlePrevious = () => {
-    if (examMode !== 'sectioned') {
-      previousQuestion();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-
-    const currentQuestionNumber = currentQuestionIndex + 1;
-    const isFirstQuestionInSection = (currentQuestionNumber - 1) % 13 === 0;
-
-    if (isFirstQuestionInSection && currentQuestionIndex > 0) {
+    if (!canGoPrevious()) {
       return;
     }
 
@@ -422,7 +431,7 @@ const QuestionDisplay = () => {
     if (examMode !== 'sectioned') return false;
     
     const currentQuestionNumber = currentQuestionIndex + 1;
-    const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
+    const isLastQuestionInSection = currentQuestionNumber % 24 === 0;
     const isLastQuestionOfExam = currentQuestionIndex === examQuestions.length - 1;
 
     // Show on the last question of a section or the entire exam
@@ -456,7 +465,8 @@ const QuestionDisplay = () => {
       'error': 'الخطأ السياقي',
       'rc': 'استيعاب المقروء',
       'reading': 'فهم المقروء',
-      'odd': 'المفردة الشاذة'
+      'odd': 'المفردة الشاذة',
+      'quantitative': 'الأسئلة الكمية'
     };
     return labels[type] || type;
   };
@@ -468,7 +478,8 @@ const QuestionDisplay = () => {
       'error': <Eye className="h-4 w-4" />,
       'rc': <BookOpen className="h-4 w-4" />,
       'reading': <BookOpen className="h-4 w-4" />,
-      'odd': <Star className="h-4 w-4" />
+      'odd': <Star className="h-4 w-4" />,
+      'quantitative': <Calculator className="h-4 w-4" />
     };
     return icons[type] || <Brain className="h-4 w-4" />;
   };
@@ -498,6 +509,10 @@ const QuestionDisplay = () => {
     'odd': {
       title: 'المفردة الشاذة',
       text: 'في كل مجموعة من المجموعات الآتية أربع كلمات، ثلاث منها تنتمي إلى مجال واحد والرابعة مختلفة عنها. المطلوب هو: اختيار الكلمة المختلفة'
+    },
+    'quantitative': {
+      title: 'الأسئلة الكمية',
+      text: 'السؤال التالي يتعلق بالرياضيات والحساب. بعد السؤال هناك أربع اختيارات (أ، ب، ج، د)، واحد منها صحيح. المطلوب هو: حل المسألة بعناية، ثم اختيار الإجابة الصحيحة'
     }
   };
 
@@ -624,8 +639,24 @@ const QuestionDisplay = () => {
               {/* السؤال والخيارات - ارتفاع مرن */}
               <div className={`border-2 border-gray-300 flex-1 flex flex-col ${isTablet ? 'tablet-height overflow-x-hidden' : ''}`}>
                 <div className={`p-4 sm:p-8 flex-1 flex flex-col ${isTablet ? 'tablet-spacing overflow-x-hidden' : ''}`}>
-                  {/* أزرار تغيير الخط */}
-                  <div className="flex items-center justify-end mb-4 sm:mb-6">
+                   {/* أزرار تغيير الخط والصورة للأسئلة الكمية */}
+                   <div className={`flex items-start mb-4 sm:mb-6 ${currentQuestion.type === 'quantitative' && currentQuestion.image ? 'justify-between' : 'justify-end'}`}>
+                      {/* عرض الصورة للأسئلة الكمية */}
+                      {currentQuestion.type === 'quantitative' && currentQuestion.image && (
+                        <div className="flex-1 flex justify-start">
+                          <img 
+                            src={currentQuestion.image} 
+                            alt={`سؤال ${currentQuestion.question_number}`}
+                            className="h-auto rounded-lg shadow-lg border-2 border-gray-300"
+                            style={{ maxHeight: '350px', width: '800px', maxWidth: '100%' }}
+                            onLoad={() => console.log('Image loaded successfully:', currentQuestion.image)}
+                            onError={(e) => {
+                              console.error(`فشل في تحميل الصورة: ${currentQuestion.image}`, e);
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
                     
                     {/* أزرار تغيير الخط */}
                     <div className="flex items-center gap-1 sm:gap-2">
@@ -660,6 +691,7 @@ const QuestionDisplay = () => {
                       }
                     </div>
                   </div>
+
 
                   {/* الخيارات - منطقة قابلة للتمرير */}
                   <div className="flex-1 overflow-y-auto overflow-x-hidden">
@@ -704,49 +736,61 @@ const QuestionDisplay = () => {
                   color: 'white'
                 }}
                 disabled={selectedAnswer === null}
-                 onClick={() => {
-                   // حفظ الإجابة المؤقتة إذا كانت موجودة
-                   if (tempSelectedAnswer !== null) {
-                     selectAnswer(currentQuestion.question_number, tempSelectedAnswer);
-                   }
-                   
-                   // في وضع المراجعة أو بعد إجابة السؤال 13، احفظ فقط ولا تنتقل للسؤال التالي
-                   if (reviewMode || hasAnsweredQuestion13()) {
-                     console.log('تم حفظ الإجابة - لا يمكن الانتقال');
-                     return;
-                   }
-                   
-                   const currentQuestionNumber = currentQuestionIndex + 1;
-                   const isLastQuestionInSection = currentQuestionNumber % 13 === 0;
-                   const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
+                  onClick={() => {
+                    // حفظ الإجابة المؤقتة إذا كانت موجودة
+                    if (tempSelectedAnswer !== null) {
+                      selectAnswer(currentQuestion.question_number, tempSelectedAnswer);
+                    }
+                    
+                    const currentQuestionNumber = currentQuestionIndex + 1;
+                    const questionInSection = (currentQuestionNumber - 1) % questionsPerSection + 1;
+                    const isLastQuestionInSection = questionInSection === questionsPerSection;
+                    const isLastQuestion = currentQuestionIndex === examQuestions.length - 1;
 
-                   // إذا كنا في آخر سؤال في القسم، لا ننتقل للقسم التالي
-                   if (isLastQuestionInSection && !isLastQuestion) {
-                     console.log('آخر سؤال في القسم - لا يمكن الانتقال');
-                     return;
-                   }
+                    // إذا تم الإجابة على آخر سؤال في القسم، احفظ فقط ولا تنتقل
+                    if (hasAnsweredLastQuestionInSection) {
+                      console.log('تم الإجابة على آخر سؤال في القسم - تم حفظ الإجابة فقط');
+                      return;
+                    }
 
-                   // إذا كنا في آخر سؤال في الامتحان، لا ننتقل
-                   if (isLastQuestion) {
-                     console.log('آخر سؤال في الاختبار - لا يمكن الانتقال');
-                     return;
-                   }
+                    // إذا كنا في آخر سؤال في القسم، احفظ فقط ولا تنتقل
+                    if (isLastQuestionInSection) {
+                      console.log('آخر سؤال في القسم - تم حفظ الإجابة فقط');
+                      setHasAnsweredLastQuestionInSection(true);
+                      return;
+                    }
 
-                   // في الحالات العادية، متابعة للسؤال التالي في نفس القسم
-                   nextQuestion();
-                   window.scrollTo({ top: 0, behavior: 'smooth' });
-                 }}
+                    // إذا كنا في آخر سؤال في الامتحان، احفظ فقط
+                    if (isLastQuestion) {
+                      console.log('آخر سؤال في الاختبار - تم حفظ الإجابة فقط');
+                      return;
+                    }
+
+                    // في الحالات العادية، متابعة للسؤال التالي في نفس القسم
+                    nextQuestion();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
               >
-                {reviewMode || hasAnsweredQuestion13()
-                  ? 'حفظ' 
-                  : currentQuestionIndex === examQuestions.length - 1 
-                    ? 'إنهاء الاختبار' 
-                    : 'حفظ والتالي'
-                }
+                {(() => {
+                  const currentQuestionNumber = currentQuestionIndex + 1;
+                  const questionInSection = (currentQuestionNumber - 1) % questionsPerSection + 1;
+                  const isLastQuestionInSection = questionInSection === questionsPerSection;
+                  
+                  // إذا تم الإجابة على آخر سؤال في القسم، كل الأسئلة تصبح "حفظ" فقط
+                  if (hasAnsweredLastQuestionInSection) {
+                    return 'حفظ';
+                  } else if (isLastQuestionInSection) {
+                    return 'حفظ والتالي';
+                  } else if (currentQuestionIndex === examQuestions.length - 1) {
+                    return 'إنهاء الاختبار';
+                  } else {
+                    return 'حفظ والتالي';
+                  }
+                })()}
               </button>
               
-              {/* زر السابق - يظهر فقط قبل إجابة السؤال 13 */}
-              {!hasAnsweredQuestion13() && (
+               {/* زر السابق - يختفي إذا تم الإجابة على آخر سؤال في القسم */}
+               {!hasAnsweredLastQuestionInSection && (
                 <button
                   className={`px-4 sm:px-6 py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
                     canGoPrevious() 
@@ -772,11 +816,13 @@ const QuestionDisplay = () => {
 
         {/* العمود الأيمن - لوحة التحكم */}
         <div className={`w-full lg:w-80 border-2 border-gray-300 p-3 sm:p-6 flex flex-col order-first lg:order-last ${isTablet ? 'tablet-sidebar' : ''}`} style={{backgroundColor: '#DDE7F7', marginTop: isMobile ? '0' : '48px'}}>
-          {/* الوقت المتبقي */}
-          <div className="text-center mb-4 sm:mb-6">
-            <div className="text-gray-600 text-xs sm:text-sm mb-1 sm:mb-2">الوقت المتبقي</div>
-            <div className="text-2xl sm:text-4xl font-bold text-gray-900">{formatTime(timeRemaining)}</div>
-          </div>
+          {/* وقت القسم الحالي */}
+          {examMode === 'sectioned' && (
+            <div className="text-center mb-4 sm:mb-6">
+              <div className="text-gray-600 text-xs sm:text-sm mb-1 sm:mb-2">وقت القسم الحالي</div>
+              <div className="text-2xl sm:text-4xl font-bold text-blue-600">{formatTime(sectionTimeRemaining)}</div>
+            </div>
+          )}
 
            {/* معلومات المستخدم */}
            <div className="mb-4 sm:mb-6">
@@ -788,8 +834,9 @@ const QuestionDisplay = () => {
 
           {/* إحصائيات الأسئلة */}
           <div className="mb-4 sm:mb-6">
-            <div className="text-gray-600 text-xs sm:text-sm mb-2 font-bold">عدد الأسئلة الرئيسية: 5</div>
-            <div className="text-gray-600 text-xs sm:text-sm mb-4 font-bold">مجموع الأسئلة 13</div>
+            <div className="text-gray-600 text-xs sm:text-sm mb-2 font-bold">عدد الأقسام: 5</div>
+            <div className="text-gray-600 text-xs sm:text-sm mb-2 font-bold">أسئلة كل قسم: {questionsPerSection}</div>
+            <div className="text-gray-600 text-xs sm:text-sm mb-4 font-bold">مجموع الأسئلة: {questionsPerSection * 5}</div>
             
             {/* مربعات الإحصائيات */}
             <div className="grid grid-cols-3 gap-1 sm:gap-2 mb-4">
@@ -810,50 +857,113 @@ const QuestionDisplay = () => {
 
           {/* أزرار التنقل */}
           <div className="mb-4 sm:mb-6">
-            <div className="flex justify-center gap-1 sm:gap-2 mb-3 sm:mb-4">
-              {Array.from({ length: 5 }, (_, i) => (
-                <button 
-                  key={i}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full text-white font-bold text-xs sm:text-sm active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ${
-                    currentSection === (i + 1) ? 'bg-green-500' : 'bg-orange-500'
-                  }`}
-                  onClick={() => {
-                    // يمكن إضافة منطق الانتقال للقسم المحدد
-                    console.log(`الانتقال للقسم ${i + 1}`);
-                  }}
-                >
-                  {i + 1}
-                </button>
-              ))}
-            </div>
+             <div className="flex justify-center gap-1 sm:gap-2 mb-3 sm:mb-4">
+               {Array.from({ length: 5 }, (_, i) => {
+                 const targetSection = i + 1;
+                 const isCompletedSection = targetSection < actualCurrentSection;
+                 const isCurrentSection = targetSection === actualCurrentSection;
+                 const isFutureSection = targetSection > actualCurrentSection;
+                 
+                 let buttonClass = 'w-8 h-8 sm:w-10 sm:h-10 rounded-full text-white font-bold text-xs sm:text-sm active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ';
+                 
+                 if (isCompletedSection) {
+                   buttonClass += 'bg-orange-500 cursor-not-allowed';
+                 } else if (isCurrentSection) {
+                   buttonClass += 'bg-green-500';
+                 } else {
+                   buttonClass += 'bg-orange-500';
+                 }
+                 
+                 return (
+                   <button 
+                     key={i}
+                     className={buttonClass}
+                     disabled={isCompletedSection || isCurrentSection}
+                     onClick={isCompletedSection || isCurrentSection ? undefined : () => {
+                       // منع الانتقال للقسم التالي إلا بعد إنهاء القسم الحالي
+                       if (isFutureSection) {
+                         alert('لا يمكن الانتقال للقسم التالي إلا بعد إنهاء القسم الحالي');
+                         return;
+                       }
+                       
+                       const targetQuestionIndex = (targetSection - 1) * questionsPerSection;
+                       if (targetQuestionIndex < examQuestions.length) {
+                         goToQuestion(targetQuestionIndex);
+                       }
+                     }}
+                     title={
+                       isCompletedSection 
+                         ? `القسم ${targetSection} - مكتمل (لا يمكن العودة)`
+                         : isCurrentSection 
+                           ? `القسم ${targetSection} - الحالي (لا يمكن النقر)`
+                           : `القسم ${targetSection} - مستقبلي`
+                     }
+                   >
+                     {i + 1}
+                   </button>
+                 );
+               })}
+             </div>
             
             {/* شبكة أرقام الأسئلة */}
-            <div className="grid grid-cols-5 gap-1 bg-white p-2 rounded">
-              {Array.from({ length: 13 }, (_, i) => {
-                // حساب رقم السؤال الحقيقي في القسم الحالي
-                const actualQuestionIndex = (currentSection - 1) * 13 + i;
-                const isAnswered = userAnswers[examQuestions[actualQuestionIndex]?.question_number] !== undefined;
-                const isDeferred = deferredQuestions[examQuestions[actualQuestionIndex]?.question_number];
+            <div className="grid grid-cols-6 gap-1 bg-white p-2 rounded">
+              {Array.from({ length: questionsPerSection }, (_, i) => {
+                // حساب رقم السؤال الحقيقي في القسم الحالي (ثابت)
+                const actualQuestionIndex = (actualCurrentSection - 1) * questionsPerSection + i;
+                // التأكد من أن السؤال موجود في الامتحان
+                if (actualQuestionIndex >= examQuestions.length) {
+                  return null;
+                }
+                
+                const question = examQuestions[actualQuestionIndex];
+                if (!question) {
+                  return null;
+                }
+                
+                const isAnswered = userAnswers[question.question_number] !== undefined;
+                const isDeferred = deferredQuestions[question.question_number];
                 const isCurrent = actualQuestionIndex === currentQuestionIndex;
                 
-                let buttonClass = 'w-6 h-6 sm:w-8 sm:h-8 rounded text-white font-bold text-xs active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ';
-                if (isCurrent) {
-                  buttonClass += 'bg-green-500';
-                } else if (isAnswered) {
-                  buttonClass += 'bg-green-400';
-                } else if (isDeferred) {
-                  buttonClass += 'bg-blue-500';
-                } else {
-                  // السماح بالتنقل دائماً
-                  buttonClass += 'bg-orange-500';
-                }
+                // تحديد نوع السؤال للتمييز البصري
+                const questionType = examQuestions[actualQuestionIndex]?.type;
+                const isQuantitative = questionType === 'quantitative';
+                
+                 let buttonClass = 'w-5 h-5 sm:w-6 sm:h-6 rounded text-white font-bold text-xs active:scale-95 transition-transform min-h-[44px] sm:min-h-0 ';
+                 if (isCurrent) {
+                   buttonClass += 'bg-green-500';
+                 } else if (isAnswered) {
+                   buttonClass += 'bg-green-400';
+                 } else if (isDeferred) {
+                   buttonClass += 'bg-yellow-500';
+                 } else {
+                   // السماح بالتنقل دائماً - نفس اللون للكمي واللفظي
+                   buttonClass += 'bg-orange-500';
+                 }
                 
                 return (
                   <button
                     key={i}
                     className={buttonClass}
-                    onClick={() => goToQuestion(actualQuestionIndex)}
-                    title={`السؤال ${i + 1} من القسم ${currentSection}${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`}
+                     onClick={() => {
+                       // منع التنقل لأسئلة القسم التالي
+                       const targetSection = Math.floor(actualQuestionIndex / questionsPerSection) + 1;
+                       if (targetSection > actualCurrentSection) {
+                         alert('لا يمكن الانتقال لأسئلة القسم التالي إلا بعد إنهاء القسم الحالي');
+                         return;
+                       }
+                       
+                       // منع العودة لأسئلة الأقسام المكتملة
+                       if (targetSection < actualCurrentSection) {
+                         alert('لا يمكن العودة لأسئلة الأقسام المكتملة');
+                         return;
+                       }
+                       
+                       // التأكد من أن السؤال موجود
+                       if (actualQuestionIndex < examQuestions.length) {
+                         goToQuestion(actualQuestionIndex);
+                       }
+                     }}
+                    title={`السؤال ${i + 1} من القسم ${actualCurrentSection} (${isQuantitative ? 'كمي' : 'لفظي'})${isAnswered ? ' - تمت الإجابة' : isDeferred ? ' - مؤجل' : ''}`}
                   >
                     {i + 1}
                   </button>
@@ -865,36 +975,42 @@ const QuestionDisplay = () => {
           {/* فاصل */}
           <div className="h-2 sm:h-4"></div>
 
-          {/* زر إنهاء القسم/الاختبار */}
-          <button 
-            className={`w-full py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
-              (currentQuestionIndex + 1) % 13 === 0 || currentQuestionIndex === examQuestions.length - 1
-                ? 'bg-orange-500 text-white hover:bg-orange-600'
-                : 'bg-gray-400 text-gray-600 cursor-not-allowed'
-            }`}
-            disabled={!((currentQuestionIndex + 1) % 13 === 0 || currentQuestionIndex === examQuestions.length - 1)}
-            onClick={() => {
-              const isLastSection = currentQuestionIndex === examQuestions.length - 1;
-              const message = isLastSection 
-                ? 'هل أنت متأكد من إنهاء الاختبار؟'
-                : 'سيتم نقلك للقسم التالي مباشرة. هل تريد المتابعة؟';
-              
-              if (window.confirm(message)) {
-                if (isLastSection) {
-                  // إنهاء الاختبار وعرض النتائج
-                  const { completeExam } = useExamStore.getState();
-                  completeExam();
-                } else {
-                  // الانتقال للقسم التالي مباشرة باستخدام endCurrentSection
-                  const { endCurrentSection } = useExamStore.getState();
-                  endCurrentSection();
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-              }
-            }}
-          >
-            {currentQuestionIndex === examQuestions.length - 1 ? 'إنهاء الاختبار' : 'إنهاء القسم'}
-          </button>
+           {/* زر إنهاء القسم/الاختبار */}
+           <button 
+             className={`w-full py-3 sm:py-4 rounded font-bold transition-all text-sm sm:text-base active:scale-95 min-h-[44px] sm:min-h-0 ${
+               sectionTimeRemaining <= 60 
+                 ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                 : 'bg-orange-500 text-white hover:bg-orange-600'
+             }`}
+             disabled={sectionTimeRemaining <= 60}
+             onClick={() => {
+               // منع إنهاء القسم في آخر دقيقة
+               if (sectionTimeRemaining <= 60) {
+                 alert('لا يمكن إنهاء القسم في آخر دقيقة، انتظر انتهاء الوقت');
+                 return;
+               }
+               
+               const isLastSection = currentQuestionIndex === examQuestions.length - 1;
+               const message = isLastSection 
+                 ? 'هل أنت متأكد من إنهاء الاختبار؟'
+                 : 'سيتم نقلك للقسم التالي مباشرة. هل تريد المتابعة؟';
+               
+               if (window.confirm(message)) {
+                 if (isLastSection) {
+                   // إنهاء الاختبار وعرض النتائج
+                   const { completeExam } = useExamStore.getState();
+                   completeExam();
+                 } else {
+                   // الانتقال للقسم التالي مباشرة باستخدام endCurrentSection
+                   const { endCurrentSection } = useExamStore.getState();
+                   endCurrentSection();
+                   window.scrollTo({ top: 0, behavior: 'smooth' });
+                 }
+               }
+             }}
+           >
+             {sectionTimeRemaining <= 60 ? 'انتظر انتهاء الوقت...' : (currentQuestionIndex === examQuestions.length - 1 ? 'إنهاء الاختبار' : 'إنهاء القسم')}
+           </button>
         </div>
       </div>
 

@@ -1,0 +1,7502 @@
+[
+  {
+    "id": "qnt_001",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_001.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_002",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_002.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_003",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_003.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_004",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_004.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_005",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_005.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_006",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_006.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_007",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_007.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_008",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_008.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_009",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_009.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_010",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_010.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_011",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_011.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_012",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_012.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_013",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_013.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_014",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_014.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_015",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_015.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_016",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_016.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_017",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_017.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_018",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_018.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_019",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_019.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_020",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_020.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_021",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_021.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_022",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_022.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_023",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_023.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_024",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_024.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_025",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_025.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_026",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_026.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_027",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_027.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_028",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_028.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_029",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_029.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_030",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_030.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_031",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_031.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_032",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_032.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_033",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_033.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_034",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_034.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_035",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_035.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_036",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_036.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_037",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_037.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_038",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_038.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_039",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_039.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_040",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_040.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_041",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_041.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_042",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_042.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_043",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_043.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_044",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_044.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_045",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_045.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_046",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_046.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_047",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_047.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_048",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_048.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_049",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_049.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_050",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_050.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_051",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_051.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_052",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_052.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_053",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_053.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_054",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_054.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_055",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_055.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_056",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_056.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_057",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_057.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_058",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_058.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_059",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_059.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_060",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_060.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_061",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_061.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_062",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_062.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_063",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_063.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_064",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_064.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_065",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_065.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_066",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_066.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_067",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_067.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_068",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_068.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_069",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_069.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_070",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_070.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_071",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_071.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_072",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_072.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_073",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_073.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_074",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_074.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_075",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_075.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_076",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_076.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_077",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_077.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_078",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_078.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_079",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_079.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_080",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_080.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_081",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_081.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_082",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_082.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_083",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_083.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_084",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_084.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_085",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_085.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_086",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_086.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_087",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_087.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_088",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_088.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_089",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_089.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_090",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_090.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_091",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_091.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_092",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_092.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_093",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_093.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_094",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_094.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_095",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_095.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_096",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_096.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_097",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_097.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_098",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_098.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_099",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_099.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_100",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_100.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_101",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_101.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_102",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_102.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_103",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_103.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_104",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_104.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_105",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_105.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_106",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_106.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_107",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_107.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_108",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_108.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_109",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_109.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_110",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_110.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_111",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_111.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_112",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_112.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_113",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_113.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_114",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_114.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_115",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_115.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_116",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_116.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_117",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_117.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_118",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_118.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_119",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_119.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_120",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_120.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_121",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_121.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_122",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_122.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_123",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_123.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_124",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_124.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_125",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_125.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_126",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_126.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_127",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_127.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_128",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_128.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_129",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_129.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_130",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_130.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_131",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_131.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_132",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_132.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_133",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_133.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_134",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_134.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_135",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_135.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_136",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_136.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_137",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_137.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_138",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_138.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_139",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_139.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_140",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_140.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_141",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_141.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_142",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_142.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_143",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_143.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_144",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_144.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_145",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_145.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_146",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_146.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_147",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_147.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_148",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_148.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_149",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_149.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_150",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_150.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_151",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_151.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_152",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_152.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_153",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_153.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_154",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_154.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_155",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_155.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_156",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_156.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_157",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_157.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_158",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_158.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_159",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_159.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_160",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_160.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_161",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_161.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_162",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_162.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_163",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_163.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_164",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_164.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_165",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_165.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_166",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_166.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_167",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_167.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_168",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_168.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_169",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_169.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_170",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_170.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_171",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_171.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_172",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_172.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_173",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_173.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_174",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_174.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_175",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_175.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_176",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_176.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_177",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_177.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_178",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_178.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_179",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_179.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_180",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_180.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_181",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_181.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_182",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_182.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_183",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_183.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_184",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_184.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_185",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_185.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_186",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_186.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_187",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_187.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_188",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_188.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_189",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_189.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_190",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_190.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_191",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_191.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_192",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_192.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_193",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_193.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_194",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_194.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_195",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_195.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_196",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_196.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_197",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_197.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_198",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_198.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_199",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_199.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_200",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_200.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_201",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_201.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_202",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_202.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_203",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_203.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_204",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_204.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_205",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_205.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_206",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_206.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_207",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_207.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_208",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_208.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_209",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_209.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_210",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_210.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_211",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_211.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_212",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_212.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_213",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_213.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_214",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_214.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_215",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_215.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_216",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_216.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_217",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_217.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_218",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_218.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_219",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_219.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_220",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_220.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_221",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_221.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_222",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_222.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_223",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_223.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_224",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_224.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_225",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_225.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_226",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_226.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي ت"
+  },
+  {
+    "id": "qnt_227",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_227.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_228",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_228.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_229",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_229.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_230",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_230.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_231",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_231.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_232",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_232.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_233",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_233.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_234",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_234.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_235",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_235.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_236",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_236.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_237",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_237.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_238",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_238.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_239",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_239.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_240",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_240.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_241",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_241.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_242",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_242.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_243",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_243.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_244",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_244.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_245",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_245.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_246",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_246.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_247",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_247.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_248",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_248.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_249",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_249.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_250",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_250.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_251",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_251.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_252",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_252.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_253",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_253.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_254",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_254.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_255",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_255.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_256",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_256.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_257",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_257.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_258",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_258.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_259",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_259.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_260",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_260.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_261",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_261.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_262",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_262.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_263",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_263.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_264",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_264.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_265",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_265.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_266",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_266.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_267",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_267.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_268",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_268.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_269",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_269.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_270",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_270.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_271",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_271.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_272",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_272.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_273",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_273.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_274",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_274.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_275",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_275.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_276",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_276.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_277",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_277.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_278",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_278.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_279",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_279.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_280",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_280.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_281",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_281.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_282",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_282.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_283",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_283.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_284",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_284.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_285",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_285.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_286",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_286.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_287",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_287.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_288",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_288.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_289",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_289.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_290",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_290.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_291",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_291.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_292",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_292.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_293",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_293.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_294",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_294.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_295",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_295.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_296",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_296.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_297",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_297.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_298",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_298.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_299",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_299.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_300",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_300.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_301",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_301.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_302",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_302.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_303",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_303.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_304",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_304.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_305",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_305.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_306",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_306.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_307",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_307.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_308",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_308.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_309",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_309.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_310",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_310.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_311",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_311.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_312",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_312.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_313",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_313.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_314",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_314.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_315",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_315.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_316",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_316.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_317",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_317.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_318",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_318.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_319",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_319.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_320",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_320.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_321",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_321.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_322",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_322.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_323",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_323.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_324",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_324.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_325",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_325.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_326",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_326.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_327",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_327.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_328",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_328.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_329",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_329.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_330",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_330.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_331",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_331.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_332",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_332.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_333",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_333.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_334",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_334.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_335",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_335.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_336",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_336.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_337",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_337.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_338",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_338.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_339",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_339.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_340",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_340.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_341",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_341.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_342",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_342.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_343",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_343.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_344",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_344.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_345",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_345.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_346",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_346.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_347",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_347.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_348",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_348.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_349",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_349.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_350",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_350.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_351",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_351.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_352",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_352.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_353",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_353.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_354",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_354.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_355",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_355.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_356",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_356.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_357",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_357.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_358",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_358.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_359",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_359.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_360",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_360.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_361",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_361.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_362",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_362.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_363",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_363.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_364",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_364.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_365",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_365.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_366",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_366.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_367",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_367.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_368",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_368.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_369",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_369.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_370",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_370.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_371",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_371.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_372",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_372.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_373",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_373.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_374",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_374.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_375",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_375.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_376",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_376.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_377",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_377.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_378",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_378.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_379",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_379.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_380",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_380.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_381",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_381.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_382",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_382.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_383",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_383.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_384",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_384.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_385",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_385.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_386",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_386.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_387",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_387.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_388",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_388.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_389",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_389.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_390",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_390.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_391",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_391.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_392",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_392.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_393",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_393.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_394",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_394.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_395",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_395.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_396",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_396.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_397",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_397.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_398",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_398.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_399",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_399.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_400",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_400.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_401",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_401.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_402",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_402.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_403",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_403.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_404",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_404.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_405",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_405.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_406",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_406.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_407",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_407.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_408",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_408.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_409",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_409.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_410",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_410.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_411",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_411.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_412",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_412.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_413",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_413.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_414",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_414.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_415",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_415.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_416",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_416.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_417",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_417.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_418",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_418.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_419",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_419.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_420",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_420.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_421",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_421.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_422",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_422.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_423",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_423.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_424",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_424.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_425",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_425.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_426",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_426.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_427",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_427.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_428",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_428.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_429",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_429.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_430",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_430.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_431",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_431.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_432",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_432.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_433",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_433.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_434",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_434.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_435",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_435.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_436",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_436.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_437",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_437.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_438",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_438.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_439",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_439.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_440",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_440.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_441",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_441.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_442",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_442.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_443",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_443.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_444",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_444.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_445",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_445.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_446",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_446.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_447",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_447.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_448",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_448.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_449",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_449.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_450",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_450.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_451",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_451.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_452",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_452.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_453",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_453.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_454",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_454.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_455",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_455.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_456",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_456.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_457",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_457.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_458",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_458.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_459",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_459.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_460",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_460.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_461",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_461.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_462",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_462.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_463",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_463.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_464",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_464.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_465",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_465.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_466",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_466.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_467",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_467.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_468",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_468.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_469",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_469.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_470",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_470.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_471",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_471.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_472",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_472.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_473",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_473.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_474",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_474.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_475",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_475.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_476",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_476.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_477",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_477.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_478",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_478.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_479",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_479.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_480",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_480.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_481",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_481.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_482",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_482.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_483",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_483.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_484",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_484.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_485",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_485.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_486",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_486.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_487",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_487.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_488",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_488.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_489",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_489.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_490",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_490.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_491",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_491.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_492",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_492.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_493",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_493.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  },
+  {
+    "id": "qnt_494",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_494.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 1,
+    "explanation": "الإجابة الصحيحة هي ب"
+  },
+  {
+    "id": "qnt_495",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_495.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_496",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_496.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_497",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_497.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 0,
+    "explanation": "الإجابة الصحيحة هي أ"
+  },
+  {
+    "id": "qnt_498",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_498.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_499",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_499.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 2,
+    "explanation": "الإجابة الصحيحة هي ج"
+  },
+  {
+    "id": "qnt_500",
+    "question_number": 1,
+    "type": "quantitative",
+    "question": "",
+    "image": "/quantitative/qnt_500.jpg",
+    "choices": [
+      "أ",
+      "ب",
+      "ج",
+      "د"
+    ],
+    "answer": 3,
+    "explanation": "الإجابة الصحيحة هي د"
+  }
+]

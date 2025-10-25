@@ -1,7 +1,7 @@
 // Service Worker for Electronic Exam PWA
-const CACHE_NAME = 'electronic-exam-v5';
-const STATIC_CACHE = 'static-v5';
-const DYNAMIC_CACHE = 'dynamic-v5';
+const CACHE_NAME = 'electronic-exam-v29';
+const STATIC_CACHE = 'static-v29';
+const DYNAMIC_CACHE = 'dynamic-v29';
 
 // Files to cache for offline functionality
 const STATIC_FILES = [

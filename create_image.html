@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Quantitative Image</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Background
+        ctx.fillStyle = '#f8f9fa';
+        ctx.fillRect(0, 0, 800, 600);
+        
+        // Border
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(10, 10, 780, 580);
+        
+        // Title
+        ctx.fillStyle = '#2c3e50';
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('سؤال كمي', 400, 80);
+        
+        // Question placeholder
+        ctx.fillStyle = '#34495e';
+        ctx.font = '24px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillText('ما قيمة x في المعادلة التالية؟', 750, 150);
+        
+        // Equation
+        ctx.fillStyle = '#e74c3c';
+        ctx.font = 'bold 28px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('2x + 5 = 15', 400, 220);
+        
+        // Choices
+        ctx.fillStyle = '#2c3e50';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'right';
+        
+        const choices = ['أ) 5', 'ب) 10', 'ج) 15', 'د) 20'];
+        choices.forEach((choice, index) => {
+            ctx.fillText(choice, 750, 300 + (index * 40));
+        });
+        
+        // Instructions
+        ctx.fillStyle = '#7f8c8d';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('اختر الإجابة الصحيحة', 400, 500);
+        
+        // Download link
+        const link = document.createElement('a');
+        link.download = 'qnt_055.png';
+        link.href = canvas.toDataURL();
+        link.textContent = 'Download Image';
+        link.style.display = 'block';
+        link.style.textAlign = 'center';
+        link.style.marginTop = '20px';
+        link.style.fontSize = '18px';
+        document.body.appendChild(link);
+    </script>
+</body>
+</html>
+
+

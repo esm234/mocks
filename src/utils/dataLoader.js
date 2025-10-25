@@ -4,6 +4,7 @@ import errorData from '../data/error.json';
 import rcBank4Data from '../data/rcbank4.json';
 import rcBank5Data from '../data/rcbank5.json';
 import oddData from '../data/odd.json';
+import quantitativeData from '../data/quantitative.json';
 
 // New course data imports
 import newAnalogyData from '../data/newdata/analogy.json';
@@ -50,6 +51,7 @@ const normalizeQuestion = (question, type, sourceIndex, sourceFile = '') => {
     choices: Array.isArray(question.choices) ? [...question.choices] : [],
     answer: question.answer,
     passage: question.passage || null,
+    image: question.image || null,
     category: question.category || type,
     exam: question.exam || '',
     passage_id: question.passage ? createSimpleHash(question.passage) : null
@@ -73,7 +75,8 @@ const initialQuestionPools = (() => {
     completion: [],
     error: [],
     rc: [],
-    odd: []
+    odd: [],
+    quantitative: []
   };
   
   try {
@@ -143,12 +146,24 @@ const initialQuestionPools = (() => {
       console.warn('Odd data not available or invalid format');
     }
     
+    // Safely check and process quantitative data
+    if (quantitativeData && Array.isArray(quantitativeData)) {
+      quantitativeData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.quantitative.push(normalizeQuestion(q, 'quantitative', index, 'quantitative'));
+        }
+      });
+    } else {
+      console.warn('Quantitative data not available or invalid format');
+    }
+    
     console.log('Question pools loaded:', {
       analogy: pools.analogy.length,
       completion: pools.completion.length,
       error: pools.error.length,
       rc: pools.rc.length,
-      odd: pools.odd.length
+      odd: pools.odd.length,
+      quantitative: pools.quantitative.length
     });
     
   } catch (error) {
@@ -159,7 +174,8 @@ const initialQuestionPools = (() => {
       completion: [],
       error: [],
       rc: [],
-      odd: []
+      odd: [],
+      quantitative: []
     };
   }
   
@@ -173,7 +189,8 @@ const newCourseQuestionPools = (() => {
     completion: [],
     error: [],
     rc: [],
-    odd: []
+    odd: [],
+    quantitative: []
   };
   
   try {
@@ -232,12 +249,24 @@ const newCourseQuestionPools = (() => {
       console.warn('New odd data not available or invalid format');
     }
     
+    // Safely check and process quantitative data (shared between old and new courses)
+    if (quantitativeData && Array.isArray(quantitativeData)) {
+      quantitativeData.forEach((q, index) => {
+        if (q && (q.question || q.choices)) {
+          pools.quantitative.push(normalizeQuestion(q, 'quantitative', index, 'quantitative'));
+        }
+      });
+    } else {
+      console.warn('Quantitative data not available or invalid format');
+    }
+    
     console.log('New course question pools loaded:', {
       analogy: pools.analogy.length,
       completion: pools.completion.length,
       error: pools.error.length,
       rc: pools.rc.length,
-      odd: pools.odd.length
+      odd: pools.odd.length,
+      quantitative: pools.quantitative.length
     });
     
   } catch (error) {
@@ -248,7 +277,8 @@ const newCourseQuestionPools = (() => {
       completion: [],
       error: [],
       rc: [],
-      odd: []
+      odd: [],
+      quantitative: []
     };
   }
   
@@ -489,20 +519,20 @@ export const generateExam = (config = {}) => {
   }
 
   // Multi-section mode - balanced questions across all types
-  // Fixed order: analogy, completion, error, rc, odd
-  const questionOrder = ['analogy', 'completion', 'error', 'rc', 'odd'];
+  // Fixed order: quantitative first, then verbal (analogy, completion, error, rc, odd)
+  const questionOrder = ['quantitative', 'analogy', 'completion', 'error', 'rc', 'odd'];
   
   const sectionStructures = [
-    // Section 1
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 2
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 3 (Special)
-    { analogy: 2, completion: 2, error: 2, rc: 5, odd: 2, rc_max_per_passage: 5 },
-    // Section 4
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
-    // Section 5
-    { analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 }
+    // Section 1: 11 quantitative + 13 verbal = 24 total
+    { quantitative: 11, analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
+    // Section 2: 11 quantitative + 13 verbal = 24 total
+    { quantitative: 11, analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
+    // Section 3: 11 quantitative + 13 verbal = 24 total (Special with odd)
+    { quantitative: 11, analogy: 2, completion: 2, error: 2, rc: 5, odd: 2, rc_max_per_passage: 5 },
+    // Section 4: 11 quantitative + 13 verbal = 24 total
+    { quantitative: 11, analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 },
+    // Section 5: 11 quantitative + 13 verbal = 24 total
+    { quantitative: 11, analogy: 4, completion: 2, error: 2, rc: 5, odd: 0, rc_max_per_passage: 5 }
   ];
 
   // Create pools for each question type based on course type
@@ -521,6 +551,7 @@ export const generateExam = (config = {}) => {
   }
   
   const questionPools = {
+    quantitative: Array.isArray(sourcePools.quantitative) ? [...sourcePools.quantitative] : [],
     analogy: Array.isArray(sourcePools.analogy) ? [...sourcePools.analogy] : [],
     completion: Array.isArray(sourcePools.completion) ? [...sourcePools.completion] : [],
     error: Array.isArray(sourcePools.error) ? [...sourcePools.error] : [],
@@ -630,10 +661,11 @@ export const generateExam = (config = {}) => {
 
   return {
     questions: examQuestions,
-    totalQuestions: 65,
+    totalQuestions: 120, // 5 sections × 24 questions each
     totalSections: 5,
-    questionsPerSection: 13,
+    questionsPerSection: 24,
     structure: {
+      quantitative: 55, // 5 sections × 11 questions each
       analogy: 18,
       completion: 10,
       error: 10,

@@ -84,13 +84,12 @@ const StartScreen = ({ onShowFolderManagement }) => {
       console.error('Error loading saved settings:', error);
     }
     return {
-      examMode: 'sectioned',
-      timerMode: 'none',
-      selectedTimerDuration: 30, // Changed default to 30 for better UX
-      questionTypeFilter: 'all',
-      selectedQuestionType: 'analogy',
-      rcQuestionOrder: 'sequential',
-      courseType: 'old'
+    examMode: 'sectioned',
+    timerMode: 'none',
+    questionTypeFilter: 'all',
+    selectedQuestionType: 'analogy',
+    rcQuestionOrder: 'sequential',
+    courseType: 'old'
     };
   };
 
@@ -107,7 +106,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
   const {
     examMode,
     timerMode,
-    selectedTimerDuration,
     questionTypeFilter,
     selectedQuestionType,
     rcQuestionOrder,
@@ -229,13 +227,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
   const questionTypeOptions = getQuestionTypeOptions();
 
   const timerDurations = [
-    { value: 15, label: '15 دقيقة', recommended: false },
-    { value: 30, label: '30 دقيقة', recommended: true },
-    { value: 45, label: '45 دقيقة', recommended: false },
-    { value: 60, label: 'ساعة كاملة', recommended: false },
-    { value: 90, label: 'ساعة ونصف', recommended: false },
-    { value: 120, label: 'ساعتان', recommended: false },
-    { value: 180, label: '3 ساعات', recommended: false },
+    { value: 125, label: '125 دقيقة (5 أقسام × 25 دقيقة)', recommended: true },
   ];
 
   const handleStepChange = (step) => {
@@ -264,7 +256,7 @@ const StartScreen = ({ onShowFolderManagement }) => {
     const config = {
       examMode,
       timerMode,
-      timerDuration: timerMode === 'none' ? 0 : selectedTimerDuration,
+      timerDuration: timerMode === 'none' ? 0 : 125, // Fixed 125 minutes for timer mode
       shuffleQuestions: true,
       shuffleAnswers: false,
       questionTypeFilter,
@@ -279,9 +271,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
     return questionTypeOptions.find(type => type.id === selectedQuestionType);
   };
 
-  const getSelectedTimerInfo = () => {
-    return timerDurations.find(timer => timer.value === selectedTimerDuration);
-  };
 
   // Show error message if there's a loading error
   if (loadingError) {
@@ -727,40 +716,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
                         </p>
                       </motion.div>
 
-                      <motion.div
-                        onClick={() => updateSetting('examMode', 'single')}
-                        variants={cardVariants}
-                        initial="initial"
-                        whileHover="hover"
-                        animate={examMode === 'single' ? "selected" : "initial"}
-                        className={`p-6 rounded-xl border-2 cursor-pointer transition-all duration-300 ${
-                          examMode === 'single'
-                            ? 'border-blue-500 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 shadow-lg shadow-blue-500/20'
-                            : 'border-gray-700 bg-gray-800/30 hover:border-gray-600'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-3">
-                            <div className={`p-2 rounded-lg ${examMode === 'single' ? 'bg-blue-600' : 'bg-gray-700'}`}>
-                              <Zap className="h-5 w-5 text-white" />
-                            </div>
-                            <h4 className="text-lg font-semibold">متتالي ومجمع</h4>
-                          </div>
-                          {examMode === 'single' && (
-                            <motion.div 
-                              initial={{ scale: 0 }} 
-                              animate={{ scale: 1 }} 
-                              transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                              className="p-1 bg-blue-600 rounded-full shadow-lg"
-                            >
-                              <Check className="h-4 w-4 text-white" />
-                            </motion.div>
-                          )}
-                        </div>
-                        <p className="text-gray-300 text-sm">
-                          جميع الأسئلة في قسم واحد متواصل بدون توقف أو مراجعة
-                        </p>
-                      </motion.div>
                     </div>
                   </motion.div>
 
@@ -841,37 +796,6 @@ const StartScreen = ({ onShowFolderManagement }) => {
                           تدريب واقعي مع مؤقت لمحاكاة ظروف الاختبار الحقيقي
                         </p>
                         
-                        {timerMode === 'total' && (
-                          <motion.div 
-                            variants={containerVariants} 
-                            initial="hidden" 
-                            animate="visible" 
-                            className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4"
-                          >
-                            {timerDurations.map((timer) => (
-                              <motion.button
-                                key={timer.value}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  updateSetting('selectedTimerDuration', timer.value);
-                                }}
-                                variants={itemVariants}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className={`relative p-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                  selectedTimerDuration === timer.value
-                                    ? 'bg-emerald-600 text-white shadow-md'
-                                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                                }`}
-                              >
-                                {timer.recommended && (
-                                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full animate-pulse-fast border border-yellow-500"></span>
-                                )}
-                                {timer.label}
-                              </motion.button>
-                            ))}
-                          </motion.div>
-                        )}
                       </motion.div>
                     </div>
                   </motion.div>
@@ -1017,12 +941,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     </div>
                     <div className="space-y-2">
                       <p className="text-white font-medium text-xl">
-                        {examMode === 'sectioned' ? 'أقسام مع مراجعة' : 'متتالي ومجمع'}
+                        أقسام مع مراجعة
                       </p>
                       <p className="text-blue-300 text-sm">
-                        {examMode === 'sectioned' 
-                          ? 'مع إمكانية المراجعة' 
-                          : 'بدون توقف'}
+                        مع إمكانية المراجعة
                       </p>
                     </div>
                   </motion.div>
@@ -1037,10 +959,10 @@ const StartScreen = ({ onShowFolderManagement }) => {
                     </div>
                     <div className="space-y-2">
                       <p className="text-white font-medium text-xl">
-                        {timerMode === 'none' ? 'بدون مؤقت' : getSelectedTimerInfo()?.label}
+                        {timerMode === 'none' ? 'بدون مؤقت' : 'مع مؤقت'}
                       </p>
                       <p className="text-emerald-300 text-sm">
-                        {timerMode === 'none' ? 'وقت مفتوح' : 'تدريب واقعي'}
+                        {timerMode === 'none' ? 'وقت مفتوح' : '125 دقيقة (5 أقسام × 25 دقيقة)'}
                       </p>
                     </div>
                   </motion.div>

@@ -178,7 +178,8 @@ const ResultsScreen = () => {
       completion: Sparkles,
       error: AlertCircle,
       rc: BookOpen,
-      odd: Eye
+      odd: Eye,
+      quantitative: BarChart3
     };
     return icons[type] || Star;
   };
@@ -189,7 +190,8 @@ const ResultsScreen = () => {
       completion: 'إكمال الجمل',
       error: 'الخطأ السياقي',
       rc: 'استيعاب المقروء',
-      odd: 'المفردة الشاذة'
+      odd: 'المفردة الشاذة',
+      quantitative: 'الكمي'
     };
     return labels[type] || type;
   };
@@ -484,6 +486,25 @@ const ResultsScreen = () => {
                           <h5 className="text-sm font-semibold text-gray-300 mb-2">السؤال:</h5>
                           <p className="text-white">{question.question}</p>
                         </div>
+
+                        {/* Image for quantitative questions */}
+                        {question.type === 'quantitative' && question.image && (
+                          <div className="mt-4">
+                            <h5 className="text-sm font-semibold text-gray-300 mb-2">الصورة:</h5>
+                            <div className="flex justify-center">
+                              <img 
+                                src={question.image} 
+                                alt={`سؤال ${question.question_number}`}
+                                className="max-w-full h-auto rounded-lg shadow-lg border-2 border-gray-600"
+                                style={{ maxHeight: '400px' }}
+                                onError={(e) => {
+                                  console.error(`فشل في تحميل الصورة: ${question.image}`, e);
+                                  e.target.style.display = 'none';
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
 
                         {/* Choices */}
                         {question.choices && (

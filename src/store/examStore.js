@@ -41,6 +41,7 @@ export const useExamStore = create(
       // Timer
       timerActive: false,
       timeRemaining: 0,
+      sectionTimeRemaining: 0, // Time remaining for current section (25 minutes)
       timerInterval: null,
       
       // Review mode
@@ -192,6 +193,8 @@ export const useExamStore = create(
 
           // Set up timer
           const timerDuration = config.timerMode === 'none' ? 0 : (config.timerDuration || 13) * 60;
+          const questionsPerSection = config.questionTypeFilter === 'specific' ? 13 : 24; // 13 for focused training, 24 for comprehensive
+          const sectionTimeDuration = config.questionTypeFilter === 'specific' ? 13 * 60 : 25 * 60; // 13 min for focused, 25 min for comprehensive
           
           // Clear any existing timer
           const { timerInterval } = get();
@@ -221,6 +224,7 @@ export const useExamStore = create(
             deferredQuestions: {},
             timerActive: config.timerMode !== 'none',
             timeRemaining: timerDuration,
+            sectionTimeRemaining: sectionTimeDuration,
             reviewMode: false,
             examResults: null,
             timerInterval: null
@@ -324,14 +328,26 @@ export const useExamStore = create(
         }
 
         const interval = setInterval(() => {
-          const { timeRemaining } = get();
+          const { timeRemaining, sectionTimeRemaining, currentQuestionIndex, examMode } = get();
           
+          // Check if total time is up
           if (timeRemaining <= 0) {
             get().completeExam();
             return;
           }
           
-          set({ timeRemaining: timeRemaining - 1 });
+          // For sectioned exams, check section time
+          if (examMode === 'sectioned' && sectionTimeRemaining <= 0) {
+            // Auto-end current section and move to next
+            get().endCurrentSection();
+            return;
+          }
+          
+          // Decrement timers
+          set({ 
+            timeRemaining: timeRemaining - 1,
+            sectionTimeRemaining: examMode === 'sectioned' ? sectionTimeRemaining - 1 : sectionTimeRemaining
+          });
         }, 1000);
 
         set({ timerInterval: interval });
@@ -568,26 +584,32 @@ export const useExamStore = create(
 
       // End current section and move to next section
       endCurrentSection: () => {
-        const { currentSection, examQuestions } = get();
-        const maxSection = Math.max(...examQuestions.map(q => q.section));
+        const { currentQuestionIndex, examQuestions, questionTypeFilter } = get();
+        const maxSections = 5; // Fixed number of sections
+        const questionsPerSection = questionTypeFilter === 'specific' ? 13 : 24; // 13 for focused training, 24 for comprehensive
+        const sectionTimeDuration = questionTypeFilter === 'specific' ? 13 * 60 : 25 * 60; // 13 min for focused, 25 min for comprehensive
         
-        if (currentSection < maxSection) {
-          // Find first question of next section
-          const nextSection = currentSection + 1;
-          const nextSectionFirstQuestion = examQuestions.find(q => q.section === nextSection);
+        // Calculate current section based on current question index
+        const actualCurrentSection = Math.floor(currentQuestionIndex / questionsPerSection) + 1;
+        
+        if (actualCurrentSection < maxSections) {
+          // Calculate first question index of next section
+          const nextSection = actualCurrentSection + 1;
+          const nextSectionFirstQuestionIndex = (nextSection - 1) * questionsPerSection;
           
-          if (nextSectionFirstQuestion) {
-            const questionIndex = examQuestions.findIndex(q => q.question_number === nextSectionFirstQuestion.question_number);
-            if (questionIndex !== -1) {
-              set({
-                currentQuestionIndex: questionIndex,
-                currentSection: nextSection,
-                sectionReviewMode: false,
-                returnedFromSectionReview: false,
-                hasSeenSectionReview: false,
-                reviewMode: false,
-              });
-            }
+          if (nextSectionFirstQuestionIndex < examQuestions.length) {
+            set({
+              currentQuestionIndex: nextSectionFirstQuestionIndex,
+              currentSection: nextSection,
+              sectionTimeRemaining: sectionTimeDuration, // Reset section timer
+              sectionReviewMode: false,
+              returnedFromSectionReview: false,
+              hasSeenSectionReview: false,
+              reviewMode: false,
+            });
+          } else {
+            // If next section doesn't have enough questions, complete the exam
+            get().completeExam();
           }
         } else {
           // If this is the last section, complete the exam
